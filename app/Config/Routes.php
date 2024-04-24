@@ -9,9 +9,11 @@ $routes->get('/', 'Home::index');
 
 //? usuarios
 
-$routes->get('/usuarios/index', 'Usuarios::index');
+$routes->get('/usuarios', 'Usuarios::index');
 $routes->post('/usuarios/login', 'Usuarios::login');
 
-$routes->get('usuarios/new', 'Usuarios::new');
+$routes->get('/usuarios/new', 'Usuarios::new');
 $routes->post('/usuarios/create', 'Usuarios::create');
+
+$routes->get('/usuarios/logOut', 'Usuarios::logOut');
 

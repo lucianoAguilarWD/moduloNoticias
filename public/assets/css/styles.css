@@ -1,3 +1,88 @@
+body {
+    font-family: Roboto;
+}
+
+p{
+    font-size: 14px;
+}
+
+/*------------------ nav -------------------*/
+
+.noticias-nav{
+    display: flex;
+    justify-content:right;
+}
+
+.noticias-nav a{
+    margin-left: 2rem;
+    margin-right: 2rem;
+    font-size: 1.5rem;
+    text-decoration: none !important;
+    color: #CCCCCC;
+}
+
+a{
+    color: #CCCCCC;
+}
+
+.dropdown-menu :hover{
+    background-color: white;
+    color: #0047AB;
+}
+/*----------------------------------------------*/
+/*------------------ footer -------------------*/
+.noticias-footer{
+    color:#CCCCCC;
+    background-color:#0047AB;
+    border: white;
+    border: 40px;
+    bottom: 0;
+    width: 100%;
+    position: relative;
+} 
+
+
+
+.noticias-footer a{
+    text-decoration: none;
+    color: #CCCCCC;
+}
+
+.noticias-footer h3{
+    margin-left: 2rem;
+    margin-right: 2rem;
+    font-size: 1.5rem;
+    text-decoration: none !important;
+    color: #CCCCCC;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.noticias-footer .list-group-item{
+    color:#CCCCCC;
+    background: #0047AB;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.noticias-footer .list-group-item:hover{
+    background:#000080;
+}
+
+.noticias-footer .btn-social i{
+    color:#CCCCCC;
+}
+
+.noticias-footer .btn-social i:hover{
+    color:#000080;
+}
+
+@media only screen and(max-width:768px){
+    .noticias-footer .btn-social{
+        display: inline-block;
+        margin-top: 15px;
+    }
+}
+/*----------------------------------------------*/
 /*------------------ botones -------------------*/
 .confirmacion{
     padding: 10px 25px;

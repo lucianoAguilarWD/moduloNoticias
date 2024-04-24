@@ -1,4 +1,4 @@
-<?php echo $this->extend('layouts/layoutUsuarios'); ?>
+<?php echo $this->extend($layout); ?>
 
 <?php echo $this->section('contenido'); ?>
 <div class="container mt-5 ">
@@ -8,86 +8,99 @@
             <h3 class="text-center">Crear Usuario</h3>
         </div>
         <div class="card-body">
-            <?php echo form_open('Usuarios/create'); ?>
+            <?php echo form_open('usuarios/create'); ?>
 
             <?php
+            //? atributos de los input
+            
             $nombreAt = [
                 'type' => 'text',
                 'id' => 'nombre',
                 'name' => 'nombre',
                 'class' => 'form-control',
-                'required' => true,
-                'value' => set_value("nombre", "Nombre de usuario")
-            ];
-
-            $rol = [
-                'type' => 'text',
-                'id' => 'nombre',
-                'name' => 'nombre',
-                'class' => 'form-control',
-                'required' => true,
-                'value' => set_value("nombre", "Nombre de usuario")
+                //'required' => true,
+                'placeholder' => 'Ingrese un nombre de usuario',
+                'value' => set_value('nombre')
             ];
 
             $contraseniaAt = [
-                'type' => 'text',
+                'type' => 'password',
                 'id' => 'pw',
                 'name' => 'pw',
                 'class' => 'form-control',
-                'required' => true,
-                'value' => set_value("pw", "Introduce tu contraseña")
+                //'required' => true,
+                'placeholder' => 'Introduce una contraseña',
+                'value' => set_value('pw')
             ];
 
             $contraseniaconfAt = [
-                'type' => 'text',
+                'type' => 'password',
                 'id' => 'pwc',
                 'name' => 'pwc',
                 'class' => 'form-control',
-                'required' => true,
-                'value' => set_value("pwc", "Introduce tu contraseña nuevamente")
+                //'required' => true,
+                'placeholder' => "Confirmar la contraseña",
             ];
 
             $options = array(
-                '0'  => 'Editor',
-                '1'    => 'Validador',
-                '2'   => 'Ambos',
+                0  => 'Editor',
+                1    => 'Validador',
+                2   => 'Ambos',
             );
-            
+
 
             ?>
 
-            <div class="mb-3 row">
+            <div class="mb-3">
                 <?php echo form_label('Usuario', 'nombre', ['class' => 'form-label col']); ?>
                 <?php echo form_input($nombreAt); ?>
-                <?php echo validation_show_error('nombre'); ?>
+                <?php if (validation_show_error('nombre')) : ?>
+                    <div class="alert alert-danger">
+                        <?php echo validation_show_error('nombre'); ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
-            <div class="mb-3 row">
-                <?php echo form_label('Rol', 'rol', ['class' => 'form-label col']); ?>
+            <div class="mb-3">
+                <?php echo form_label('Seleccione un rol', 'rol', ['class' => 'form-label col']); ?>
                 <?php echo form_dropdown('rol', $options, '0'); ?>
+                <?php if (validation_show_error('rol')) : ?>
+                <div class="alert alert-danger">
+                    <?php echo validation_show_error('rol'); ?>
+                </div>
+                <?php endif; ?>
             </div>
 
 
-            <div class="mb-3 row">
+            <div class="mb-3">
                 <?php echo form_label('Contraseña', 'pw', ['class' => 'form-label col']); ?>
                 <?php echo form_input($contraseniaAt); ?>
-                <?php echo validation_show_error('pw'); ?>
+                <?php if (validation_show_error('pw')) : ?>
+                <div class="alert alert-danger">
+                    <?php echo validation_show_error('pw'); ?>
+                </div>
+                <?php endif; ?>
             </div>
 
-            <div class="mb-3 row">
+            <div class="mb-3">
                 <?php echo form_label('Confirmar Contraseña', 'pwc', ['class' => 'form-label col']); ?>
                 <?php echo form_input($contraseniaconfAt); ?>
-                <?php echo validation_show_error('pwc'); ?>
+                <?php if (validation_show_error('pwc')) : ?>
+                <div class="alert alert-danger">
+                    <?php echo validation_show_error('pwc'); ?>
+                </div>
+                <?php endif; ?>
             </div>
 
-            <div class="mb-3 row">
-                <?php echo form_submit('submit', 'Iniciar Sesión', ['class' => 'btn btn-primary']); ?>
+            <div class="mb-3">
+                <?php echo form_submit('submit', 'Crear Cuenta', ['class' => 'btn confirmacion']); ?>
+                <a href="<?= base_url('/'); ?>" class="btn confirmacion" >Volver a inicio</a>
             </div>
 
             <?php echo form_close(); ?>
         </div>
         <div class="card-footer text-muted">
-        ¿Ya tienes una cuenta? <a href="index">Inicia sesión aquí</a>
+            ¿Ya tienes una cuenta? <a href="<?= base_url('usuarios'); ?>">Inicia sesión aquí</a>
         </div>
     </div>
 </div>

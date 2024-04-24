@@ -8,6 +8,15 @@ class UsuariosSeeder extends Seeder
 {
     public function run()
     {
-        //
+        $usuario = "lucho";
+        $hash = password_hash("lucho", PASSWORD_BCRYPT);
+        $rol = "0";
+        $data = [
+            'nombre' => $usuario,
+            'contrasenia' => $hash,
+            'rol' => $rol
+        ];
+
+        $this->db->table('usuarios')->insert($data);
     }
 }
