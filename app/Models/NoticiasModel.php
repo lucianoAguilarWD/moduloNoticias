@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class NoticasModel extends Model
+class NoticiasModel extends Model
 {
-    protected $table            = 'noticas';
+    protected $table            = 'noticias';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';

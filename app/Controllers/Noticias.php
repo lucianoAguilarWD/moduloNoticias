@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\SeguimientosModel;
 use App\Models\CategoriasModel;
-use App\Models\NoticasModel;
+use App\Models\NoticiasModel;
 use App\Models\UsuariosModel;
 
 class Noticias extends BaseController
@@ -20,7 +20,7 @@ class Noticias extends BaseController
     {
         $this->usuariosModel = new UsuariosModel();
         $this->categoriasModel = new CategoriasModel();
-        $this->noticiasModel = new NoticasModel();
+        $this->noticiasModel = new NoticiasModel();
         $this->seguimientosModel = new SeguimientosModel();
     }
     /**
@@ -31,7 +31,15 @@ class Noticias extends BaseController
     public function index()
     {
         //? Muestra de todas las noticias publicadas
-        return view('Noticias/mostrar', ['titulo' => 'Noticias Publicadas', 'layout' => 'layouts/layoutBase']);
+        $noticias = $this->noticiasModel->findAll();
+
+        $data = [
+            'noticias' => $noticias,
+            'titulo' => 'Noticias Publicadas',
+            'layout' => 'layouts/layoutBase'
+        ];
+
+        return view('Noticias/mostrar', $data);
     }
 
     /**
@@ -101,6 +109,18 @@ class Noticias extends BaseController
     public function update($id = null)
     {
         //? validación y modificación de la noticia
+    }
+
+
+    public function delete($id = null)
+    {
+        if (!$this->request->is('delete') || $id == null) {
+            return redirect()->route('noticias');
+        }
+
+        $this->noticiasModel->delete($id);
+
+        return redirect()->to('noticias');
     }
 
 }
