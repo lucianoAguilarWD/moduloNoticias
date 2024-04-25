@@ -51,6 +51,11 @@ class Noticias extends Migration
                 'type' => 'DATETIME',
                 'null' => true
             ],
+            'id_categoria' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => true,
+            ],
             'id_usuario' => [
                 'type' => 'INT',
                 'constraint' => 11,
@@ -59,6 +64,7 @@ class Noticias extends Migration
         ]);
 
         $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('id_categoria', 'categorias', 'id');
         $this->forge->addForeignKey('id_usuario', 'usuarios', 'id');
         $this->forge->createTable('noticias');
     }
