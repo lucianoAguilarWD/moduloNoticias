@@ -55,15 +55,15 @@
             <?php
             //? mensajes de error
 
-            $usuarioNoEncontrado = session()->getFlashdata('Error:0');
-            $pwIncorrecta = session()->getFlashdata('Error:1');
-            if ($usuarioNoEncontrado || $pwIncorrecta || validation_show_error('nombre') || validation_show_error('pw')) : ?>
+            // $usuarioNoEncontrado = session()->getFlashdata('Error:0');
+            // $pwIncorrecta = session()->getFlashdata('Error:1');
+            if ( validation_show_error('nombre') || validation_show_error('pw')) : ?>
                 <div class="alert alert-danger">
                     <?php
                     echo "<p>".validation_show_error('nombre')."</p>";
                     echo "<p>".validation_show_error('pw')."</p>";
-                    echo "<p>".$usuarioNoEncontrado."</p>";
-                    echo "<p>".$pwIncorrecta."</p>";
+                    // echo "<p>".$usuarioNoEncontrado."</p>";
+                    // echo "<p>".$pwIncorrecta."</p>";
                     ?>
                 </div>
             <?php endif; ?>

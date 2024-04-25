@@ -20,12 +20,11 @@ class Usuarios extends BaseController
     public function index()
     {
         //? view de inicio de sesion
-        if($this->session->rol === null){
+        if ($this->session->rol === null) {
             return view('Usuarios/login', ['titulo' => 'Iniciar Sesión', 'layout' => 'layouts/layoutUsuarios']);
-        }else{
+        } else {
             return redirect()->to('/');
         }
-        
     }
 
     public function login()
@@ -35,16 +34,18 @@ class Usuarios extends BaseController
         $reglas = [
             'nombre' => [
                 'label' => 'Usuario',
-                'rules' => 'required',
+                'rules' => 'required|validationUser',
                 'errors' => [
-                    'required' => 'El campo {field} es obligatorio'
+                    'required' => 'El campo {field} es obligatorio',
+                    'validationUser' => 'Usuario no encontrado'
                 ]
             ],
             'pw' => [
                 'label' => 'Contraseña',
-                'rules' => 'required',
+                'rules' => 'required|validationPassword',
                 'errors' => [
-                    'required' => 'El campo {field} es obligatorio'
+                    'required' => 'El campo {field} es obligatorio',
+                    'validationPassword' => 'Contraseña incorrecta'
                 ]
             ]
         ];
@@ -53,33 +54,19 @@ class Usuarios extends BaseController
             return redirect()->back()->withInput('error', $this->validator->listErrors());
         }
 
-
         $usuario = $this->request->getPost('nombre');
-        $password = $this->request->getPost('pw');
-        
 
         if (is_string($usuario)) {
             $usuarioBuscado = $this->usuariosModel->find_by_name($usuario);
-            if (is_string($password)) {
-                if ($usuarioBuscado) {
-                    if (password_verify($password, $usuarioBuscado['contrasenia'])) {
+            //todo: datos para la sesión
+            $data = [
+                'usuario' => trim($usuarioBuscado['nombre']),
+                'rol' => intval($usuarioBuscado['rol'])
+            ];
+            //* Creamos la sesión
+            $this->session->set($data);
 
-                        //todo: datos para la sesión
-                        $data = [
-                            'usuario' => trim($usuarioBuscado['nombre']),
-                            'rol' => intval($usuarioBuscado['rol'])
-                        ];
-                        //* Creamos la sesión
-                        $this->session->set($data);
-
-                        return redirect()->to('/');
-                    } else {
-                        return redirect()->to(base_url('usuarios'))->with('Error:1', 'Contraseña incorrecta');
-                    }
-                } else {
-                    return redirect()->to(base_url('usuarios'))->with('Error:0', 'Usuario no encontrado');
-                }
-            }
+            return redirect()->to('/');
         }
     }
 
@@ -93,12 +80,11 @@ class Usuarios extends BaseController
     public function new()
     {
         //* muestra del formulario de creacion de usuario
-        if($this->session->rol === null){
+        if ($this->session->rol === null) {
             return view('Usuarios/signup',  ['titulo' => 'Crear Cuenta', 'layout' => 'layouts/layoutUsuarios']);
-        }else{
+        } else {
             return redirect()->to('/');
         }
-        
     }
 
     /**
@@ -154,7 +140,7 @@ class Usuarios extends BaseController
 
         $this->usuariosModel->insert([
             'nombre' => trim($post['nombre']),
-            'contrasenia' =>password_hash($post['pw'], PASSWORD_BCRYPT),
+            'contrasenia' => password_hash($post['pw'], PASSWORD_BCRYPT),
             'rol' => intval($post['rol'])
         ]);
 
@@ -169,9 +155,9 @@ class Usuarios extends BaseController
         return redirect()->to('/');
     }
 
-    public function logOut ()
+    public function logOut()
     {
-        if($this->session->rol !== null){
+        if ($this->session->rol !== null) {
             $this->session->destroy();
             return redirect()->to('/');
         }
