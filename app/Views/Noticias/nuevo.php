@@ -6,7 +6,7 @@
 
     <h2 class="mb-4">Nueva noticia</h2>
 
-    <?php echo form_open_multipart('noticias/new'); ?>
+    <?php echo form_open_multipart('noticias/create'); ?>
 
     <?php
     $titulo = [

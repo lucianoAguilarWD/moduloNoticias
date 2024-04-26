@@ -7,6 +7,7 @@ use App\Models\SeguimientosModel;
 use App\Models\CategoriasModel;
 use App\Models\NoticiasModel;
 use App\Models\UsuariosModel;
+use CodeIgniter\Files\File;
 
 class Noticias extends BaseController
 {
@@ -69,7 +70,6 @@ class Noticias extends BaseController
         ];
 
         return view('Noticias/nuevo', $data);
-
     }
 
     /**
@@ -80,6 +80,72 @@ class Noticias extends BaseController
     public function create()
     {
         //TODO: validación e inserción de la noticia
+
+        $reglas = [
+            'titulo' => [
+                'label' => 'Titulo',
+                'rules' => 'required|max_length[50]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio',
+                    'max_length' => 'El campo {field} no puede exceder los {param} caracteres.'
+                ]
+            ],
+
+            'desc' => [
+                'label' => 'Descripción',
+                'rules' => 'required|max_length[255]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio',
+                    'max_length' => 'El campo {field} no puede exceder los {param} caracteres.'
+                ]
+            ],
+
+            'archivo' => [
+                'label' => 'Selecciona una imagen',
+                'rules' => [
+                    'uploaded[archivo]',
+                    'is_image[archivo]',
+                    'mime_in[archivo,image/jpg,image/jpeg,image/gif,image/png,image/webp]',
+                    'max_size[archivo,1000]',
+                    'max_dims[archivo,1920,1080]',
+                ],
+            ],
+
+            'categoria' => [
+                'label' => 'Seleccione una categoria',
+                'rules' => 'required|in_list[1,2,3,4,5]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio',
+                ]
+            ]
+        ];
+
+        if (!$this->validate($reglas)) {
+            return redirect()->back()->withInput('error', $this->validator->listErrors());
+        }
+
+        $file = $this->request->getFile('archivo');
+
+        if (!$file->hasMoved()) {
+            $filepath = WRITEPATH . 'uploads/' . $file->store();
+
+            $data = ['uploaded_fileinfo' => new File($filepath)];
+            $nombre_del_archivo = $data['uploaded_fileinfo']->getFilename();
+        }
+
+
+
+        $post = $this->request->getPost(['titulo', 'desc', 'categoria']);
+
+        $this->noticiasModel->insert([
+            'titulo' => trim($post['titulo']),
+            'descripcion' => trim($post['desc']),
+            'estado' => 1,
+            'imagen' => $nombre_del_archivo,
+            'id_categoria' => intval($post['categoria']),
+            'id_usuario' => 1
+        ]);
+        return redirect()->to('noticias');
     }
 
     public function borrador()
@@ -97,6 +163,15 @@ class Noticias extends BaseController
     public function edit($id = null)
     {
         //? Editar una noticia seleccionada
+
+        $data = [
+            'categorias' => $this->categoriasModel->findAll(),
+            'noticia' => $this->noticiasModel->find($id),
+            'titulo' => 'Editar noticia',
+            'layout' => 'layouts/layoutBase'
+        ];
+
+        return view('Noticias/editar', $data);
     }
 
     /**
@@ -109,6 +184,77 @@ class Noticias extends BaseController
     public function update($id = null)
     {
         //? validación y modificación de la noticia
+
+        if (!$this->request->is('put') || $id == null) {
+            return redirect()->route('empleados');
+        }
+
+
+        $reglas = [
+            'titulo' => [
+                'label' => 'Titulo',
+                'rules' => 'required|max_length[50]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio',
+                    'max_length' => 'El campo {field} no puede exceder los {param} caracteres.'
+                ]
+            ],
+
+            'desc' => [
+                'label' => 'Descripción',
+                'rules' => 'required|max_length[255]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio',
+                    'max_length' => 'El campo {field} no puede exceder los {param} caracteres.'
+                ]
+            ],
+
+            'archivo' => [
+                'label' => 'Selecciona una imagen',
+                'rules' => [
+                    'uploaded[archivo]',
+                    'is_image[archivo]',
+                    'mime_in[archivo,image/jpg,image/jpeg,image/gif,image/png,image/webp]',
+                    'max_size[archivo,1000]',
+                    'max_dims[archivo,1920,1080]',
+                ],
+            ],
+
+            'categoria' => [
+                'label' => 'Seleccione una categoria',
+                'rules' => 'required|in_list[1,2,3,4,5]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio',
+                ]
+            ]
+        ];
+
+        if (!$this->validate($reglas)) {
+            return redirect()->back()->withInput('error', $this->validator->listErrors());
+        }
+
+        $file = $this->request->getFile('archivo');
+
+        if (!$file->hasMoved()) {
+            $filepath = WRITEPATH . 'uploads/' . $file->store();
+
+            $data = ['uploaded_fileinfo' => new File($filepath)];
+            $nombre_del_archivo = $data['uploaded_fileinfo']->getFilename();
+        }
+
+
+
+        $post = $this->request->getPost(['titulo', 'desc', 'categoria']);
+
+        $this->noticiasModel->update($id,[
+            'titulo' => trim($post['titulo']),
+            'descripcion' => trim($post['desc']),
+            'estado' => 1,
+            'imagen' => $nombre_del_archivo,
+            'id_categoria' => intval($post['categoria']),
+            'id_usuario' => 1
+        ]);
+        return redirect()->to('noticias');
     }
 
 
@@ -122,5 +268,4 @@ class Noticias extends BaseController
 
         return redirect()->to('noticias');
     }
-
 }

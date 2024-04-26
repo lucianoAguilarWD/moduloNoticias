@@ -24,3 +24,7 @@ $routes->get('/noticias', 'Noticias::index');
 $routes->get('/noticias/new', 'Noticias::new');
 $routes->post('/noticias/create', 'Noticias::create');
 
+$routes->get('/noticias/(:num)/edit', 'Noticias::edit/$1');
+$routes->put('/noticias/(:num)', 'Noticias::update/$1');
+
+$routes->delete('noticias/(:num)', 'Noticias::delete/$1');

@@ -35,7 +35,7 @@
                 <td><?= $noticia['fechaCreacion']; ?></td>
                 <td><?= $noticia['id_usuario']; ?></td>
                 <td>
-                    <a href="<?= base_url('empleados/' . $noticia['id'] . '/edit'); ?>" class="btn btn-warning btn-sm me-2">Editar</a>
+                    <a href="<?= base_url('noticias/' . $noticia['id'] . '/edit'); ?>" class="btn btn-warning btn-sm me-2">Editar</a>
 
                     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-url="<?= base_url('noticias/' . $noticia['id']); ?>">Eliminar</button>
                 </td>
@@ -57,7 +57,7 @@
             </div>
             <div class="modal-footer">
                 <form id="form-elimina" action="" method="post">
-                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="_method" value="DELETE"/>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                 </form>
@@ -68,7 +68,7 @@
 
 <?= $this->endSection(); ?>
 
-<?= $this->section('script'); ?>
+<?= $this->section('scripts'); ?>
 
 <script>
     const eliminaModal = document.getElementById('eliminaModal')

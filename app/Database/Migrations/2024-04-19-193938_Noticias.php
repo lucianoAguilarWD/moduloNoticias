@@ -26,11 +26,6 @@ class Noticias extends Migration
                 'type' => 'INT',
                 'constraint' => 11,
             ],
-            'validada' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'null' => true
-            ],
             'imagen' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
@@ -44,6 +39,10 @@ class Noticias extends Migration
                 'null' => true
             ],
             'fechaPublicacion' => [
+                'type' => 'DATETIME',
+                'null' => true
+            ],
+            'fechaModificacion' => [
                 'type' => 'DATETIME',
                 'null' => true
             ],
