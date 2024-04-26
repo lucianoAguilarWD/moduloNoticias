@@ -20,7 +20,8 @@ class UsuariosModel extends Model
     // Dates
     protected $useTimestamps = false;
 
-    public function find_by_name($nombre) {
+    public function find_by_name($nombre)
+    {
         return $this->where('nombre', $nombre)->get()->getRowArray();
     }
 }

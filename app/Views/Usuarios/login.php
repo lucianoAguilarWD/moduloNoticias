@@ -38,35 +38,29 @@
             <div class="mb-3">
                 <?php echo form_label('Usuario', 'nombre', ['class' => 'form-label col']); ?>
                 <?php echo form_input($nombreAt); ?>
+                <?php if (validation_show_error('nombre')) : ?>
+                    <div class="alert alert-danger">
+                        <?= "<p>" . validation_show_error('nombre') . "</p>"; ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div class="mb-3">
                 <?php echo form_label('Contraseña', 'pw', ['class' => 'form-label col']); ?>
                 <?php echo form_input($contraseniaAt); ?>
+                <?php if (validation_show_error('pw')) : ?>
+                    <div class="alert alert-danger">
+                        <?= "<p>" . validation_show_error('pw') . "</p>"; ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div class="mb-3">
                 <?php echo form_submit('submit', 'Iniciar Sesión', ['class' => 'btn confirmacion']); ?>
-                <a href="<?= base_url('/'); ?>" class="btn confirmacion" >Volver a inicio</a>
+                <a href="<?= base_url('/'); ?>" class="btn confirmacion">Volver a inicio</a>
             </div>
 
             <?php echo form_close(); ?>
-
-            <?php
-            //? mensajes de error
-
-            $usuarioNoEncontrado = session()->getFlashdata('Error:0');
-            $pwIncorrecta = session()->getFlashdata('Error:1');
-            if ($usuarioNoEncontrado || $pwIncorrecta || validation_show_error('nombre') || validation_show_error('pw')) : ?>
-                <div class="alert alert-danger">
-                    <?php
-                    echo "<p>".validation_show_error('nombre')."</p>";
-                    echo "<p>".validation_show_error('pw')."</p>";
-                    echo "<p>".$usuarioNoEncontrado."</p>";
-                    echo "<p>".$pwIncorrecta."</p>";
-                    ?>
-                </div>
-            <?php endif; ?>
         </div>
         <div class="card-footer text-muted">
             ¿No tienes una cuenta? <a href="<?= base_url('usuarios/new'); ?>">Regístrate aquí</a>
