@@ -20,20 +20,14 @@ class Categorias extends Migration
                 'constraint' => 50,
                 'unique' => true
             ],
-            'id_noticia' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'unsigned' => true,
-            ]
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('id_noticia', 'noticias', 'id');
         $this->forge->createTable('categorias');
     }
 
     public function down()
     {
-        $this->forge->dropTable('categorias');
+        $this->forge->dropTable('noticias');
     }
 }

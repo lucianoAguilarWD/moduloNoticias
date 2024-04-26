@@ -1,65 +1,82 @@
-<?php echo $this->extend('layouts/layoutBase');?>
+<?php echo $this->extend($layout); ?>
 
 <?php echo $this->section('contenido'); ?>
 
 <main class="container">
 
-    <h2 class="mb-4">Nuevo producto</h2>
+    <h2 class="mb-4">Nueva noticia</h2>
 
-    <?php 
-        //echo validation_list_errors();
+    <?php echo form_open_multipart('noticias/create'); ?>
+
+    <?php
+    $titulo = [
+        'type' => 'text',
+        'id' => 'titulo',
+        'name' => 'titulo',
+        'class' => 'form-control',
+        'value' => set_value('titulo'),
+        'placeholder' => 'Titulo de la noticia'
+    ];
+
+    $desc = [
+        'type' => 'text',
+        'id' => 'desc',
+        'name' => 'desc',
+        'class' => 'form-control',
+        'value' => set_value('desc'),
+        'placeholder' => 'Descripción de la noticia'
+    ];
+
+    $categoriasOpcion = [];
+    foreach ($categorias as $categoria) {
+        $categoriasOpcion[$categoria['id']] = $categoria['nombre'];
+    }
+
     ?>
 
-    <?php echo form_open('ejemplo/guarda'); ?>
-
-    <?php 
-        $atributos = [
-            'type' => 'text',
-            'id' => 'codigo',
-            'name' => 'codigo',
-            'class' => 'form-control',
-            'required' => true,
-            'value' => set_value("codigo", "ABC-123")
-        ];
-
-        $nombre = set_value("nombre", "pepe");
-        $precio = set_value("precio", "23");
-        $stock = set_value("stock", "12");
-        $almacen = set_value("almacen", "1");
-    ?>
-
-    <div class= "mb-3 row">
-        <?php echo form_label('Código', 'codigo', ['class' => 'form-label col-sm-2']); ?>
-        <?php echo form_input($atributos); ?>
-        <?php echo validation_show_error('codigo'); ?>
+    <div class="mb-3">
+        <?php echo form_label('Titulo', 'titulo', ['class' => 'form-label col-sm-2']); ?>
+        <?php echo form_input($titulo); ?>
+        <?php if (validation_show_error('titulo')) : ?>
+            <div class="alert alert-danger">
+                <?php echo validation_show_error('titulo'); ?>
+            </div>
+        <?php endif; ?>
     </div>
 
-    <div class= "mb-3 row">
-        <?php echo form_label('Nombre', 'nombre', ['class' => 'form-label col-sm-2']); ?>
-        <?php echo form_input('nombre', "$nombre" , ['id' => 'nombre', 'class' => 'form-control']); ?>
-        <?php echo validation_show_error('nombre'); ?>
+    <div class="mb-3">
+        <?php echo form_label('Descripción', 'desc', ['class' => 'form-label col-sm-2']); ?>
+        <?php echo form_input($desc); ?>
+        <?php if (validation_show_error('desc')) : ?>
+            <div class="alert alert-danger">
+                <?php echo validation_show_error('desc'); ?>
+            </div>
+        <?php endif; ?>
     </div>
 
-    <div class= "mb-3 row">
-        <?php echo form_label('Precio', 'precio', ['class' => 'form-label col-sm-2']); ?>
-        <?php echo form_input('precio', "$precio", ['id' => 'precio', 'min' => 1, 'class' => 'form-control'], 'number'); ?>
-        <?php echo validation_show_error('precio'); ?>
+    <div class="mb-3">
+        <?php echo form_label('Seleccione una categoria', 'categoria', ['class' => 'form-label col']); ?>
+        <?php echo form_dropdown('categoria', $categoriasOpcion, '0'); ?>
+        <?php if (validation_show_error('categoria')) : ?>
+            <div class="alert alert-danger">
+                <?php echo validation_show_error('categoria'); ?>
+            </div>
+        <?php endif; ?>
     </div>
 
-    <div class= "mb-3 row"
-        <?php echo form_label('Stock', 'stock', ['class' => 'form-label col-sm-2']); ?>
-        <?php echo form_input('stock', "$stock", ['id' => 'stock', 'min' => 0, 'class' => 'form-control'], 'number'); ?>
-        <?php echo validation_show_error('stock'); ?>
+    <div class="mb-3">
+        <label for="archivo">Selecciona una imagen(opcional)</label>
+        <input type="file" name="archivo" id="archivo" accept="image/jpeg, image/png">
+        <?php if (validation_show_error('archivo')) : ?>
+            <div class="alert alert-danger">
+                <?php echo validation_show_error('archivo'); ?>
+            </div>
+        <?php endif; ?>
     </div>
 
-    <div class= "mb-3 row"
-        <?php echo form_label('Almacen', 'almacen', ['class' => 'form-label col-sm-2']); ?>
-        <?php echo form_input('almacen', "$almacen", ['id' => 'almacen', 'min' => 0, 'class' => 'form-control'], 'number'); ?>
-        <?php echo validation_show_error('almacen'); ?>
-    </div>
 
-    <div class= "mb-3 row">
-        <?php echo form_submit('submit', 'Guardar', ['class' => 'btn btn-primary']); ?>
+    <div class="mb-3">
+        <?php echo form_submit('submit', 'Enviar para validar', ['class' => 'btn confirmacion']); ?>
     </div>
 
     <?php echo form_close(); ?>

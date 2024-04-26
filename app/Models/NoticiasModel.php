@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class NoticasModel extends Model
+class NoticiasModel extends Model
 {
-    protected $table            = 'noticas';
+    protected $table            = 'noticias';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['titulo', 'descripcion', 'estado', 'validada', 'imagen', 'fechaPublicacion', 'fechaExpiracion', 'id_usuario'];
+    protected $allowedFields    = ['titulo', 'descripcion', 'estado', 'validada', 'imagen', 'fechaPublicacion', 'fechaExpiracion', 'id_usuario', 'id_categoria'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -21,6 +21,7 @@ class NoticasModel extends Model
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'fechaCreacion';
+    protected $updatedField  = 'fechaModificacion';
     protected $deletedField  = 'activa';
 
 }

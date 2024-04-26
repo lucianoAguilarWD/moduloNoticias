@@ -26,11 +26,6 @@ class Noticias extends Migration
                 'type' => 'INT',
                 'constraint' => 11,
             ],
-            'validada' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'null' => true
-            ],
             'imagen' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
@@ -47,9 +42,18 @@ class Noticias extends Migration
                 'type' => 'DATETIME',
                 'null' => true
             ],
+            'fechaModificacion' => [
+                'type' => 'DATETIME',
+                'null' => true
+            ],
             'fechaExpiración' => [
                 'type' => 'DATETIME',
                 'null' => true
+            ],
+            'id_categoria' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => true,
             ],
             'id_usuario' => [
                 'type' => 'INT',
@@ -59,6 +63,7 @@ class Noticias extends Migration
         ]);
 
         $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('id_categoria', 'categorias', 'id');
         $this->forge->addForeignKey('id_usuario', 'usuarios', 'id');
         $this->forge->createTable('noticias');
     }
