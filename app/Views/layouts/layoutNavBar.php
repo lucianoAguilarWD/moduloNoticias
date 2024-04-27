@@ -3,7 +3,7 @@
     <div class="row">
       <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#0047AB;">
         <div class="container-fluid">
-          <a class="navbar-brand" href="<?= base_url('/'); ?>" ><i class="fa-solid fa-earth-americas fa-2xl mt-4" style="color: #CCCCCC;"></i></a>
+          <a class="navbar-brand" href="<?= base_url('/noticias'); ?>" ><i class="fa-solid fa-earth-americas fa-2xl mt-4" style="color: #CCCCCC;"></i></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>

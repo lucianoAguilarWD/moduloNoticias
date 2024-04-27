@@ -10,9 +10,9 @@ class NoticiasModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['titulo', 'descripcion', 'estado', 'validada', 'imagen', 'fechaPublicacion', 'fechaExpiracion', 'id_usuario', 'id_categoria'];
+    protected $allowedFields    = ['titulo', 'descripcion', 'estado', 'imagen', 'fechaPublicacion', 'fechaExpiracion', 'id_usuario', 'id_categoria'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

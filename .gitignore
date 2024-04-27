@@ -48,7 +48,7 @@ Vagrantfile
 #-------------------------
 # Temporary Files
 #-------------------------
-writable/uploads
+public/uploads
 
 writable/cache/*
 !writable/cache/index.html
