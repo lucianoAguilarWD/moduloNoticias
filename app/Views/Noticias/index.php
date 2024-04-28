@@ -39,34 +39,13 @@
                         <a href="<?= base_url('noticias/' . $noticia['id'] . '/edit'); ?>" class="btn btn-warning btn-sm me-2">Editar</a>
                         <a href="<?= base_url('noticias/' . $noticia['id']); ?>" class="btn btn-warning btn-sm me-2"> Mostrar</a>
 
-                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-url="<?= base_url('noticias/' . $noticia['id']); ?>">Eliminar</button>
+                        <button onclick="modalConfirmacion('<?= base_url('noticias/' . $noticia['id']); ?>');" class="btn btn-danger btn-sm">Eliminar</button>
                     </td>
                 </tr>
             <?php endforeach; ?>
 
         </tbody>
     </table>
-
-    <div class="modal fade" id="eliminaModal" tabindex="-1" aria-labelledby="eliminaModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="eliminaModalLabel">Aviso</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Desea eliminar este registro?</p>
-                </div>
-                <div class="modal-footer">
-                    <form id="form-elimina" action="" method="post">
-                        <input type="hidden" name="_method" value="DELETE" />
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 </main>
 
 <?= $this->endSection(); ?>
@@ -74,17 +53,18 @@
 <?= $this->section('scripts'); ?>
 
 <script>
-    const eliminaModal = document.getElementById('eliminaModal')
-    if (eliminaModal) {
-        eliminaModal.addEventListener('show.bs.modal', event => {
-            // Button that triggered the modal
-            const button = event.relatedTarget
-            // Extract info from data-bs-* attributes
-            const url = button.getAttribute('data-bs-url')
-
-            // Update the modal's content.
-            const form = eliminaModal.querySelector('#form-elimina')
-            form.setAttribute('action', url)
+    const modalConfirmacion = (url) => {
+        Modal.danger({
+            confirm: true,
+            title: '¿Desea Eliminar la noticia?',
+            content: `Si elimina la noticia no podra recuperarla luego.
+                <form id="form-elimina" action="${url}" method="post">
+                    <input type="hidden" name="_method" value="DELETE" />
+                </form>
+            `,
+            onAccept: () => {
+                document.getElementById("form-elimina").submit()
+            }
         })
     }
 </script>
