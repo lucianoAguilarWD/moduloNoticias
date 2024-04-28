@@ -29,8 +29,11 @@ a{
     background-color: white;
     color: #0047AB;
 }
+
 /*----------------------------------------------*/
+
 /*------------------ footer -------------------*/
+
 .noticias-footer{
     color:#CCCCCC;
     background-color:#0047AB;
@@ -82,8 +85,11 @@ a{
         margin-top: 15px;
     }
 }
+
 /*----------------------------------------------*/
+
 /*------------------ botones -------------------*/
+
 .confirmacion{
     padding: 10px 25px;
     border: none;
@@ -99,7 +105,9 @@ a{
     background: #0047AB;
     color: #CCCCCC;
 }
+
 /*----------------------------------------------*/
+
 /*------------------ card -------------------*/
 
 .card-header{
@@ -121,6 +129,18 @@ a{
     background-color:#0047AB;
     color: #CCCCCC;
 }
+
+.noticias-muestra{
+    width: 800px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    padding: 3rem !important;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
 /*----------------------------------------------*/
 
 section{

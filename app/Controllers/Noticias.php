@@ -7,7 +7,7 @@ use App\Models\SeguimientosModel;
 use App\Models\CategoriasModel;
 use App\Models\NoticiasModel;
 use App\Models\UsuariosModel;
-use CodeIgniter\Files\File;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Noticias extends BaseController
 {
@@ -40,7 +40,7 @@ class Noticias extends BaseController
             'layout' => 'layouts/layoutBase'
         ];
 
-        return view('Noticias/mostrar', $data);
+        return view('Noticias/index', $data);
     }
 
     /**
@@ -52,7 +52,20 @@ class Noticias extends BaseController
      */
     public function show($id = null)
     {
-        //
+        $noticia = $this->noticiasModel->find($id);
+
+
+        if (empty($noticia)) {
+            throw new PageNotFoundException('Cannot find the news item: ' . $id);
+        }
+
+        $data = [
+            'noticia' => $noticia,
+            'titulo' => $noticia['titulo'],
+            'layout' => 'layouts/layoutBase'
+        ];
+
+        return view('Noticias/mostrar', $data);
     }
 
     /**
@@ -80,6 +93,8 @@ class Noticias extends BaseController
     public function create()
     {
         //TODO: validación e inserción de la noticia
+
+        //? ------------------------- CRUD ----------------------------
 
         $reglas = [
             'titulo' => [
@@ -125,12 +140,13 @@ class Noticias extends BaseController
         }
 
         $file = $this->request->getFile('archivo');
+        $newName = $file->getRandomName();
 
         if (!$file->hasMoved()) {
-            $filepath = WRITEPATH . 'uploads/' . $file->store();
+            $filepath = ROOTPATH.'public/uploads/';
+            
 
-            $data = ['uploaded_fileinfo' => new File($filepath)];
-            $nombre_del_archivo = $data['uploaded_fileinfo']->getFilename();
+            $file->move($filepath, $newName);
         }
 
 
@@ -141,16 +157,11 @@ class Noticias extends BaseController
             'titulo' => trim($post['titulo']),
             'descripcion' => trim($post['desc']),
             'estado' => 1,
-            'imagen' => $nombre_del_archivo,
+            'imagen' => $newName,
             'id_categoria' => intval($post['categoria']),
             'id_usuario' => 1
         ]);
         return redirect()->to('noticias');
-    }
-
-    public function borrador()
-    {
-        //? muestra las noticias disponibles para editar
     }
 
     /**
@@ -234,12 +245,13 @@ class Noticias extends BaseController
         }
 
         $file = $this->request->getFile('archivo');
-
+        $newName = $file->getRandomName();
+        
         if (!$file->hasMoved()) {
-            $filepath = WRITEPATH . 'uploads/' . $file->store();
+            $filepath = ROOTPATH.'public/uploads/';
+            
 
-            $data = ['uploaded_fileinfo' => new File($filepath)];
-            $nombre_del_archivo = $data['uploaded_fileinfo']->getFilename();
+            $file->move($filepath, $newName);
         }
 
 
@@ -250,7 +262,7 @@ class Noticias extends BaseController
             'titulo' => trim($post['titulo']),
             'descripcion' => trim($post['desc']),
             'estado' => 1,
-            'imagen' => $nombre_del_archivo,
+            'imagen' => $newName,
             'id_categoria' => intval($post['categoria']),
             'id_usuario' => 1
         ]);
@@ -268,4 +280,15 @@ class Noticias extends BaseController
 
         return redirect()->to('noticias');
     }
+
+    //? -----------------------------------------------------------------------
+
+    //*------------------------ Requerimentos ---------------------------------
+
+    public function borrador()
+    {
+        //? muestra las noticias disponibles para editar
+    }
+
+
 }
