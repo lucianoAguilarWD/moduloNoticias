@@ -7,6 +7,7 @@ use App\Models\SeguimientosModel;
 use App\Models\CategoriasModel;
 use App\Models\NoticiasModel;
 use App\Models\UsuariosModel;
+use App\Models\BitacorasModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Noticias extends BaseController
@@ -15,6 +16,8 @@ class Noticias extends BaseController
     private $categoriasModel;
     private $noticiasModel;
     private $seguimientosModel;
+    private $bitacorasModel;
+    
     protected $helpers = ['form'];
 
     public function __construct()
@@ -23,7 +26,10 @@ class Noticias extends BaseController
         $this->categoriasModel = new CategoriasModel();
         $this->noticiasModel = new NoticiasModel();
         $this->seguimientosModel = new SeguimientosModel();
+        $this->bitacorasModel = new BitacorasModel();
     }
+
+
     /**
      * Return an array of resource objects, themselves in array format.
      *
@@ -158,6 +164,7 @@ class Noticias extends BaseController
             'descripcion' => trim($post['desc']),
             'estado' => 1,
             'imagen' => $newName,
+            'activa' => 1,
             'id_categoria' => intval($post['categoria']),
             'id_usuario' => 1
         ]);
@@ -263,6 +270,7 @@ class Noticias extends BaseController
             'descripcion' => trim($post['desc']),
             'estado' => 1,
             'imagen' => $newName,
+            'activa' => 1,
             'id_categoria' => intval($post['categoria']),
             'id_usuario' => 1
         ]);
@@ -285,10 +293,80 @@ class Noticias extends BaseController
 
     //*------------------------ Requerimentos ---------------------------------
 
+    //* ---------vistas----------
+
     public function borrador()
     {
-        //? muestra las noticias disponibles para editar
+        //todo: muestra las noticias disponibles para editar
     }
+
+    public function validar()
+    {
+        //todo: muestra una tabla con las noticias listas para validar
+
+        $noticias = $this->noticiasModel->findAll();
+
+        $data = [
+            'noticias' => $noticias,
+            'titulo' => 'Noticias Publicadas',
+            'layout' => 'layouts/layoutBase'
+        ];
+
+        return view('Noticias/validar', $data);
+    }
+
+    public function corregir()
+    {
+
+    }
+
+    public function noticiasPropias()
+    {
+
+    }
+
+    //* --------Estados---------
+
+    public function rechazar($id = null)
+    {
+
+    }
+
+    public function desactivar($id = null)
+    {
+
+    }
+
+    public function activar($id = null)
+    {
+
+    }
+
+    //* ----------Seguimientos------------
+
+    public function traerSeguimientos()
+    {
+
+    }
+
+    public function cargarSeguimiento()
+    {
+
+    }
+
+    //* ---------Bitacora-------------
+
+    public function buscarCambios()
+    {
+
+    }
+
+    public function cargarbitacora($data)
+    {
+        
+    }
+
+    
 
 
 }
