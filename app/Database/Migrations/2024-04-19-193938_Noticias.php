@@ -22,31 +22,45 @@ class Noticias extends Migration
             'descripcion' => [
                 'type' => 'TINYTEXT',
             ],
-            'estado' => [
-                'type' => 'INT',
-                'constraint' => 11,
-            ],
             'imagen' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
                 'null' => true
             ],
-            'fechaCreacion' => [
-                'type' => 'DATETIME',
+            'estado' => [
+                'type' => 'INT',
+                'constraint' => 11,
             ],
             'activa' => [
-                'type' => 'DATETIME',
+                'type' => 'Int',
+                'constraint' => 11,
+            ],
+            'corregir' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'null' => true
+            ],
+            'rechazar' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
                 'null' => true
             ],
             'fechaPublicacion' => [
                 'type' => 'DATETIME',
                 'null' => true
             ],
+            'fechaExpiración' => [
+                'type' => 'DATETIME',
+                'null' => true
+            ],
+            'fechaCreacion' => [
+                'type' => 'DATETIME',
+            ],
             'fechaModificacion' => [
                 'type' => 'DATETIME',
                 'null' => true
             ],
-            'fechaExpiración' => [
+            'descartar' => [
                 'type' => 'DATETIME',
                 'null' => true
             ],

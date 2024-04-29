@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class NoticiasModel extends Model
+class BitacorasModel extends Model
 {
-    protected $table            = 'noticias';
+    protected $table            = 'bitacoras';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = true;
+    protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['titulo', 'descripcion', 'estado', 'imagen', 'fechaPublicacion', 'fechaExpiracion', 'id_usuario', 'id_categoria', 'activa', 'rechazar', 'corregir'];
+    protected $allowedFields    = ['id', 'titulo', 'descripcion', 'imagen', 'activa', 'id_noticia'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -21,7 +21,7 @@ class NoticiasModel extends Model
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'fechaCreacion';
-    protected $updatedField  = 'fechaModificacion';
-    protected $deletedField  = 'rechazar';
+    protected $updatedField  = '';
+    protected $deletedField  = '';
 
 }

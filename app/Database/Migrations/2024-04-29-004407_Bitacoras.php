@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Seguimientos extends Migration
+class Bitacoras extends Migration
 {
     public function up()
     {
@@ -15,19 +15,23 @@ class Seguimientos extends Migration
                 'unsigned' => true,
                 'auto_increment' => true
             ],
-            'accion' => [
-                'type' => 'INT',
+            'titulo' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50
+            ],
+            'descripcion' => [
+                'type' => 'TINYTEXT',
+            ],
+            'imagen' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'null' => true
+            ],
+            'activa' => [
+                'type' => 'Int',
                 'constraint' => 11,
             ],
-            'cambio' => [
-                'type' => 'VARCHAR',
-                'constraint' =>1000
-            ],
-            'usuario' => [
-                'type' => 'VARCHAR',
-                'constraint' =>150
-            ],
-            'fechaModificacion' => [
+            'fechaCreacion' => [
                 'type' => 'DATETIME',
             ],
             'id_noticia' => [
@@ -39,11 +43,11 @@ class Seguimientos extends Migration
 
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('id_noticia', 'noticias', 'id');
-        $this->forge->createTable('seguimientos');
+        $this->forge->createTable('bitacoras');
     }
 
     public function down()
     {
-        $this->forge->dropTable('seguimientos');
+        $this->forge->dropTable('bitacoras');
     }
 }

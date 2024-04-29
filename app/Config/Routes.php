@@ -29,3 +29,7 @@ $routes->get('/noticias/(:num)/edit', 'Noticias::edit/$1');
 $routes->put('/noticias/(:num)', 'Noticias::update/$1');
 
 $routes->delete('noticias/(:num)', 'Noticias::delete/$1');
+
+//todo: requerimentos
+
+$routes->get('/noticias/validar', 'Noticias::validar');
