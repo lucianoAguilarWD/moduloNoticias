@@ -5,7 +5,7 @@
 <main class="container mt-5">
     <br><br>
     <div class="card">
-        <div class="card-header">
+        <div class="card-header text-dark">
             <h3 class="text-center">Iniciar Sesión</h3>
         </div>
         <div class="card-body">
@@ -62,7 +62,7 @@
 
             <?php echo form_close(); ?>
         </div>
-        <div class="card-footer text-muted">
+        <div class="card-footer text-dark">
             ¿No tienes una cuenta? <a href="<?= base_url('usuarios/new'); ?>">Regístrate aquí</a>
         </div>
     </div>

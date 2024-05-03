@@ -124,12 +124,17 @@ class Noticias extends BaseController
             'archivo' => [
                 'label' => 'Selecciona una imagen',
                 'rules' => [
-                    'uploaded[archivo]',
                     'is_image[archivo]',
                     'mime_in[archivo,image/jpg,image/jpeg,image/gif,image/png,image/webp]',
                     'max_size[archivo,1000]',
                     'max_dims[archivo,1920,1080]',
                 ],
+                'errors' => [
+                    'is_image' => 'El campo {field} debe ser una imagen',
+                    'mime_in' => 'Los formatos soportados son jpg/jpeg/png',
+                    'max_size' => 'El tamaño maximo es 1 mb',
+                    'max_dims' => 'Las dimensiones maximas son 1920x1080'
+                ]
             ],
 
             'categoria' => [
@@ -146,13 +151,13 @@ class Noticias extends BaseController
         }
 
         $file = $this->request->getFile('archivo');
-        $newName = $file->getRandomName();
 
-        if (!$file->hasMoved()) {
+        if (!$file->hasMoved() && $file->isValid() && $file->getSize() > 0) {
+            $newName = $file->getRandomName();
             $filepath = ROOTPATH.'public/uploads/';
-            
-
             $file->move($filepath, $newName);
+        }else{
+            $newName = '';
         }
 
 
@@ -230,12 +235,17 @@ class Noticias extends BaseController
             'archivo' => [
                 'label' => 'Selecciona una imagen',
                 'rules' => [
-                    'uploaded[archivo]',
                     'is_image[archivo]',
                     'mime_in[archivo,image/jpg,image/jpeg,image/gif,image/png,image/webp]',
                     'max_size[archivo,1000]',
                     'max_dims[archivo,1920,1080]',
                 ],
+                'errors' => [
+                    'is_image' => 'El campo {field} debe ser una imagen',
+                    'mime_in' => 'Los formatos soportados son jpg/jpeg/png',
+                    'max_size' => 'El tamaño maximo es 1 mb',
+                    'max_dims' => 'Las dimensiones maximas son 1920x1080'
+                ]
             ],
 
             'categoria' => [
@@ -251,14 +261,17 @@ class Noticias extends BaseController
             return redirect()->back()->withInput('error', $this->validator->listErrors());
         }
 
-        $file = $this->request->getFile('archivo');
-        $newName = $file->getRandomName();
-        
-        if (!$file->hasMoved()) {
-            $filepath = ROOTPATH.'public/uploads/';
-            
+        //todo: trabajando la imagen.
 
+        $file = $this->request->getFile('archivo');
+       
+        if (!$file->hasMoved() && $file->isValid() && $file->getSize() > 0) {
+            $newName =  $file->getRandomName();
+            $filepath = ROOTPATH.'public/uploads/';
             $file->move($filepath, $newName);
+        }else{
+            $noticia = $this->noticiasModel->find($id);
+            $newName = $noticia['imagen'];
         }
 
 
@@ -274,7 +287,7 @@ class Noticias extends BaseController
             'id_categoria' => intval($post['categoria']),
             'id_usuario' => 1
         ]);
-        return redirect()->to('noticias');
+        return redirect()->to('noticias/validar');
     }
 
 

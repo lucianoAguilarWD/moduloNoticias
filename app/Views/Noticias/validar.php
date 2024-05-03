@@ -59,6 +59,7 @@
             title: '¿Desea Eliminar la noticia?',
             content: `Si elimina la noticia no podra recuperarla luego.
                 <form id="form-elimina" action="${url}" method="post">
+                    <?= csrf_field();?>
                     <input type="hidden" name="_method" value="DELETE" />
                 </form>
             `,

@@ -7,9 +7,11 @@
 
     <div class="card noticias-muestra">
 
-        <div class="card-header">
+        <div class="card-header bg-dark">
             <div>
-                <img src="<?= base_url('uploads/') . $noticia['imagen']; ?>" class="card-img-top" alt="Imagen de la noticia">
+                <?php if($noticia['imagen'] !== ''):?>
+                    <img src="<?= base_url('uploads/') . $noticia['imagen']; ?>" class="card-img-top" alt="Imagen de la noticia">
+                <?php endif;?>
             </div>
         </div>
         <div class="card-body">
@@ -17,7 +19,7 @@
             <p class="card-text"><small class="text-muted"><?= $noticia['descripcion']; ?></small></p>
             <p class="card-text"><small class="text-muted">Categoria:<?= $noticia['id_categoria']; ?></small></p>
         </div>
-        <div class="card-footer text-muted">
+        <div class="card-footer bg-dark text-light">
             Fecha de publicación: <?= $noticia['fechaPublicacion']; ?>
         </div>
 
