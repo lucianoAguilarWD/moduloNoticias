@@ -17,22 +17,37 @@ class Bitacoras extends Migration
             ],
             'titulo' => [
                 'type' => 'VARCHAR',
-                'constraint' => 50
+                'constraint' => 150
             ],
             'descripcion' => [
-                'type' => 'TINYTEXT',
+                'type' => 'VARCHAR',
+                'constraint' => 1000
             ],
             'imagen' => [
                 'type' => 'VARCHAR',
-                'constraint' => 100,
+                'constraint' => 150,
                 'null' => true
+            ],
+            'estado' => [
+                'type' => 'INT',
+                'constraint' => 11,
             ],
             'activa' => [
                 'type' => 'Int',
                 'constraint' => 11,
             ],
-            'fechaCreacion' => [
+            'fechaPublicacion' => [
                 'type' => 'DATETIME',
+                'null' => true
+            ],
+            'fechaExpiración' => [
+                'type' => 'DATETIME',
+                'null' => true
+            ],
+            'id_categoria' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => true,
             ],
             'id_noticia' => [
                 'type' => 'INT',
@@ -42,6 +57,7 @@ class Bitacoras extends Migration
         ]);
 
         $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('id_categoria', 'categorias', 'id');
         $this->forge->addForeignKey('id_noticia', 'noticias', 'id');
         $this->forge->createTable('bitacoras');
     }

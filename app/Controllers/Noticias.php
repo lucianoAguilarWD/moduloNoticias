@@ -105,7 +105,7 @@ class Noticias extends BaseController
         $reglas = [
             'titulo' => [
                 'label' => 'Titulo',
-                'rules' => 'required|max_length[50]',
+                'rules' => 'required|max_length[150]',
                 'errors' => [
                     'required' => 'El campo {field} es obligatorio',
                     'max_length' => 'El campo {field} no puede exceder los {param} caracteres.'
@@ -114,7 +114,7 @@ class Noticias extends BaseController
 
             'desc' => [
                 'label' => 'Descripción',
-                'rules' => 'required|max_length[255]',
+                'rules' => 'required|max_length[1000]',
                 'errors' => [
                     'required' => 'El campo {field} es obligatorio',
                     'max_length' => 'El campo {field} no puede exceder los {param} caracteres.'
@@ -211,7 +211,7 @@ class Noticias extends BaseController
         $reglas = [
             'titulo' => [
                 'label' => 'Titulo',
-                'rules' => 'required|max_length[50]',
+                'rules' => 'required|max_length[150]',
                 'errors' => [
                     'required' => 'El campo {field} es obligatorio',
                     'max_length' => 'El campo {field} no puede exceder los {param} caracteres.'
@@ -220,7 +220,7 @@ class Noticias extends BaseController
 
             'desc' => [
                 'label' => 'Descripción',
-                'rules' => 'required|max_length[255]',
+                'rules' => 'required|max_length[1000]',
                 'errors' => [
                     'required' => 'El campo {field} es obligatorio',
                     'max_length' => 'El campo {field} no puede exceder los {param} caracteres.'
@@ -314,59 +314,5 @@ class Noticias extends BaseController
 
         return view('Noticias/validar', $data);
     }
-
-    public function corregir()
-    {
-
-    }
-
-    public function noticiasPropias()
-    {
-
-    }
-
-    //* --------Estados---------
-
-    public function rechazar($id = null)
-    {
-
-    }
-
-    public function desactivar($id = null)
-    {
-
-    }
-
-    public function activar($id = null)
-    {
-
-    }
-
-    //* ----------Seguimientos------------
-
-    public function traerSeguimientos()
-    {
-
-    }
-
-    public function cargarSeguimiento()
-    {
-
-    }
-
-    //* ---------Bitacora-------------
-
-    public function buscarCambios()
-    {
-
-    }
-
-    public function cargarbitacora($data)
-    {
-        
-    }
-
-    
-
 
 }

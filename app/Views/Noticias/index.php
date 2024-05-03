@@ -6,7 +6,7 @@
 
     <div class="row">
         <?php foreach ($noticias as $noticia) : ?>
-            <div class="card col-4" style="max-width: 600px; max-height: 800px; margin: auto;">
+            <div class="card col-4" style="width: 600px; height: 800px; margin: auto;">
                 <a href="<?= base_url('noticias/' . $noticia['id']); ?>" class="d-block" style="text-decoration: none;">
                     <div class=" card-header">
                         <img src="<?= base_url('uploads/') . $noticia['imagen']; ?>" class="card-img-top" style="width: 540px; height: 350px;" alt="Imagen de la noticia">

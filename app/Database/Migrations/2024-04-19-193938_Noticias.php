@@ -15,16 +15,21 @@ class Noticias extends Migration
                 'unsigned' => true,
                 'auto_increment' => true
             ],
+            'version' => [
+                'type' => 'INT',
+                'constraint' => 255,
+            ],
             'titulo' => [
                 'type' => 'VARCHAR',
-                'constraint' => 50
+                'constraint' => 150
             ],
             'descripcion' => [
-                'type' => 'TINYTEXT',
+                'type' => 'VARCHAR',
+                'constraint' => 1000
             ],
             'imagen' => [
                 'type' => 'VARCHAR',
-                'constraint' => 100,
+                'constraint' => 150,
                 'null' => true
             ],
             'estado' => [
@@ -34,16 +39,6 @@ class Noticias extends Migration
             'activa' => [
                 'type' => 'Int',
                 'constraint' => 11,
-            ],
-            'corregir' => [
-                'type' => 'VARCHAR',
-                'constraint' => 50,
-                'null' => true
-            ],
-            'rechazar' => [
-                'type' => 'VARCHAR',
-                'constraint' => 50,
-                'null' => true
             ],
             'fechaPublicacion' => [
                 'type' => 'DATETIME',
@@ -60,7 +55,7 @@ class Noticias extends Migration
                 'type' => 'DATETIME',
                 'null' => true
             ],
-            'descartar' => [
+            'descartado' => [
                 'type' => 'DATETIME',
                 'null' => true
             ],
