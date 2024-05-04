@@ -40,13 +40,15 @@ class Noticias extends BaseController
         //? Muestra de todas las noticias publicadas
         $noticias = $this->noticiasModel->findAll();
 
-        $data = [
-            'noticias' => $noticias,
-            'titulo' => 'Noticias Publicadas',
-            'layout' => 'layouts/layoutBase'
-        ];
-
-        return view('Noticias/index', $data);
+        if ($this->session->rol === null) {
+            return view('Noticias/index', ['noticias' => $noticias, 'titulo' => 'Noticias publicadas', 'layout' => 'layouts/layoutBase']);
+        }elseif($this->session->rol === EDITOR){
+            return view('Noticias/index', ['noticias' => $noticias, 'titulo' => 'Noticias publicadas', 'layout' => 'layouts/layoutEditor']);
+        }elseif($this->session->rol === VALIDADOR){
+            return view('Noticias/index', ['noticias' => $noticias, 'titulo' => 'Noticias publicadas', 'layout' => 'layouts/layoutValidador']);
+        }elseif($this->session->rol === AMBOS){
+            return view('Noticias/index', ['noticias' => $noticias, 'titulo' => 'Noticias publicadas', 'layout' => 'layouts/layoutMultiRol']);
+        }
     }
 
     /**
@@ -65,13 +67,17 @@ class Noticias extends BaseController
             throw new PageNotFoundException('Cannot find the news item: ' . $id);
         }
 
-        $data = [
-            'noticia' => $noticia,
-            'titulo' => $noticia['titulo'],
-            'layout' => 'layouts/layoutBase'
-        ];
 
-        return view('Noticias/mostrar', $data);
+        if ($this->session->rol === null) {
+            return view('Noticias/mostrar', ['noticia' => $noticia,'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutBase']);
+        }elseif($this->session->rol === EDITOR){
+            return view('Noticias/mostrar', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutEditor']);
+        }elseif($this->session->rol === VALIDADOR){
+            return view('Noticias/mostrar', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutValidador']);
+        }elseif($this->session->rol === AMBOS){
+            return view('Noticias/mostrar', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutMultiRol']);
+        }
+
     }
 
     /**
@@ -82,13 +88,17 @@ class Noticias extends BaseController
     public function new()
     {
         //TODO: crear una una noticia
-        $data = [
-            'categorias' => $this->categoriasModel->findAll(),
-            'titulo' => 'Crear noticia',
-            'layout' => 'layouts/layoutBase'
-        ];
 
-        return view('Noticias/nuevo', $data);
+        if ($this->session->rol === null) {
+            return redirect()->to('noticias');
+        }elseif($this->session->rol === EDITOR){
+            return view('Noticias/nuevo', ['categorias' => $this->categoriasModel->findAll(), 'titulo' => 'Crear noticia', 'layout' => 'layouts/layoutEditor']);
+        }elseif($this->session->rol === VALIDADOR){
+            return redirect()->to('noticias');
+        }elseif($this->session->rol === AMBOS){
+            return view('Noticias/nuevo', ['categorias' => $this->categoriasModel->findAll(), 'titulo' => 'Crear noticia', 'layout' => 'layouts/layoutMultiRol']);
+        }
+
     }
 
     /**
@@ -187,14 +197,16 @@ class Noticias extends BaseController
     {
         //? Editar una noticia seleccionada
 
-        $data = [
-            'categorias' => $this->categoriasModel->findAll(),
-            'noticia' => $this->noticiasModel->find($id),
-            'titulo' => 'Editar noticia',
-            'layout' => 'layouts/layoutBase'
-        ];
+        if ($this->session->rol === null) {
+            return redirect()->to('noticias');
+        }elseif($this->session->rol === EDITOR){
+            return view('Noticias/nuevo', ['categorias' => $this->categoriasModel->findAll(), 'noticia' => $this->noticiasModel->find($id), 'titulo' => 'Editar noticia', 'layout' => 'layouts/layoutEditor']);
+        }elseif($this->session->rol === VALIDADOR){
+            return redirect()->to('noticias');
+        }elseif($this->session->rol === AMBOS){
+            return view('Noticias/nuevo', ['categorias' => $this->categoriasModel->findAll(), 'noticia' => $this->noticiasModel->find($id), 'titulo' => 'Editar noticia', 'layout' => 'layouts/layoutMultiRol']);
+        }
 
-        return view('Noticias/editar', $data);
     }
 
     /**

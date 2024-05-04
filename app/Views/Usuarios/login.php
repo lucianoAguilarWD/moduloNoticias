@@ -57,7 +57,7 @@
 
             <div class="mb-3">
                 <?php echo form_submit('submit', 'Iniciar Sesión', ['class' => 'btn confirmacion']); ?>
-                <a href="<?= base_url('/'); ?>" class="btn confirmacion">Volver a inicio</a>
+                <a href="<?= base_url('noticias'); ?>" class="btn confirmacion">Volver a inicio</a>
             </div>
 
             <?php echo form_close(); ?>
