@@ -1,7 +1,8 @@
 <?php echo $this->extend($layout); ?>
 
 <?php echo $this->section('contenido'); ?>
-<div class="container mt-5 ">
+
+<main class="container mt-5 ">
     <br><br>
     <div class="card">
         <div class="card-header">
@@ -94,7 +95,7 @@
 
             <div class="mb-3">
                 <?php echo form_submit('submit', 'Crear Cuenta', ['class' => 'btn confirmacion']); ?>
-                <a href="<?= base_url('/'); ?>" class="btn confirmacion" >Volver a inicio</a>
+                <a href="<?= base_url('noticias'); ?>" class="btn confirmacion" >Volver a inicio</a>
             </div>
 
             <?php echo form_close(); ?>
@@ -103,6 +104,6 @@
             ¿Ya tienes una cuenta? <a href="<?= base_url('usuarios'); ?>">Inicia sesión aquí</a>
         </div>
     </div>
-</div>
+</main>
 
 <?php echo $this->endSection(); ?>

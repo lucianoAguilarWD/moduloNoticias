@@ -12,11 +12,15 @@ class SeguimientosModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['antes', 'despues', 'usuario', 'fechaModificacion', 'id_noticia'];
+    protected $allowedFields    = ['id', 'accion', 'motivo', 'usuario', 'id_noticia'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'fechaCreacion';
+    protected $updatedField  = '';
+    protected $deletedField  = '';
 }

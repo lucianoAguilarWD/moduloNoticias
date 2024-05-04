@@ -8,10 +8,10 @@ class CategoriasSeeder extends Seeder
 {
     public function run()
     {
-        $this->db->table('categorias')->insert(['nombre' => 'categoria 1']);
-        $this->db->table('categorias')->insert(['nombre' => 'categoria 2']);
-        $this->db->table('categorias')->insert(['nombre' => 'categoria 3']);
-        $this->db->table('categorias')->insert(['nombre' => 'categoria 4']);
-        $this->db->table('categorias')->insert(['nombre' => 'categoria 5']);
+        $this->db->table('categorias')->insert(['nombre' => 'Actualizaciones de productos']);
+        $this->db->table('categorias')->insert(['nombre' => 'Tendencias tecnológicas']);
+        $this->db->table('categorias')->insert(['nombre' => 'Análisis de mercado']);
+        $this->db->table('categorias')->insert(['nombre' => 'Eventos y conferencias']);
+        $this->db->table('categorias')->insert(['nombre' => 'Opinión y análisis']);
     }
 }

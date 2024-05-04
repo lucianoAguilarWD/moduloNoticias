@@ -4,8 +4,8 @@
 
 <main class="container">
 
-    <div class="card mt-3">
-        <div class="card-header">
+    <div class="card mt-5">
+        <div class="card-header bg-light">
             <h3 class="text-center">Nueva noticia</h3>
         </div>
         <div class="card-body g-3 mt-3">
@@ -84,7 +84,7 @@
 
             <?php echo form_close(); ?>
         </div>
-        <div class="card-footer"></div>
+        <div class="card-footer bg-light"></div>
     </div>
 
 </main>

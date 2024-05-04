@@ -3,8 +3,8 @@
 <?php echo $this->section('contenido'); ?>
 
 <main class="container">
-    <div class="card mt-3">
-        <div class="card-header">
+    <div class="card mt-5">
+        <div class="card-header bg-light">
             <h3 class="text-center">Editar noticia</h3>
         </div>
         <div class="card-body g-3 mt-3">
@@ -82,6 +82,9 @@
             </div>
 
             <div class="mb-3">
+                <?php if($noticia['imagen'] !== ''):?>
+                <img src="<?= base_url('uploads/') . $noticia['imagen']; ?>" class="card-img-top" alt="Imagen de la noticia" style="width:100px; height:100px;">
+                <?php endif;?>
                 <label for="archivo">Selecciona una imagen(opcional)</label>
                 <input type="file" name="archivo" id="archivo" accept="image/jpeg, image/png" value="<?= $noticia['imagen'] ?>">
                 <?php if (validation_show_error('archivo')) : ?>
@@ -98,7 +101,7 @@
 
             <?php echo form_close(); ?>
         </div>
-        <div class="card-footer"></div>
+        <div class="card-footer bg-light"></div>
     </div>
 </main>
 <?php echo $this->endSection(); ?>

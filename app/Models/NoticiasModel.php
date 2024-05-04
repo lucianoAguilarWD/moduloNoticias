@@ -12,7 +12,7 @@ class NoticiasModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['titulo', 'descripcion', 'estado', 'imagen', 'fechaPublicacion', 'fechaExpiracion', 'id_usuario', 'id_categoria', 'activa', 'rechazar', 'corregir'];
+    protected $allowedFields    = ['id', 'version', 'titulo', 'descripcion', 'imagen', 'estado', 'activa', 'fechaPublicacion', 'fechaExpiracion', 'id_usuario', 'id_categoria'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -22,6 +22,6 @@ class NoticiasModel extends Model
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'fechaCreacion';
     protected $updatedField  = 'fechaModificacion';
-    protected $deletedField  = 'rechazar';
+    protected $deletedField  = 'descartado';
 
 }

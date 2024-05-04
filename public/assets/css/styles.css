@@ -27,7 +27,7 @@ a{
 
 .dropdown-menu :hover{
     background-color: white;
-    color: #0047AB;
+    color:#333 ;
 }
 
 /*----------------------------------------------*/
@@ -35,20 +35,19 @@ a{
 /*------------------ footer -------------------*/
 
 .noticias-footer{
-    color:#CCCCCC;
-    background-color:#0047AB;
+    color:white;
     border: white;
     border: 40px;
-    bottom: 0;
-    width: 100%;
-    position: relative;
+    /* bottom: 0;
+    width: 100%; */
+    /* position: relative; */
 } 
 
 
 
 .noticias-footer a{
     text-decoration: none;
-    color: #CCCCCC;
+    color:  white;
 }
 
 .noticias-footer h3{
@@ -56,27 +55,27 @@ a{
     margin-right: 2rem;
     font-size: 1.5rem;
     text-decoration: none !important;
-    color: #CCCCCC;
+    color:white;
     font-family: 'Times New Roman', Times, serif;
 }
 
 .noticias-footer .list-group-item{
-    color:#CCCCCC;
-    background: #0047AB;
+    color:white;
+    background: #343a40;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .noticias-footer .list-group-item:hover{
-    background:#000080;
+    background:black;
 }
 
 .noticias-footer .btn-social i{
-    color:#CCCCCC;
+    color:white;
 }
 
 .noticias-footer .btn-social i:hover{
-    color:#000080;
+    color:#343a40;
 }
 
 @media only screen and(max-width:768px){
@@ -97,13 +96,13 @@ a{
     border-radius: 12px;
     cursor: pointer;
     outline: none;
-    background: #4169E1;
-    color: #CCCCCC;
+    background:#343a40;
+    color: white;
 }
 
 .confirmacion:hover{
-    background: #0047AB;
-    color: #CCCCCC;
+    background: black;
+    color: white;
 }
 
 /*----------------------------------------------*/
@@ -116,8 +115,6 @@ a{
     font-family: sans-serif;
     width: 100%;
     margin: auto;
-    background-color:#0047AB;
-    color: #CCCCCC;
 }
 
 .card-footer{
@@ -126,8 +123,6 @@ a{
     font-family: sans-serif;
     width: 100%;
     margin: auto;
-    background-color:#0047AB;
-    color: #CCCCCC;
 }
 
 .noticias-muestra{

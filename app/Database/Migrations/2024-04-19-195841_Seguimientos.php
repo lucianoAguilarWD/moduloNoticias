@@ -19,15 +19,16 @@ class Seguimientos extends Migration
                 'type' => 'INT',
                 'constraint' => 11,
             ],
-            'cambio' => [
+            'motivo' => [
                 'type' => 'VARCHAR',
-                'constraint' =>1000
+                'constraint' =>1000,
+                'null' => true
             ],
             'usuario' => [
                 'type' => 'VARCHAR',
                 'constraint' =>150
             ],
-            'fechaModificacion' => [
+            'fechaCreacion' => [
                 'type' => 'DATETIME',
             ],
             'id_noticia' => [
