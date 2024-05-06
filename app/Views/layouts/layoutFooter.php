@@ -8,8 +8,8 @@
                     <div class="col-md-4 footer-col">
                         <h3>Ayuda</h3>
                         <ul class="list-group list-group-flush">
-                            <a href="<?php base_url('/'); ?>">
-                                <li class="list-group-item">Buscar</li>
+                            <a href="<?php base_url('noticias'); ?>">
+                                <li class="list-group-item bg-dark">Buscar</li>
                             </a>
 
                         </ul>
@@ -18,8 +18,8 @@
                     <div class="col-md-4 footer-col">
                         <h3>Contacto</h3>
                         <ul class="list-group list-group-flush">
-                            <a href="<?php base_url('/'); ?>">
-                                <li class="list-group-item">Contacto</li>
+                            <a href="<?php base_url('noticias'); ?>">
+                                <li class="list-group-item bg-dark">Contacto</li>
                             </a>
                         </ul>
                     </div>

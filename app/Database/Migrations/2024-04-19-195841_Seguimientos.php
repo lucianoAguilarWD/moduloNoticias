@@ -24,12 +24,13 @@ class Seguimientos extends Migration
                 'constraint' =>1000,
                 'null' => true
             ],
-            'usuario' => [
-                'type' => 'VARCHAR',
-                'constraint' =>150
-            ],
             'fechaCreacion' => [
                 'type' => 'DATETIME',
+            ],
+            'id_usuario' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => true,
             ],
             'id_noticia' => [
                 'type' => 'INT',
@@ -39,6 +40,7 @@ class Seguimientos extends Migration
         ]);
 
         $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('id_usuario', 'usuarios', 'id');
         $this->forge->addForeignKey('id_noticia', 'noticias', 'id');
         $this->forge->createTable('seguimientos');
     }

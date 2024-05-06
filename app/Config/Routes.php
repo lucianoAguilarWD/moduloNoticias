@@ -5,8 +5,6 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
-
 //? usuarios
 
 $routes->get('/usuarios', 'Usuarios::index');
@@ -33,3 +31,5 @@ $routes->delete('noticias/(:num)', 'Noticias::delete/$1');
 //todo: requerimentos
 
 $routes->get('/noticias/validar', 'Noticias::validar');
+$routes->get('/noticias/home', 'Noticias::home');
+$routes->get('/noticias/validate', 'Noticias::validates');

@@ -61,13 +61,12 @@ a{
 
 .noticias-footer .list-group-item{
     color:white;
-    background: #343a40;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .noticias-footer .list-group-item:hover{
-    background:black;
+    background:#343a40;
 }
 
 .noticias-footer .btn-social i{

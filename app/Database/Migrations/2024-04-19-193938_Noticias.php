@@ -44,7 +44,7 @@ class Noticias extends Migration
                 'type' => 'DATETIME',
                 'null' => true
             ],
-            'fechaExpiración' => [
+            'fechaExpiracion' => [
                 'type' => 'DATETIME',
                 'null' => true
             ],

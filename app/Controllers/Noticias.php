@@ -29,7 +29,9 @@ class Noticias extends BaseController
         $this->bitacorasModel = new BitacorasModel();
     }
 
+    //? ---------------------------------------------- CRUD -----------------------------------------------
 
+    //?----------------------------------------vistas de noticias------------------------------------------
     /**
      * Return an array of resource objects, themselves in array format.
      *
@@ -38,7 +40,7 @@ class Noticias extends BaseController
     public function index()
     {
         //? Muestra de todas las noticias publicadas
-        $noticias = $this->noticiasModel->findAll();
+        $noticias = $this->noticiasModel->noticiasPublicadas();
 
         if ($this->session->rol === null) {
             return view('Noticias/index', ['noticias' => $noticias, 'titulo' => 'Noticias publicadas', 'layout' => 'layouts/layoutBase']);
@@ -60,7 +62,7 @@ class Noticias extends BaseController
      */
     public function show($id = null)
     {
-        $noticia = $this->noticiasModel->find($id);
+        $noticia = $this->noticiasModel->noticiaCategoria($id);
 
 
         if (empty($noticia)) {
@@ -69,16 +71,19 @@ class Noticias extends BaseController
 
 
         if ($this->session->rol === null) {
-            return view('Noticias/mostrar', ['noticia' => $noticia,'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutBase']);
+            return view('Noticias/view', ['noticia' => $noticia,'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutBase']);
         }elseif($this->session->rol === EDITOR){
-            return view('Noticias/mostrar', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutEditor']);
+            return view('Noticias/view', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutEditor']);
         }elseif($this->session->rol === VALIDADOR){
-            return view('Noticias/mostrar', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutValidador']);
+            return view('Noticias/view', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutValidador']);
         }elseif($this->session->rol === AMBOS){
-            return view('Noticias/mostrar', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutMultiRol']);
+            return view('Noticias/view', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutMultiRol']);
         }
 
     }
+    //? -------------------------------------Fin de vistas de noticias-----------------------------------------------
+
+    //?---------------------------- crear noticias--------------------------------------------------------
 
     /**
      * Return a new resource object, with default properties.
@@ -92,11 +97,11 @@ class Noticias extends BaseController
         if ($this->session->rol === null) {
             return redirect()->to('noticias');
         }elseif($this->session->rol === EDITOR){
-            return view('Noticias/nuevo', ['categorias' => $this->categoriasModel->findAll(), 'titulo' => 'Crear noticia', 'layout' => 'layouts/layoutEditor']);
+            return view('Noticias/new', ['categorias' => $this->categoriasModel->findAll(), 'titulo' => 'Crear noticia', 'layout' => 'layouts/layoutEditor']);
         }elseif($this->session->rol === VALIDADOR){
             return redirect()->to('noticias');
         }elseif($this->session->rol === AMBOS){
-            return view('Noticias/nuevo', ['categorias' => $this->categoriasModel->findAll(), 'titulo' => 'Crear noticia', 'layout' => 'layouts/layoutMultiRol']);
+            return view('Noticias/new', ['categorias' => $this->categoriasModel->findAll(), 'titulo' => 'Crear noticia', 'layout' => 'layouts/layoutMultiRol']);
         }
 
     }
@@ -108,9 +113,7 @@ class Noticias extends BaseController
      */
     public function create()
     {
-        //TODO: validación e inserción de la noticia
-
-        //? ------------------------- CRUD ----------------------------
+        //? validación e inserción de la noticia
 
         $reglas = [
             'titulo' => [
@@ -153,6 +156,14 @@ class Noticias extends BaseController
                 'errors' => [
                     'required' => 'El campo {field} es obligatorio',
                 ]
+            ],
+
+            'estados' => [
+                'label' => 'Seleccione una opción',
+                'rules' => 'required|in_list[0,1]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio',
+                ]
             ]
         ];
 
@@ -170,21 +181,25 @@ class Noticias extends BaseController
             $newName = '';
         }
 
+        $usuario = $this->session->usuario;
+        $usuarioBuscado = $this->usuariosModel->find_by_name($usuario);
 
-
-        $post = $this->request->getPost(['titulo', 'desc', 'categoria']);
+        $post = $this->request->getPost(['titulo', 'desc', 'categoria', 'estados']);
 
         $this->noticiasModel->insert([
             'titulo' => trim($post['titulo']),
             'descripcion' => trim($post['desc']),
-            'estado' => 1,
+            'estado' => intval($post['estados']),
             'imagen' => $newName,
             'activa' => 1,
             'id_categoria' => intval($post['categoria']),
-            'id_usuario' => 1
+            'id_usuario' => $usuarioBuscado['id']
         ]);
         return redirect()->to('noticias');
     }
+    //? -------------------------------------Fin de crear noticias-----------------------------------------------
+
+    //?------------------------------------modificar noticias---------------------------------------------
 
     /**
      * Return the editable properties of a resource object.
@@ -200,11 +215,11 @@ class Noticias extends BaseController
         if ($this->session->rol === null) {
             return redirect()->to('noticias');
         }elseif($this->session->rol === EDITOR){
-            return view('Noticias/nuevo', ['categorias' => $this->categoriasModel->findAll(), 'noticia' => $this->noticiasModel->find($id), 'titulo' => 'Editar noticia', 'layout' => 'layouts/layoutEditor']);
+            return view('Noticias/edit', ['categorias' => $this->categoriasModel->findAll(), 'noticia' => $this->noticiasModel->find($id), 'titulo' => 'Editar noticia', 'layout' => 'layouts/layoutEditor']);
         }elseif($this->session->rol === VALIDADOR){
             return redirect()->to('noticias');
         }elseif($this->session->rol === AMBOS){
-            return view('Noticias/nuevo', ['categorias' => $this->categoriasModel->findAll(), 'noticia' => $this->noticiasModel->find($id), 'titulo' => 'Editar noticia', 'layout' => 'layouts/layoutMultiRol']);
+            return view('Noticias/edit', ['categorias' => $this->categoriasModel->findAll(), 'noticia' => $this->noticiasModel->find($id), 'titulo' => 'Editar noticia', 'layout' => 'layouts/layoutMultiRol']);
         }
 
     }
@@ -266,6 +281,14 @@ class Noticias extends BaseController
                 'errors' => [
                     'required' => 'El campo {field} es obligatorio',
                 ]
+            ],
+
+            'estados' => [
+                'label' => 'Seleccione una opción',
+                'rules' => 'required|in_list[0,1]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio',
+                ]
             ]
         ];
 
@@ -288,56 +311,99 @@ class Noticias extends BaseController
 
 
 
-        $post = $this->request->getPost(['titulo', 'desc', 'categoria']);
+        $post = $this->request->getPost(['titulo', 'desc', 'categoria', 'estados']);
 
         $this->noticiasModel->update($id,[
             'titulo' => trim($post['titulo']),
             'descripcion' => trim($post['desc']),
-            'estado' => 1,
+            'estado' => intval($post['estados']),
             'imagen' => $newName,
-            'activa' => 1,
             'id_categoria' => intval($post['categoria']),
-            'id_usuario' => 1
         ]);
-        return redirect()->to('noticias/validar');
+        return redirect()->to('noticias');
     }
+    //? -------------------------------------Fin de modificar noticias-----------------------------------------------
 
+    //?--------------------------------------borrar noticias--------------------------------------------
 
     public function delete($id = null)
     {
         if (!$this->request->is('delete') || $id == null) {
-            return redirect()->route('noticias');
+            return redirect()->route('noticias/home');
         }
 
         $this->noticiasModel->delete($id);
 
-        return redirect()->to('noticias');
+        return redirect()->to('noticias/home');
     }
+    //? -------------------------------------Fin de borrar noticias-----------------------------------------------
+    //? ------------------------------------Fin del CRUD--------------------------------------------------
 
-    //? -----------------------------------------------------------------------
+    //*------------------------ Requerimentos ------------------------------------------------
 
-    //*------------------------ Requerimentos ---------------------------------
+    //* ---------------------------Vistas-----------------------------
 
-    //* ---------vistas----------
-
-    public function borrador()
+    public function home()
     {
-        //todo: muestra las noticias disponibles para editar
-    }
-
-    public function validar()
-    {
-        //todo: muestra una tabla con las noticias listas para validar
-
-        $noticias = $this->noticiasModel->findAll();
-
+        //* muestra el área de trabajo de los usuario editor y multirol.
+        $user = $this->session->usuario;
+        
         $data = [
-            'noticias' => $noticias,
-            'titulo' => 'Noticias Publicadas',
-            'layout' => 'layouts/layoutBase'
+            'titulo' => 'Área de trabajo',
+            'borrador' => $this->noticiasModel->noticiasPorEstado($user, BORRADOR),
+            'validacion' => $this->noticiasModel->noticiasPorEstado($user, L_VALIDAR),
+            'corregir' => $this->noticiasModel->noticiasPorEstado($user, CORREGIR),
+            'rechazadas' => $this->noticiasModel->noticiasPorEstado($user, RECHAZADO),
+            'desactivadas' => $this->noticiasModel->noticiasDesactivadas($user),
+            'publicadas' => $this->noticiasModel->noticiasPublicadasUser($user),
         ];
+        $editor = $data;
+        $editor['layout'] = 'layouts/layoutEditor';
+        $multiRol = $data;
+        $multiRol['layout'] = 'layouts/layoutMultiRol';
 
-        return view('Noticias/validar', $data);
+        if ($this->session->rol === null) {
+            return redirect()->to('noticias');
+        }elseif($this->session->rol === EDITOR){
+            return view('Noticias/home', $editor);
+        }elseif($this->session->rol === VALIDADOR){
+            return redirect()->to('noticias');
+        }elseif($this->session->rol === AMBOS){
+            return view('Noticias/home', $multiRol);
+        }
     }
 
+    public function validates()
+    {
+        //* muestra el área de trabajo de los usuarios validador y multirol
+        $user = $this->session->usuario;
+        $data = [
+            'titulo' => 'Área de validación',
+            'validar' => $this->noticiasModel->noticiasAValidarUser($user),
+            'sinValidar' => $this->noticiasModel->noticiasPublicadasSinValidar(),
+            'seguimientos' => $this->seguimientosModel->seguimientosNoticiasUser($user)
+        ];
+        $validador = $data;
+        $validador['layout'] = 'layouts/layoutValidador';
+        $multiRol = $data;
+        $multiRol['layout'] = 'layouts/layoutMultiRol';
+
+        if ($this->session->rol === null) {
+            return redirect()->to('noticias');
+        }elseif($this->session->rol === EDITOR){
+            return redirect()->to('noticias');
+        }elseif($this->session->rol === VALIDADOR){
+            return view('Noticias/validate', $validador);
+        }elseif($this->session->rol === AMBOS){
+            return view('Noticias/validate', $multiRol);
+        }
+    }
+
+    //*------------------------------Fin de Vistas----------------------------------------
+
+    //*-----------------------------Procesos---------------------------------
+
+    //*------------------------------Fin de Procesos----------------------------------------
+
+    //*------------------------------Fin de Requrimentos----------------------------------------
 }

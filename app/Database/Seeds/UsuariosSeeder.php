@@ -18,5 +18,16 @@ class UsuariosSeeder extends Seeder
         ];
 
         $this->db->table('usuarios')->insert($data);
+
+        $usuario = "samus";
+        $hash = password_hash("samus", PASSWORD_BCRYPT);
+        $rol = VALIDADOR;
+        $data = [
+            'nombre' => $usuario,
+            'contrasenia' => $hash,
+            'rol' => $rol
+        ];
+
+        $this->db->table('usuarios')->insert($data);
     }
 }
