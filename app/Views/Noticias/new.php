@@ -35,6 +35,11 @@
                 $categoriasOpcion[$categoria['id']] = $categoria['nombre'];
             }
 
+            $estadosOpcion = [
+                BORRADOR => 'Borrador',
+                L_VALIDAR => 'Lista para validar'
+            ];
+
             ?>
 
             <div class="mb-3">
@@ -68,6 +73,17 @@
             </div>
 
             <div class="mb-3">
+                <?php echo form_label('Seleccione una opción', 'estados', ['class' => 'form-label col']); ?>
+                <?php echo form_dropdown('estados', $estadosOpcion, '0'); ?>
+                <?php if (validation_show_error('estados')) : ?>
+                    <div class="alert alert-danger">
+                        <?php echo validation_show_error('estados'); ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+
+            <div class="mb-3">
                 <label for="archivo">Selecciona una imagen(opcional)</label>
                 <input type="file" name="archivo" id="archivo" accept="image/jpeg, image/png">
                 <?php if (validation_show_error('archivo')) : ?>
@@ -79,7 +95,8 @@
 
 
             <div class="mb-3">
-                <?php echo form_submit('submit', 'Enviar para validar', ['class' => 'btn confirmacion']); ?>
+                <?php echo form_submit('submit', 'Enviar', ['class' => 'btn confirmacion']); ?>
+                <a href="<?= base_url('noticias'); ?>" class="btn confirmacion" >Volver a inicio</a>
             </div>
 
             <?php echo form_close(); ?>

@@ -9,9 +9,9 @@
 
         <div class="card-header bg-dark">
             <div>
-                <?php if($noticia['imagen'] !== ''):?>
+                <?php if ($noticia['imagen'] !== '') : ?>
                     <img src="<?= base_url('uploads/') . $noticia['imagen']; ?>" class="card-img-top" alt="Imagen de la noticia">
-                <?php endif;?>
+                <?php endif; ?>
             </div>
         </div>
         <div class="card-body">
@@ -22,7 +22,6 @@
         <div class="card-footer bg-dark text-light">
             Fecha de publicación: <?= $noticia['fechaPublicacion']; ?>
         </div>
-
     </div>
 
 

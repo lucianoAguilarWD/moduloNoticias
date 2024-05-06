@@ -22,5 +22,19 @@ class NoticiasSeeder extends Seeder
             'fechaExpiracion' => date('Y-m-d H:i:s')
         ];
         $this->db->table('noticias')->insert($data);
+
+        $data = [
+            'titulo' => 'Zona horaria',
+            'descripcion' => 'Horario BSAS',
+            'estado' => BORRADOR,
+            'activa' => ACTIVA,
+            'id_categoria' => 3,
+            'id_usuario' => 3,
+            'fechaCreacion' => date('Y-m-d H:i:s'),
+            'fechaModificacion' => date('Y-m-d H:i:s'),
+            'fechaPublicacion' => date('Y-m-d H:i:s'),
+            'fechaExpiracion' => date('Y-m-d H:i:s')
+        ];
+        $this->db->table('noticias')->insert($data);
     }
 }

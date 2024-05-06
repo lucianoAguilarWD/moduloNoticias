@@ -45,6 +45,11 @@
             //? aca deberia traerse el nombre de la categoria mediante inner join
             $valorCategoria = $noticia['id_categoria'];
 
+            $estadosOpcion = [
+                BORRADOR => 'Borrador',
+                L_VALIDAR => 'Lista para validar'
+            ];
+
             ?>
 
             <div class="mb-3">
@@ -82,6 +87,16 @@
             </div>
 
             <div class="mb-3">
+                <?php echo form_label('Seleccione una opción', 'estados', ['class' => 'form-label col']); ?>
+                <?php echo form_dropdown('estados', $estadosOpcion, '0'); ?>
+                <?php if (validation_show_error('estados')) : ?>
+                    <div class="alert alert-danger">
+                        <?php echo validation_show_error('estados'); ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="mb-3">
                 <?php if($noticia['imagen'] !== ''):?>
                 <img src="<?= base_url('uploads/') . $noticia['imagen']; ?>" class="card-img-top" alt="Imagen de la noticia" style="width:100px; height:100px;">
                 <?php endif;?>
@@ -96,7 +111,8 @@
 
 
             <div class="mb-3">
-                <?php echo form_submit('submit', 'Enviar para validar', ['class' => 'btn confirmacion']); ?>
+                <?php echo form_submit('submit', 'Enviar', ['class' => 'btn confirmacion']); ?>
+                <a href="<?= base_url('noticias/home'); ?>" class="btn confirmacion" >Volver atrás</a>
             </div>
 
             <?php echo form_close(); ?>

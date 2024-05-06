@@ -40,16 +40,16 @@
                                     </div>
                                     <div class="card-body bg-light">
                                         <div>
-                                            <h3 class="bg-info" style="border-radius: 5px;"><?= strlen($draft['titulo']) > 24 ? substr($draft['titulo'], 0, 24) . '...' : $draft['titulo']; ?></h3>
-                                            Categoría: <?= $val['categorias']; ?>
+                                            <h3><?= strlen($draft['titulo']) > 24 ? substr($draft['titulo'], 0, 24) . '...' : $draft['titulo']; ?></h3>
+                                            Categoría: <?= $draft['categorias']; ?>
                                             <p><?= strlen($draft['descripcion']) > 36 ? substr($draft['descripcion'], 0, 36) . '...' : $draft['descripcion']; ?></p>
                                         </div>
                                     </div>
-                                    <div class="card-footer bg-dark">
-                                        <a href="" class="btn btn-light"><i class="fa-solid fa-check"></i></a>
-                                        <a href="<?= base_url('noticias/' . $draft['id'] . '/edit'); ?>" class="btn btn-light"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
-                                        <button onclick="modalConfirmacion('<?= base_url('noticias/' . $draft['id']); ?>');" class="btn btn-light"><i class="fa-solid fa-trash"></i></button>
+                                    <div class="card-footer bg-light">
+                                        <a href="" class="btn btn-info"><i class="fa-solid fa-check"></i></a>
+                                        <a href="<?= base_url('noticias/' . $draft['id'] . '/edit'); ?>" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="" class="btn btn-info"><i class="fa-solid fa-reply"></i></a>
+                                        <button onclick="modalConfirmacion('<?= base_url('noticias/' . $draft['id']); ?>');" class="btn btn-info"><i class="fa-solid fa-trash"></i></button>
                                     </div>
 
                                 </div>
@@ -77,14 +77,14 @@
                                     </div>
                                     <div class="card-body bg-light">
                                         <div>
-                                            <h3 class="bg-info" style="border-radius: 5px;"><?= strlen($val['titulo']) > 24 ? substr($val['titulo'], 0, 24) . '...' : $val['titulo']; ?></h3>
+                                            <h3><?= strlen($val['titulo']) > 24 ? substr($val['titulo'], 0, 24) . '...' : $val['titulo']; ?></h3>
                                             Categoría: <?= $val['categorias']; ?>
                                             <p><?= strlen($val['descripcion']) > 36 ? substr($val['descripcion'], 0, 36) . '...' : $val['descripcion']; ?></p>
                                         </div>
                                     </div>
-                                    <div class="card-footer bg-dark">
-                                        <a href="" class="btn btn-light"><i class="fa-solid fa-pen-ruler"></i></a>
-                                        <button onclick="modalConfirmacion('<?= base_url('noticias/' . $val['id']); ?>');" class="btn btn-light"><i class="fa-solid fa-trash"></i></button>
+                                    <div class="card-footer bg-light">
+                                        <a href="" class="btn btn-info"><i class="fa-solid fa-pen-ruler"></i></a>
+                                        <button onclick="modalConfirmacion('<?= base_url('noticias/' . $val['id']); ?>');" class="btn btn-info"><i class="fa-solid fa-trash"></i></button>
                                     </div>
 
                                 </div>
@@ -112,13 +112,13 @@
                                     </div>
                                     <div class="card-body bg-light">
                                         <div>
-                                            <h3 class="bg-info" style="border-radius: 5px;"><?= strlen($desactivada['titulo']) > 24 ? substr($desactivada['titulo'], 0, 24) . '...' : $desactivada['titulo']; ?></h3>
+                                            <h3><?= strlen($desactivada['titulo']) > 24 ? substr($desactivada['titulo'], 0, 24) . '...' : $desactivada['titulo']; ?></h3>
                                             Categoría: <?= $desactivada['categorias']; ?>
                                             <p><?= strlen($desactivada['descripcion']) > 36 ? substr($desactivada['descripcion'], 0, 36) . '...' : $desactivada['descripcion']; ?></p>
                                         </div>
                                     </div>
-                                    <div class="card-footer bg-dark">
-                                        <a href="" class="btn btn-light"><i class="fa-solid fa-bolt"></i></a>
+                                    <div class="card-footer bg-light">
+                                        <a href="" class="btn btn-info"><i class="fa-solid fa-bolt"></i></a>
                                     </div>
 
                                 </div>
@@ -153,8 +153,8 @@
                                             Fecha de Expiración: <?= $publicada['fechaExpiracion']; ?>
                                         </div>
                                     </div>
-                                    <div class="card-footer bg-dark text-light">
-                                        <a href="<?= base_url('noticias/' . $publicada['id']); ?>" class="btn btn-light"><i class="fa-solid fa-eye"></i></a>
+                                    <div class="card-footer bg-light">
+                                        <a href="<?= base_url('noticias/' . $publicada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                     </div>
 
                                 </div>
@@ -182,13 +182,13 @@
                                     </div>
                                     <div class="card-body bg-light">
                                         <div>
-                                            <h3 class="bg-info" style="border-radius: 5px;"><?= strlen($correct['titulo']) > 24 ? substr($correct['titulo'], 0, 24) . '...' : $correct['titulo']; ?></h3>
+                                            <h3><?= strlen($correct['titulo']) > 24 ? substr($correct['titulo'], 0, 24) . '...' : $correct['titulo']; ?></h3>
                                             Categoría: <?= $correct['categorias']; ?>
                                             <p><?= strlen($correct['descripcion']) > 36 ? substr($correct['descripcion'], 0, 36) . '...' : $correct['descripcion']; ?></p>
                                         </div>
                                     </div>
-                                    <div class="card-footer bg-dark">
-                                        <a href="<?= base_url('noticias/' . $correct['id'] . '/edit'); ?>" class="btn btn-light"><i class="fas fa-pencil-alt"></i></a>
+                                    <div class="card-footer bg-light">
+                                        <a href="<?= base_url('noticias/' . $correct['id'] . '/edit'); ?>" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a>
                                     </div>
 
                                 </div>
@@ -216,13 +216,13 @@
                                     </div>
                                     <div class="card-body bg-light">
                                         <div>
-                                            <h3 class="bg-info" style="border-radius: 5px;"><?= strlen($rechazada['titulo']) > 24 ? substr($rechazada['titulo'], 0, 24) . '...' : $rechazada['titulo']; ?></h3>
+                                            <h3><?= strlen($rechazada['titulo']) > 24 ? substr($rechazada['titulo'], 0, 24) . '...' : $rechazada['titulo']; ?></h3>
                                             Categoría: <?= $rechazada['categorias']; ?>
                                             <p><?= strlen($rechazada['descripcion']) > 36 ? substr($rechazada['descripcion'], 0, 36) . '...' : $rechazada['descripcion']; ?></p>
                                         </div>
                                     </div>
-                                    <div class="card-footer bg-dark">
-                                        <button onclick="modalConfirmacion('<?= base_url('noticias/' . $val['id']); ?>');" class="btn btn-light"><i class="fa-solid fa-trash"></i></button>
+                                    <div class="card-footer bg-light">
+                                        <button onclick="modalConfirmacion('<?= base_url('noticias/' . $val['id']); ?>');" class="btn btn-info"><i class="fa-solid fa-trash"></i></button>
                                     </div>
 
                                 </div>
