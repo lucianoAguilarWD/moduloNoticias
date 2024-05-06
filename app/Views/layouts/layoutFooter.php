@@ -1,5 +1,5 @@
-<footer class="footer fixed-bottom bg-dark">
-    <div class="card text-center noticias-footer">
+<footer class="noticias-footer">
+    <div class="card text-center">
         <div class="card-header bg-dark">
 
             <div class="card-body">
