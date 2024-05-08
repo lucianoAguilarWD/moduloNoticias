@@ -50,6 +50,8 @@
                 L_VALIDAR => 'Lista para validar'
             ];
 
+            $valorEstado = $noticia['estado']
+
             ?>
 
             <div class="mb-3">
@@ -88,7 +90,7 @@
 
             <div class="mb-3">
                 <?php echo form_label('Seleccione una opción', 'estados', ['class' => 'form-label col']); ?>
-                <?php echo form_dropdown('estados', $estadosOpcion, '0'); ?>
+                <?php echo form_dropdown('estados', $estadosOpcion, $valorEstado); ?>
                 <?php if (validation_show_error('estados')) : ?>
                     <div class="alert alert-danger">
                         <?php echo validation_show_error('estados'); ?>

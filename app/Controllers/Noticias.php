@@ -7,7 +7,7 @@ use App\Models\SeguimientosModel;
 use App\Models\CategoriasModel;
 use App\Models\NoticiasModel;
 use App\Models\UsuariosModel;
-use App\Models\BitacorasModel;
+use App\Models\RespaldosModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Noticias extends BaseController
@@ -16,7 +16,7 @@ class Noticias extends BaseController
     private $categoriasModel;
     private $noticiasModel;
     private $seguimientosModel;
-    private $bitacorasModel;
+    private $respaldosModel;
     
     protected $helpers = ['form'];
 
@@ -26,7 +26,7 @@ class Noticias extends BaseController
         $this->categoriasModel = new CategoriasModel();
         $this->noticiasModel = new NoticiasModel();
         $this->seguimientosModel = new SeguimientosModel();
-        $this->bitacorasModel = new BitacorasModel();
+        $this->respaldosModel = new RespaldosModel();
     }
 
     //? ---------------------------------------------- CRUD -----------------------------------------------
@@ -187,6 +187,7 @@ class Noticias extends BaseController
         $post = $this->request->getPost(['titulo', 'desc', 'categoria', 'estados']);
 
         $this->noticiasModel->insert([
+            'version' => 0,
             'titulo' => trim($post['titulo']),
             'descripcion' => trim($post['desc']),
             'estado' => intval($post['estados']),
@@ -197,6 +198,7 @@ class Noticias extends BaseController
         ]);
         return redirect()->to('/');
     }
+
     //? -------------------------------------Fin de crear noticias-----------------------------------------------
 
     //?------------------------------------modificar noticias---------------------------------------------
@@ -239,7 +241,11 @@ class Noticias extends BaseController
             return redirect()->route('/');
         }
 
+        //? traemos la noticia a partir del $id traido del formulario
 
+        $noticia = $this->noticiasModel->find($id);
+
+        //? validando el formulario
         $reglas = [
             'titulo' => [
                 'label' => 'Titulo',
@@ -296,8 +302,7 @@ class Noticias extends BaseController
             return redirect()->back()->withInput('error', $this->validator->listErrors());
         }
 
-        //todo: trabajando la imagen.
-
+        //? trabajando la imagen.
         $file = $this->request->getFile('archivo');
        
         if (!$file->hasMoved() && $file->isValid() && $file->getSize() > 0) {
@@ -305,15 +310,52 @@ class Noticias extends BaseController
             $filepath = ROOTPATH.'public/uploads/';
             $file->move($filepath, $newName);
         }else{
-            $noticia = $this->noticiasModel->find($id);
             $newName = $noticia['imagen'];
         }
 
+        //? crear el respaldo o modificar el respaldo de ser necesario
+
+        $bitacora = $this->respaldosModel->respaldoNoticia($noticia['id']);
+
+        if(count($bitacora) > 0)
+        {
+            $this->respaldosModel->update($bitacora['id'],[
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion']
+            ]);
+
+        }else{
+
+            $this->respaldosModel->insert([
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion'],
+                'id_noticia' => $noticia['id']
+            ]);
+
+        }
+
+        if($bitacora)
+
+        //? haciendo la modificación de la noticia
 
 
         $post = $this->request->getPost(['titulo', 'desc', 'categoria', 'estados']);
+        $version = intval($noticia['version']) + 1;
 
         $this->noticiasModel->update($id,[
+            'version' => $version,
             'titulo' => trim($post['titulo']),
             'descripcion' => trim($post['desc']),
             'estado' => intval($post['estados']),
@@ -402,6 +444,11 @@ class Noticias extends BaseController
     //*------------------------------Fin de Vistas----------------------------------------
 
     //*-----------------------------Procesos---------------------------------
+
+    public function deshacerModificacion($idNoticia)
+    {
+
+    }
 
     //*------------------------------Fin de Procesos----------------------------------------
 

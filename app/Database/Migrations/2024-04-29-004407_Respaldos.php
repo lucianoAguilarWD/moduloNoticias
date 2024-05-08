@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Bitacoras extends Migration
+class Respaldos extends Migration
 {
     public function up()
     {
@@ -59,11 +59,11 @@ class Bitacoras extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('id_categoria', 'categorias', 'id');
         $this->forge->addForeignKey('id_noticia', 'noticias', 'id');
-        $this->forge->createTable('bitacoras');
+        $this->forge->createTable('respaldos');
     }
 
     public function down()
     {
-        $this->forge->dropTable('bitacoras');
+        $this->forge->dropTable('respaldos');
     }
 }

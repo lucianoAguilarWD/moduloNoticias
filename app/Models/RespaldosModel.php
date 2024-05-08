@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class BitacorasModel extends Model
+class RespaldosModel extends Model
 {
     protected $table            = 'bitacoras';
     protected $primaryKey       = 'id';
@@ -19,4 +19,14 @@ class BitacorasModel extends Model
 
     // Dates
     protected $useTimestamps = false;
+
+
+    public function respaldoNoticia($idNoticia)
+    {
+        return $this->select('respaldos.*')
+            ->join('noticias', 'respaldos.id_noticia = noticias.id')
+            ->where('id_noticia', $idNoticia)
+            ->find();
+    }
+
 }

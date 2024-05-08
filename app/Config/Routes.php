@@ -30,6 +30,5 @@ $routes->delete('noticias/(:num)', 'Noticias::delete/$1');
 
 //todo: requerimentos
 
-$routes->get('/noticias/validar', 'Noticias::validar');
 $routes->get('/noticias/home', 'Noticias::home');
 $routes->get('/noticias/validate', 'Noticias::validates');
