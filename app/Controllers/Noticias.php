@@ -95,11 +95,11 @@ class Noticias extends BaseController
         //TODO: crear una una noticia
 
         if ($this->session->rol === null) {
-            return redirect()->to('noticias');
+            return redirect()->to('/');
         }elseif($this->session->rol === EDITOR){
             return view('Noticias/new', ['categorias' => $this->categoriasModel->findAll(), 'titulo' => 'Crear noticia', 'layout' => 'layouts/layoutEditor']);
         }elseif($this->session->rol === VALIDADOR){
-            return redirect()->to('noticias');
+            return redirect()->to('/');
         }elseif($this->session->rol === AMBOS){
             return view('Noticias/new', ['categorias' => $this->categoriasModel->findAll(), 'titulo' => 'Crear noticia', 'layout' => 'layouts/layoutMultiRol']);
         }
@@ -195,7 +195,7 @@ class Noticias extends BaseController
             'id_categoria' => intval($post['categoria']),
             'id_usuario' => $usuarioBuscado['id']
         ]);
-        return redirect()->to('noticias');
+        return redirect()->to('/');
     }
     //? -------------------------------------Fin de crear noticias-----------------------------------------------
 
@@ -213,11 +213,11 @@ class Noticias extends BaseController
         //? Editar una noticia seleccionada
 
         if ($this->session->rol === null) {
-            return redirect()->to('noticias');
+            return redirect()->to('/');
         }elseif($this->session->rol === EDITOR){
             return view('Noticias/edit', ['categorias' => $this->categoriasModel->findAll(), 'noticia' => $this->noticiasModel->find($id), 'titulo' => 'Editar noticia', 'layout' => 'layouts/layoutEditor']);
         }elseif($this->session->rol === VALIDADOR){
-            return redirect()->to('noticias');
+            return redirect()->to('/');
         }elseif($this->session->rol === AMBOS){
             return view('Noticias/edit', ['categorias' => $this->categoriasModel->findAll(), 'noticia' => $this->noticiasModel->find($id), 'titulo' => 'Editar noticia', 'layout' => 'layouts/layoutMultiRol']);
         }
@@ -236,7 +236,7 @@ class Noticias extends BaseController
         //? validación y modificación de la noticia
 
         if (!$this->request->is('put') || $id == null) {
-            return redirect()->route('empleados');
+            return redirect()->route('/');
         }
 
 
@@ -320,7 +320,7 @@ class Noticias extends BaseController
             'imagen' => $newName,
             'id_categoria' => intval($post['categoria']),
         ]);
-        return redirect()->to('noticias');
+        return redirect()->to('/');
     }
     //? -------------------------------------Fin de modificar noticias-----------------------------------------------
 
@@ -363,11 +363,11 @@ class Noticias extends BaseController
         $multiRol['layout'] = 'layouts/layoutMultiRol';
 
         if ($this->session->rol === null) {
-            return redirect()->to('noticias');
+            return redirect()->to('/');
         }elseif($this->session->rol === EDITOR){
             return view('Noticias/home', $editor);
         }elseif($this->session->rol === VALIDADOR){
-            return redirect()->to('noticias');
+            return redirect()->to('/');
         }elseif($this->session->rol === AMBOS){
             return view('Noticias/home', $multiRol);
         }
@@ -389,9 +389,9 @@ class Noticias extends BaseController
         $multiRol['layout'] = 'layouts/layoutMultiRol';
 
         if ($this->session->rol === null) {
-            return redirect()->to('noticias');
+            return redirect()->to('/');
         }elseif($this->session->rol === EDITOR){
-            return redirect()->to('noticias');
+            return redirect()->to('/');
         }elseif($this->session->rol === VALIDADOR){
             return view('Noticias/validate', $validador);
         }elseif($this->session->rol === AMBOS){

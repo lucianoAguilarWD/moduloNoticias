@@ -17,7 +17,7 @@ $routes->get('/usuarios/logOut', 'Usuarios::logOut');
 
 //* noticias
 
-$routes->get('/noticias', 'Noticias::index');
+$routes->get('/', 'Noticias::index');
 $routes->get('/noticias/(:num)', 'Noticias::show/$1');
 
 $routes->get('/noticias/new', 'Noticias::new');
