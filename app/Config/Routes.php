@@ -32,3 +32,5 @@ $routes->delete('noticias/(:num)', 'Noticias::delete/$1');
 
 $routes->get('/noticias/home', 'Noticias::home');
 $routes->get('/noticias/validate', 'Noticias::validates');
+
+$routes->put('/noticias/deshacer/(:num)', 'Noticias::deshacerModificacion/$1');

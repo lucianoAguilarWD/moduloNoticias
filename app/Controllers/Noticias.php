@@ -315,11 +315,11 @@ class Noticias extends BaseController
 
         //? crear el respaldo o modificar el respaldo de ser necesario
 
-        $bitacora = $this->respaldosModel->respaldoNoticia($noticia['id']);
+        $respaldo = $this->respaldosModel->respaldoNoticia($noticia['id']);
 
-        if(count($bitacora) > 0)
+        if(count($respaldo) > 0)
         {
-            $this->respaldosModel->update($bitacora['id'],[
+            $this->respaldosModel->update($respaldo['id'],[
                 'titulo' => $noticia['titulo'],
                 'descripcion' => $noticia['descripcion'],
                 'estado' => $noticia['estado'],
@@ -345,8 +345,6 @@ class Noticias extends BaseController
             ]);
 
         }
-
-        if($bitacora)
 
         //? haciendo la modificación de la noticia
 
@@ -447,6 +445,56 @@ class Noticias extends BaseController
 
     public function deshacerModificacion($idNoticia)
     {
+        $noticia = $this->noticiasModel->find($idNoticia);
+
+        //!posibilidad de que falle por los tipos
+        $version = intval($noticia['version']);
+        if($version > 0)
+        {
+            $res = $this->respaldosModel->respaldoNoticia($idNoticia);
+            $respaldo = $res[0];
+
+            //* creamos un respaldo temporal de la noticia
+            $temp = [
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion']
+            ];
+
+            //* volvemos la modificación
+            $version = $version + 1;
+            $this->noticiasModel->update($idNoticia,[
+                'version' => $version,
+                'titulo' => $respaldo['titulo'],
+                'descripcion' => $respaldo['descripcion'],
+                'estado' => $respaldo['estado'],
+                'imagen' => $respaldo['imagen'],
+                'id_categoria' => $respaldo['id_categoria'],
+                'activa' => $respaldo['activa'],
+                'fechaPublicacion' => $respaldo['fechaPublicacion'],
+                'fechaExpiracion' => $respaldo['fechaExpiracion']
+            ]);
+
+            //* cargamos el respaldo con los valores previos al deshacer
+
+            $this->respaldosModel->update($respaldo['id'], [
+                'titulo' => $temp['titulo'],
+                'descripcion' => $temp['descripcion'],
+                'estado' => $temp['estado'],
+                'imagen' => $temp['imagen'],
+                'id_categoria' => $temp['id_categoria'],
+                'activa' => $temp['activa'],
+                'fechaPublicacion' => $temp['fechaPublicacion'],
+                'fechaExpiracion' => $temp['fechaExpiracion']
+            ]);
+        }
+
+        return redirect()->to('noticias/home');
 
     }
 

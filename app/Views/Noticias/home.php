@@ -50,6 +50,9 @@
                                         <a href="<?= base_url('noticias/' . $draft['id'] . '/edit'); ?>" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="" class="btn btn-info"><i class="fa-solid fa-reply"></i></a>
                                         <button onclick="modalConfirmacion('<?= base_url('noticias/' . $draft['id']); ?>');" class="btn btn-info"><i class="fa-solid fa-trash"></i></button>
+                                        <?php if(intval($draft['version']) > 0 && intval($draft['estado'] == BORRADOR)):?>
+                                            <button onclick="modalDeshacer('<?= base_url('noticias/deshacer/' . $draft['id']); ?>');" class="btn btn-info"><i class="fa-solid fa-rotate-left"></i></button>
+                                        <?php endif; ?>
                                     </div>
 
                                 </div>
@@ -264,6 +267,22 @@
         `,
             onAccept: () => {
                 document.getElementById("form-elimina").submit()
+            }
+        })
+    }
+
+    const modalDeshacer = (url) => {
+        Modal.danger({
+            confirm: true,
+            title: '¿Desea deshacer la modificación hecha?',
+            content: `Siempre puede volver a revertir está desición
+            <form id="form-deshacer" action="${url}" method="post">
+                <?= csrf_field(); ?>
+                <input type="hidden" name="_method" value="PUT" />
+            </form>
+        `,
+            onAccept: () => {
+                document.getElementById("form-deshacer").submit()
             }
         })
     }

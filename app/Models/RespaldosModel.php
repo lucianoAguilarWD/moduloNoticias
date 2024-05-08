@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class RespaldosModel extends Model
 {
-    protected $table            = 'bitacoras';
+    protected $table            = 'respaldos';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';

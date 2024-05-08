@@ -4,7 +4,7 @@ namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
 
-class BitacorasSeeder extends Seeder
+class RespaldosSeeder extends Seeder
 {
     public function run()
     {
@@ -19,6 +19,6 @@ class BitacorasSeeder extends Seeder
             'fechaPublicacion' => date('Y-m-d H:i:s'),
             'fechaExpiracion' => date('Y-m-d H:i:s')
         ];
-        $this->db->table('bitacoras')->insert($data);
+        $this->db->table('respaldos')->insert($data);
     }
 }
