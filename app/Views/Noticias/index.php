@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="container row" style="margin: auto;" id="prueba">
+                <div class="container row" style="margin: auto;">
                     <?php foreach ($noticias as $noticia) : ?>
                         <?php if ($noticia['imagen'] !== '') : ?>
                             <div class="card col-md-6 border-0" style="max-width: 600px; max-height: 800px; margin: auto;">

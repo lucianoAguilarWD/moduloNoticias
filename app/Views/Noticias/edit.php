@@ -19,6 +19,12 @@
                 'value' => $noticia['id']
             ];
 
+            $idVersion = [
+                'type' => 'hidden',
+                'name' => 'version',
+                'value' => $noticia['version']
+            ];
+
             $titulo = [
                 'type' => 'text',
                 'id' => 'titulo',
@@ -56,6 +62,10 @@
 
             <div class="mb-3">
                 <?php echo form_input($idAt); ?>
+            </div>
+
+            <div class="mb-3">
+                <?php echo form_input($idVersion); ?>
             </div>
 
             <div class="mb-3">
@@ -99,9 +109,9 @@
             </div>
 
             <div class="mb-3">
-                <?php if($noticia['imagen'] !== ''):?>
-                <img src="<?= base_url('uploads/') . $noticia['imagen']; ?>" class="card-img-top" alt="Imagen de la noticia" style="width:100px; height:100px;">
-                <?php endif;?>
+                <?php if ($noticia['imagen'] !== '') : ?>
+                    <img src="<?= base_url('uploads/') . $noticia['imagen']; ?>" class="card-img-top" alt="Imagen de la noticia" style="width:100px; height:100px;">
+                <?php endif; ?>
                 <label for="archivo">Selecciona una imagen(opcional)</label>
                 <input type="file" name="archivo" id="archivo" accept="image/jpeg, image/png" value="<?= $noticia['imagen'] ?>">
                 <?php if (validation_show_error('archivo')) : ?>
@@ -114,12 +124,18 @@
 
             <div class="mb-3">
                 <?php echo form_submit('submit', 'Enviar', ['class' => 'btn confirmacion']); ?>
-                <a href="<?= base_url('noticias/home'); ?>" class="btn confirmacion" >Volver atrás</a>
+                <a href="<?= base_url('noticias/home'); ?>" class="btn confirmacion">Volver al área de trabajo</a>
             </div>
 
             <?php echo form_close(); ?>
         </div>
-        <div class="card-footer bg-light"></div>
+        <div class="card-footer bg-light">
+            <?php if (session()->getFlashdata('error') !== null) { ?>
+                <div class="alert alert-danger">
+                    <?= session()->getFlashdata('error'); ?>
+                </div>
+            <?php } ?>
+        </div>
     </div>
 </main>
 <?php echo $this->endSection(); ?>

@@ -12,7 +12,7 @@ class SeguimientosModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'accion', 'motivo', 'id_usuario', 'id_noticia'];
+    protected $allowedFields    = ['id', 'accion', 'antes', 'despues', 'motivo', 'id_usuario', 'id_noticia'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

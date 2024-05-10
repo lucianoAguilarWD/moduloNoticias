@@ -96,12 +96,18 @@
 
             <div class="mb-3">
                 <?php echo form_submit('submit', 'Enviar', ['class' => 'btn confirmacion']); ?>
-                <a href="<?= base_url('/'); ?>" class="btn confirmacion" >Volver a inicio</a>
+                <a href="<?= base_url('/'); ?>" class="btn confirmacion">Volver a inicio</a>
             </div>
 
             <?php echo form_close(); ?>
         </div>
-        <div class="card-footer bg-light"></div>
+        <div class="card-footer bg-light">
+            <?php if (session()->getFlashdata('error') !== null) { ?>
+                <div class="alert alert-danger">
+                    <?= session()->getFlashdata('error'); ?>
+                </div>
+            <?php } ?>
+        </div>
     </div>
 
 </main>

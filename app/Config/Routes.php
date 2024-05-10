@@ -34,3 +34,7 @@ $routes->get('/noticias/home', 'Noticias::home');
 $routes->get('/noticias/validate', 'Noticias::validates');
 
 $routes->put('/noticias/deshacer/(:num)', 'Noticias::deshacerModificacion/$1');
+$routes->put('/noticias/desactivar/(:num)', 'Noticias::desactivar/$1');
+$routes->put('/noticias/activar/(:num)', 'Noticias::activar/$1');
+$routes->put('/noticias/borrador/(:num)', 'Noticias::enviarABorrador/$1');
+$routes->put('/noticias/validar/(:num)', 'Noticias::enviarAValidar/$1');

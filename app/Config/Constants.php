@@ -128,8 +128,7 @@ define('AMBOS', 2);
  * Acción.
 */
 define('MODIFICO', 0);
-define('CORRIGIO', 1);
-define('RECHAZO', 2);
-define('VALIDO', 3);
-define('PUBLICO', 4);
-define('DESHIZO', 5);
+define('RECHAZO', 1);
+define('VALIDO', 2);
+define('PUBLICO', 3);
+define('DESHIZO', 4);

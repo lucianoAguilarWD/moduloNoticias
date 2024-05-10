@@ -19,6 +19,12 @@ class Seguimientos extends Migration
                 'type' => 'INT',
                 'constraint' => 11,
             ],
+            'antes' => [
+                'type' => 'LONGTEXT',
+            ],
+            'despues' => [
+                'type' => 'LONGTEXT',
+            ],
             'motivo' => [
                 'type' => 'VARCHAR',
                 'constraint' =>1000,
