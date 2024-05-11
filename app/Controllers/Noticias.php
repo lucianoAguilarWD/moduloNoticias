@@ -81,6 +81,7 @@ class Noticias extends BaseController
         }
 
     }
+
     //? -------------------------------------Fin de vistas de noticias-----------------------------------------------
 
     //?---------------------------- crear noticias--------------------------------------------------------
@@ -396,6 +397,27 @@ class Noticias extends BaseController
             return view('Noticias/validate', $validador);
         }elseif($this->session->rol === AMBOS){
             return view('Noticias/validate', $multiRol);
+        }
+    }
+
+    public function tracking($id)
+    {
+        $seguimientos = $this->seguimientosModel->seguimientoNoticia($id);
+
+
+        if (empty($seguimientos)) {
+            throw new PageNotFoundException('Cannot find the news item: ' . $id);
+        }
+
+
+        if ($this->session->rol === null) {
+            return redirect()->to('/');
+        }elseif($this->session->rol === EDITOR){
+            return view('Noticias/tracking', ['seguimientos' => $seguimientos, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutEditor']);
+        }elseif($this->session->rol === VALIDADOR){
+            return view('Noticias/tracking', ['seguimientos' => $seguimientos, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutValidador']);
+        }elseif($this->session->rol === AMBOS){
+            return view('Noticias/tracking', ['seguimientos' => $seguimientos, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutMultiRol']);
         }
     }
 

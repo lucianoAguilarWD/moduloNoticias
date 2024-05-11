@@ -33,3 +33,4 @@ $routes->delete('noticias/(:num)', 'Noticias::delete/$1');
 $routes->get('/noticias/validar', 'Noticias::validar');
 $routes->get('/noticias/home', 'Noticias::home');
 $routes->get('/noticias/validate', 'Noticias::validates');
+$routes->get('/noticias/seguimiento/(:num)', 'Noticias::tracking/$1');
