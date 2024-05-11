@@ -7,7 +7,7 @@ use App\Models\SeguimientosModel;
 use App\Models\CategoriasModel;
 use App\Models\NoticiasModel;
 use App\Models\UsuariosModel;
-use App\Models\BitacorasModel;
+use App\Models\RespaldosModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Noticias extends BaseController
@@ -16,8 +16,8 @@ class Noticias extends BaseController
     private $categoriasModel;
     private $noticiasModel;
     private $seguimientosModel;
-    private $bitacorasModel;
-    
+    private $respaldosModel;
+
     protected $helpers = ['form'];
 
     public function __construct()
@@ -26,7 +26,7 @@ class Noticias extends BaseController
         $this->categoriasModel = new CategoriasModel();
         $this->noticiasModel = new NoticiasModel();
         $this->seguimientosModel = new SeguimientosModel();
-        $this->bitacorasModel = new BitacorasModel();
+        $this->respaldosModel = new RespaldosModel();
     }
 
     //? ---------------------------------------------- CRUD -----------------------------------------------
@@ -44,11 +44,11 @@ class Noticias extends BaseController
 
         if ($this->session->rol === null) {
             return view('Noticias/index', ['noticias' => $noticias, 'titulo' => 'Noticias publicadas', 'layout' => 'layouts/layoutBase']);
-        }elseif($this->session->rol === EDITOR){
+        } elseif ($this->session->rol === EDITOR) {
             return view('Noticias/index', ['noticias' => $noticias, 'titulo' => 'Noticias publicadas', 'layout' => 'layouts/layoutEditor']);
-        }elseif($this->session->rol === VALIDADOR){
+        } elseif ($this->session->rol === VALIDADOR) {
             return view('Noticias/index', ['noticias' => $noticias, 'titulo' => 'Noticias publicadas', 'layout' => 'layouts/layoutValidador']);
-        }elseif($this->session->rol === AMBOS){
+        } elseif ($this->session->rol === AMBOS) {
             return view('Noticias/index', ['noticias' => $noticias, 'titulo' => 'Noticias publicadas', 'layout' => 'layouts/layoutMultiRol']);
         }
     }
@@ -71,15 +71,14 @@ class Noticias extends BaseController
 
 
         if ($this->session->rol === null) {
-            return view('Noticias/view', ['noticia' => $noticia,'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutBase']);
-        }elseif($this->session->rol === EDITOR){
+            return view('Noticias/view', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutBase']);
+        } elseif ($this->session->rol === EDITOR) {
             return view('Noticias/view', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutEditor']);
-        }elseif($this->session->rol === VALIDADOR){
+        } elseif ($this->session->rol === VALIDADOR) {
             return view('Noticias/view', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutValidador']);
-        }elseif($this->session->rol === AMBOS){
+        } elseif ($this->session->rol === AMBOS) {
             return view('Noticias/view', ['noticia' => $noticia, 'titulo' => $noticia['titulo'], 'layout' => 'layouts/layoutMultiRol']);
         }
-
     }
     //? -------------------------------------Fin de vistas de noticias-----------------------------------------------
 
@@ -96,14 +95,13 @@ class Noticias extends BaseController
 
         if ($this->session->rol === null) {
             return redirect()->to('/');
-        }elseif($this->session->rol === EDITOR){
+        } elseif ($this->session->rol === EDITOR) {
             return view('Noticias/new', ['categorias' => $this->categoriasModel->findAll(), 'titulo' => 'Crear noticia', 'layout' => 'layouts/layoutEditor']);
-        }elseif($this->session->rol === VALIDADOR){
+        } elseif ($this->session->rol === VALIDADOR) {
             return redirect()->to('/');
-        }elseif($this->session->rol === AMBOS){
+        } elseif ($this->session->rol === AMBOS) {
             return view('Noticias/new', ['categorias' => $this->categoriasModel->findAll(), 'titulo' => 'Crear noticia', 'layout' => 'layouts/layoutMultiRol']);
         }
-
     }
 
     /**
@@ -175,9 +173,9 @@ class Noticias extends BaseController
 
         if (!$file->hasMoved() && $file->isValid() && $file->getSize() > 0) {
             $newName = $file->getRandomName();
-            $filepath = ROOTPATH.'public/uploads/';
+            $filepath = ROOTPATH . 'public/uploads/';
             $file->move($filepath, $newName);
-        }else{
+        } else {
             $newName = '';
         }
 
@@ -186,7 +184,18 @@ class Noticias extends BaseController
 
         $post = $this->request->getPost(['titulo', 'desc', 'categoria', 'estados']);
 
+        if (intval($post['estados']) === BORRADOR) {
+            $user = $this->session->usuario;
+            $borrador = $this->noticiasModel->noticiasPorEstado($user, BORRADOR);
+
+            if (count($borrador) >= 3) {
+                return redirect()->back()->with('error', 'No puede agregar la noticia a borrador debido a que ya tiene tres en su borrador. Desactive o descarte una noticia.');
+            }
+        }
+
+
         $this->noticiasModel->insert([
+            'version' => 0,
             'titulo' => trim($post['titulo']),
             'descripcion' => trim($post['desc']),
             'estado' => intval($post['estados']),
@@ -197,6 +206,7 @@ class Noticias extends BaseController
         ]);
         return redirect()->to('/');
     }
+
     //? -------------------------------------Fin de crear noticias-----------------------------------------------
 
     //?------------------------------------modificar noticias---------------------------------------------
@@ -214,14 +224,13 @@ class Noticias extends BaseController
 
         if ($this->session->rol === null) {
             return redirect()->to('/');
-        }elseif($this->session->rol === EDITOR){
+        } elseif ($this->session->rol === EDITOR) {
             return view('Noticias/edit', ['categorias' => $this->categoriasModel->findAll(), 'noticia' => $this->noticiasModel->find($id), 'titulo' => 'Editar noticia', 'layout' => 'layouts/layoutEditor']);
-        }elseif($this->session->rol === VALIDADOR){
+        } elseif ($this->session->rol === VALIDADOR) {
             return redirect()->to('/');
-        }elseif($this->session->rol === AMBOS){
+        } elseif ($this->session->rol === AMBOS) {
             return view('Noticias/edit', ['categorias' => $this->categoriasModel->findAll(), 'noticia' => $this->noticiasModel->find($id), 'titulo' => 'Editar noticia', 'layout' => 'layouts/layoutMultiRol']);
         }
-
     }
 
     /**
@@ -239,7 +248,16 @@ class Noticias extends BaseController
             return redirect()->route('/');
         }
 
+        //? traemos la noticia a partir del $id traido del formulario
 
+        $noticia = $this->noticiasModel->find($id);
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'Por favor, vuelva al área de trabajo para verificar posibles actualizaciones en la noticia. Para obtener más detalles, consulte el seguimiento de la misma.');
+        }
+
+        //? validando el formulario
         $reglas = [
             'titulo' => [
                 'label' => 'Titulo',
@@ -296,31 +314,100 @@ class Noticias extends BaseController
             return redirect()->back()->withInput('error', $this->validator->listErrors());
         }
 
-        //todo: trabajando la imagen.
-
+        //? trabajando la imagen.
         $file = $this->request->getFile('archivo');
-       
+
         if (!$file->hasMoved() && $file->isValid() && $file->getSize() > 0) {
             $newName =  $file->getRandomName();
-            $filepath = ROOTPATH.'public/uploads/';
+            $filepath = ROOTPATH . 'public/uploads/';
             $file->move($filepath, $newName);
-        }else{
-            $noticia = $this->noticiasModel->find($id);
+        } else {
             $newName = $noticia['imagen'];
         }
 
-
+        //? comprobamos que el borrador no este ocupado
 
         $post = $this->request->getPost(['titulo', 'desc', 'categoria', 'estados']);
+        $version = $version + 1;
 
-        $this->noticiasModel->update($id,[
+        if (intval($post['estados']) === BORRADOR) {
+            $user = $this->session->usuario;
+            $borrador = $this->noticiasModel->noticiasPorEstado($user, BORRADOR);
+
+            if (count($borrador) >= 3) {
+                return redirect()->back()->with('error', 'No puede agregar la noticia a borrador debido a que ya tiene tres en su borrador. Desactive o descarte una noticia.');
+            }
+        }
+
+        //? crear el respaldo o modificar el respaldo de ser necesario
+
+        $res = $this->respaldosModel->respaldoNoticia($noticia['id']);
+
+        if (count($res) > 0) {
+            $respaldo = $res[0];
+            $this->respaldosModel->update($respaldo['id'], [
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion']
+            ]);
+        } else {
+
+            $this->respaldosModel->insert([
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion'],
+                'id_noticia' => $noticia['id']
+            ]);
+        }
+
+        //? haciendo la modificación de la noticia
+
+        $this->noticiasModel->update($id, [
+            'version' => $version,
             'titulo' => trim($post['titulo']),
             'descripcion' => trim($post['desc']),
             'estado' => intval($post['estados']),
             'imagen' => $newName,
             'id_categoria' => intval($post['categoria']),
         ]);
-        return redirect()->to('/');
+
+        //? creamos el seguimiento
+        $noticiaCat = $this->noticiasModel->noticiaCategoria($noticia['id']);
+
+        $tit = $noticiaCat['titulo'];
+        $desc = $noticiaCat['descripcion'];
+        $est = $noticiaCat['estado'];
+        $img = $noticiaCat['imagen'];
+        $categoria = $noticiaCat['categoria'];
+        $antes = "$tit|$desc|$est|$img|$categoria";
+
+        $tit = trim($post['titulo']);
+        $desc = trim($post['desc']);
+        $est = intval($post['estados']);
+        $img = $newName;
+        $categoria = intval($post['categoria']);
+        $despues = "$tit|$desc|$est|$img|$categoria";
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        $this->seguimientosModel->insert([
+            'accion' => MODIFICO,
+            'antes' => $antes,
+            'despues' => $despues,
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $noticia['id']
+        ]);
+
+        return redirect()->to('noticias/home');
     }
     //? -------------------------------------Fin de modificar noticias-----------------------------------------------
 
@@ -347,7 +434,7 @@ class Noticias extends BaseController
     {
         //* muestra el área de trabajo de los usuario editor y multirol.
         $user = $this->session->usuario;
-        
+
         $data = [
             'titulo' => 'Área de trabajo',
             'borrador' => $this->noticiasModel->noticiasPorEstado($user, BORRADOR),
@@ -364,11 +451,11 @@ class Noticias extends BaseController
 
         if ($this->session->rol === null) {
             return redirect()->to('/');
-        }elseif($this->session->rol === EDITOR){
+        } elseif ($this->session->rol === EDITOR) {
             return view('Noticias/home', $editor);
-        }elseif($this->session->rol === VALIDADOR){
+        } elseif ($this->session->rol === VALIDADOR) {
             return redirect()->to('/');
-        }elseif($this->session->rol === AMBOS){
+        } elseif ($this->session->rol === AMBOS) {
             return view('Noticias/home', $multiRol);
         }
     }
@@ -377,9 +464,19 @@ class Noticias extends BaseController
     {
         //* muestra el área de trabajo de los usuarios validador y multirol
         $user = $this->session->usuario;
+        $validar = $this->noticiasModel->noticiasAValidarUser($user);
+        $aux = [];
+        foreach($validar as $val){
+            if(count($this->seguimientosModel->seguimientosUserRechazo($user, $val['id'])) > 0)
+            {
+                $aux[] = ['noticia' => $val, 'seguimientos' => true];
+            }else{
+                $aux[] = ['noticia' => $val, 'seguimientos' => false];
+            }
+        }
         $data = [
             'titulo' => 'Área de validación',
-            'validar' => $this->noticiasModel->noticiasAValidarUser($user),
+            'validar' => $aux,
             'sinValidar' => $this->noticiasModel->noticiasPublicadasSinValidar(),
             'seguimientos' => $this->seguimientosModel->seguimientosNoticiasUser($user)
         ];
@@ -390,11 +487,11 @@ class Noticias extends BaseController
 
         if ($this->session->rol === null) {
             return redirect()->to('/');
-        }elseif($this->session->rol === EDITOR){
+        } elseif ($this->session->rol === EDITOR) {
             return redirect()->to('/');
-        }elseif($this->session->rol === VALIDADOR){
+        } elseif ($this->session->rol === VALIDADOR) {
             return view('Noticias/validate', $validador);
-        }elseif($this->session->rol === AMBOS){
+        } elseif ($this->session->rol === AMBOS) {
             return view('Noticias/validate', $multiRol);
         }
     }
@@ -403,7 +500,432 @@ class Noticias extends BaseController
 
     //*-----------------------------Procesos---------------------------------
 
+    //*----------------------------Editor------------------------------------
+
+    public function deshacerModificacion($idNoticia)
+    {
+        $noticia = $this->noticiasModel->find($idNoticia);
+        $noticiaCat = $this->noticiasModel->noticiaCategoria($idNoticia);
+
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'No pudo deshacer la modificación en la noticia debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+        }
+
+        $version = intval($noticia['version']);
+        if ($version > 0) {
+            $res = $this->respaldosModel->respaldoNoticia($idNoticia);
+            $respaldo = $res[0];
+
+            //* volvemos la modificación
+            $version = $version + 1;
+            $this->noticiasModel->update($idNoticia, [
+                'version' => $version,
+                'titulo' => $respaldo['titulo'],
+                'descripcion' => $respaldo['descripcion'],
+                'estado' => $respaldo['estado'],
+                'imagen' => $respaldo['imagen'],
+                'id_categoria' => $respaldo['id_categoria'],
+                'activa' => $respaldo['activa'],
+                'fechaPublicacion' => $respaldo['fechaPublicacion'],
+                'fechaExpiracion' => $respaldo['fechaExpiracion']
+            ]);
+
+            //* cargamos el respaldo con los valores previos al deshacer
+
+            $this->respaldosModel->update($respaldo['id'], [
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion']
+            ]);
+        }
+
+        //* creamos el seguimiento
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+
+
+        $tit = $noticiaCat['titulo'];
+        $desc = $noticiaCat['descripcion'];
+        $est = $noticiaCat['estado'];
+        $img = $noticiaCat['imagen'];
+        $categoria = $noticiaCat['categoria'];
+        $despues = "$tit|$desc|$est|$img|$categoria";
+        $noticiaCat = $this->noticiasModel->noticiaCategoria($idNoticia);
+
+        $tit = $noticiaCat['titulo'];
+        $desc = $noticiaCat['descripcion'];
+        $est = $noticiaCat['estado'];
+        $img = $noticiaCat['imagen'];
+        $categoria = $noticiaCat['categoria'];
+        $antes = "$tit|$desc|$est|$img|$categoria";
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        $this->seguimientosModel->insert([
+            'accion' => DESHIZO,
+            'antes' => $antes,
+            'despues' => $despues,
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $noticia['id']
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function desactivar($id)
+    {
+        $noticia = $this->noticiasModel->find($id);
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'Por favor, recargue el área de trabajo para verificar posibles actualizaciones en la noticia. Para obtener más detalles, consulte el seguimiento de la misma.');
+        }
+
+        $this->noticiasModel->update($id, [
+            'version' => $version + 1,
+            'activa' => DESACTIVADA
+        ]);
+
+        return redirect()->to('noticias/home');
+    }
+
+    public function activar($id)
+    {
+        $user = $this->session->usuario;
+        $borrador = $this->noticiasModel->noticiasPorEstado($user, BORRADOR);
+
+        if (count($borrador) >= 3) {
+            return redirect()->back()->with('error', 'No puede activar la noticia mientras tenga tres noticias en su borrador.');
+        }
+
+        $this->noticiasModel->update($id, [
+            'activa' => ACTIVA
+        ]);
+
+        return redirect()->to('noticias/home');
+    }
+
+    public function enviarABorrador($id)
+    {
+        $noticia = $this->noticiasModel->find($id);
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'Por favor, recargue el área de trabajo para verificar posibles actualizaciones en la noticia. Para obtener más detalles, consulte el seguimiento de la misma.');
+        }
+        
+        $user = $this->session->usuario;
+        $borrador = $this->noticiasModel->noticiasPorEstado($user, BORRADOR);
+
+        if (count($borrador) >= 3) {
+            return redirect()->back()->with('error', 'No puede agregar la noticia a borrador debido a que ya tiene tres en su borrador. Desactive o descarte una noticia.');
+        }
+
+        $this->noticiasModel->update($id, [
+            'version' => $version + 1,
+            'estado' => BORRADOR
+        ]);
+
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        $this->seguimientosModel->insert([
+            'accion' => MODIFICO,
+            'antes' => 'validandose',
+            'despues' => 'borrador',
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $id
+        ]);
+
+        return redirect()->to('noticias/home');
+    }
+
+    public function enviarAValidar($id)
+    {
+        $noticia = $this->noticiasModel->find($id);
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'Por favor, recargue el área de trabajo para verificar posibles actualizaciones en la noticia. Para obtener más detalles, consulte el seguimiento de la misma.');
+        }
+        
+
+        $this->noticiasModel->update($id, [
+            'version' => $version + 1,
+            'estado' => L_VALIDAR
+        ]);
+
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        $this->seguimientosModel->insert([
+            'accion' => MODIFICO,
+            'antes' => 'borrador',
+            'despues' => 'validandose',
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $id
+        ]);
+
+        return redirect()->to('noticias/home');
+    }
+
+    //*------------------------------Fin de Procesos de editor----------------------------------------
+
+    //*-------------------------------Validador----------------------------------------------------
+
+    public function publicar($id)
+    {
+        $noticia = $this->noticiasModel->find($id);
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'No pudo publicarse debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+        }
+
+        $res = $this->respaldosModel->respaldoNoticia($id);
+        if (count($res) > 0) {
+            $respaldo = $res[0];
+            $this->respaldosModel->update($respaldo['id'], [
+                'estado' => $noticia['estado'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion']
+            ]);
+        } else {
+
+            $this->respaldosModel->insert([
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion'],
+                'id_noticia' => $noticia['id']
+            ]);
+        }
+
+        $fechaPublicacion = date('Y-m-d H:i:s');
+        $this->noticiasModel->update($id, [
+            'version' => $version + 1,
+            'estado' => VALIDADA,
+            'fechaPublicacion' => $fechaPublicacion,
+            'fechaExpiracion' => date('Y-m-d H:i:s', strtotime($fechaPublicacion . TIEMPO_PUBLICACION))
+        ]);
+
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        $this->seguimientosModel->insert([
+            'accion' => VALIDO,
+            'antes' => 'validandose',
+            'despues' => 'válido/público',
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $id
+        ]);
+
+        return redirect()->to('noticias/validate');
+    }
+
+    public function desPublicar($id)
+    {
+        $noticia = $this->noticiasModel->find($id);
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'No pudo deshacerse la publicación debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+        }
+
+        $res = $this->respaldosModel->respaldoNoticia($id);
+        if (count($res) > 0) {
+            $respaldo = $res[0];
+            $this->respaldosModel->update($respaldo['id'], [
+                'estado' => $noticia['estado'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion']
+            ]);
+        } else {
+
+            $this->respaldosModel->insert([
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion'],
+                'id_noticia' => $noticia['id']
+            ]);
+        }
+
+        $this->noticiasModel->update($id, [
+            'version' => $version + 1,
+            'estado' => CORREGIR,
+            'fechaPublicacion' => NULL,
+            'fechaExpiracion' => NULL
+        ]);
+
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        $this->seguimientosModel->insert([
+            'accion' => DESHIZO,
+            'antes' => 'Publicada',
+            'despues' => 'A corregir',
+            'motivo' => 'Fue publicada sin validar',
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $id
+        ]);
+
+        return redirect()->to('noticias/validate');
+    }
+
+    public function rechazar($id)
+    {
+
+        $noticia = $this->noticiasModel->find($id);
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'No pudo rechazar la noticia debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+        }
+
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        //* comprobamos que el usuario no tenga un historial de seguimientos de validacion previo al rechazo.
+
+        $historial = $this->seguimientosModel->seguimientosUserRechazo($this->session->usuario, $id);
+
+        if(count($historial) > 0)
+        {
+            return redirect()->back()->with('error', 'No puede rechazar la noticia debido a que ya le hizo un seguimiento de validaciones a la misma.');
+        }
+
+        $reglas = [
+            'motivo' => [
+                'label' => 'Motivo',
+                'rules' => 'required|max_length[1000]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio',
+                    'max_length' => 'El campo {field} no puede exceder los {param} caracteres.'
+                ]
+            ],
+        ];
+
+        if (!$this->validate($reglas)) {
+            return redirect()->back()->withInput('error', $this->validator->listErrors());
+        }
+
+        $res = $this->respaldosModel->respaldoNoticia($id);
+        if (count($res) > 0) {
+            $respaldo = $res[0];
+            $this->respaldosModel->update($respaldo['id'], [
+                'estado' => $noticia['estado'],
+            ]);
+        } else {
+
+            $this->respaldosModel->insert([
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion'],
+                'id_noticia' => $noticia['id']
+            ]);
+        }
+
+        $this->noticiasModel->update($id, [
+            'version' => $version + 1,
+            'estado' => RECHAZADO,
+        ]);
+
+
+        $this->seguimientosModel->insert([
+            'accion' => RECHAZADO,
+            'antes' => 'validandose',
+            'despues' => 'rechazado',
+            'motivo' => $this->request->getPost('motivo'),
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $id
+        ]);
+
+        return redirect()->to('noticias/validate');
+    }
+
+    public function corregir($id)
+    {
+        $noticia = $this->noticiasModel->find($id);
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'No pudo mandar a corregir la noticia debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+        }
+
+        $reglas = [
+            'motivo' => [
+                'label' => 'Motivo',
+                'rules' => 'required|max_length[1000]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio',
+                    'max_length' => 'El campo {field} no puede exceder los {param} caracteres.'
+                ]
+            ],
+        ];
+
+        if (!$this->validate($reglas)) {
+            return redirect()->back()->withInput('error', $this->validator->listErrors());
+        }
+
+        $res = $this->respaldosModel->respaldoNoticia($id);
+        if (count($res) > 0) {
+            $respaldo = $res[0];
+            $this->respaldosModel->update($respaldo['id'], [
+                'estado' => $noticia['estado'],
+            ]);
+        } else {
+
+            $this->respaldosModel->insert([
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion'],
+                'id_noticia' => $noticia['id']
+            ]);
+        }
+
+        $this->noticiasModel->update($id, [
+            'version' => $version + 1,
+            'estado' => CORREGIR,
+        ]);
+
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        $this->seguimientosModel->insert([
+            'accion' => A_CORREGIR,
+            'antes' => 'validandose',
+            'despues' => 'a corregir',
+            'motivo' => $this->request->getPost('motivo'),
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $id
+        ]);
+
+        return redirect()->to('noticias/validate');
+    }
+
+    //*------------------------------Fin de Procesos de editor----------------------------------------
+
     //*------------------------------Fin de Procesos----------------------------------------
 
     //*------------------------------Fin de Requrimentos----------------------------------------
 }
+    //*------------------------------Fin del controlador----------------------------------------
