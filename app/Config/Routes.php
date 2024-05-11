@@ -33,6 +33,7 @@ $routes->delete('noticias/(:num)', 'Noticias::delete/$1');
 //todo: vistas
 $routes->get('/noticias/home', 'Noticias::home');
 $routes->get('/noticias/validate', 'Noticias::validates');
+$routes->get('/noticias/seguimiento/(:num)', 'Noticias::tracking/$1');
 
 //todo: procesos editor
 $routes->put('/noticias/deshacer/(:num)', 'Noticias::deshacerModificacion/$1');
@@ -45,3 +46,4 @@ $routes->put('/noticias/validar/(:num)', 'Noticias::enviarAValidar/$1');
 $routes->put('/noticias/publicar/(:num)', 'Noticias::publicar/$1');
 $routes->put('/noticias/rechazar/(:num)', 'Noticias::rechazar/$1');
 $routes->put('/noticias/corregir/(:num)', 'Noticias::corregir/$1');
+
