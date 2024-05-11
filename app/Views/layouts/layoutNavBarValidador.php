@@ -14,7 +14,7 @@
                   <i class="fas fa-user"></i> Validador
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="<?= base_url('/noticias/validate');?>" >Área de validaciones</a>
+                  <a class="dropdown-item" href="<?= base_url('/noticias/validate');?>" >Área de validación</a>
                   <a class="dropdown-item" href="<?= base_url('/usuarios/logOut');?>" >Cerrar sesión</a>
                 </div>
               </li>

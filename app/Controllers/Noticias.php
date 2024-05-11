@@ -464,9 +464,19 @@ class Noticias extends BaseController
     {
         //* muestra el área de trabajo de los usuarios validador y multirol
         $user = $this->session->usuario;
+        $validar = $this->noticiasModel->noticiasAValidarUser($user);
+        $aux = [];
+        foreach($validar as $val){
+            if(count($this->seguimientosModel->seguimientosUserRechazo($user, $val['id'])) > 0)
+            {
+                $aux[] = ['noticia' => $val, 'seguimientos' => true];
+            }else{
+                $aux[] = ['noticia' => $val, 'seguimientos' => false];
+            }
+        }
         $data = [
             'titulo' => 'Área de validación',
-            'validar' => $this->noticiasModel->noticiasAValidarUser($user),
+            'validar' => $aux,
             'sinValidar' => $this->noticiasModel->noticiasPublicadasSinValidar(),
             'seguimientos' => $this->seguimientosModel->seguimientosNoticiasUser($user)
         ];
@@ -490,11 +500,18 @@ class Noticias extends BaseController
 
     //*-----------------------------Procesos---------------------------------
 
+    //*----------------------------Editor------------------------------------
+
     public function deshacerModificacion($idNoticia)
     {
         $noticia = $this->noticiasModel->find($idNoticia);
         $noticiaCat = $this->noticiasModel->noticiaCategoria($idNoticia);
 
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'No pudo deshacer la modificación en la noticia debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+        }
 
         $version = intval($noticia['version']);
         if ($version > 0) {
@@ -558,7 +575,7 @@ class Noticias extends BaseController
             'id_noticia' => $noticia['id']
         ]);
 
-        return redirect()->to('noticias/home');
+        return redirect()->back();
     }
 
     public function desactivar($id)
@@ -571,6 +588,7 @@ class Noticias extends BaseController
         }
 
         $this->noticiasModel->update($id, [
+            'version' => $version + 1,
             'activa' => DESACTIVADA
         ]);
 
@@ -610,6 +628,7 @@ class Noticias extends BaseController
         }
 
         $this->noticiasModel->update($id, [
+            'version' => $version + 1,
             'estado' => BORRADOR
         ]);
 
@@ -637,6 +656,7 @@ class Noticias extends BaseController
         
 
         $this->noticiasModel->update($id, [
+            'version' => $version + 1,
             'estado' => L_VALIDAR
         ]);
 
@@ -653,9 +673,259 @@ class Noticias extends BaseController
         return redirect()->to('noticias/home');
     }
 
+    //*------------------------------Fin de Procesos de editor----------------------------------------
 
+    //*-------------------------------Validador----------------------------------------------------
+
+    public function publicar($id)
+    {
+        $noticia = $this->noticiasModel->find($id);
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'No pudo publicarse debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+        }
+
+        $res = $this->respaldosModel->respaldoNoticia($id);
+        if (count($res) > 0) {
+            $respaldo = $res[0];
+            $this->respaldosModel->update($respaldo['id'], [
+                'estado' => $noticia['estado'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion']
+            ]);
+        } else {
+
+            $this->respaldosModel->insert([
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion'],
+                'id_noticia' => $noticia['id']
+            ]);
+        }
+
+        $fechaPublicacion = date('Y-m-d H:i:s');
+        $this->noticiasModel->update($id, [
+            'version' => $version + 1,
+            'estado' => VALIDADA,
+            'fechaPublicacion' => $fechaPublicacion,
+            'fechaExpiracion' => date('Y-m-d H:i:s', strtotime($fechaPublicacion . TIEMPO_PUBLICACION))
+        ]);
+
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        $this->seguimientosModel->insert([
+            'accion' => VALIDO,
+            'antes' => 'validandose',
+            'despues' => 'válido/público',
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $id
+        ]);
+
+        return redirect()->to('noticias/validate');
+    }
+
+    public function desPublicar($id)
+    {
+        $noticia = $this->noticiasModel->find($id);
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'No pudo deshacerse la publicación debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+        }
+
+        $res = $this->respaldosModel->respaldoNoticia($id);
+        if (count($res) > 0) {
+            $respaldo = $res[0];
+            $this->respaldosModel->update($respaldo['id'], [
+                'estado' => $noticia['estado'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion']
+            ]);
+        } else {
+
+            $this->respaldosModel->insert([
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion'],
+                'id_noticia' => $noticia['id']
+            ]);
+        }
+
+        $this->noticiasModel->update($id, [
+            'version' => $version + 1,
+            'estado' => CORREGIR,
+            'fechaPublicacion' => NULL,
+            'fechaExpiracion' => NULL
+        ]);
+
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        $this->seguimientosModel->insert([
+            'accion' => DESHIZO,
+            'antes' => 'Publicada',
+            'despues' => 'A corregir',
+            'motivo' => 'Fue publicada sin validar',
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $id
+        ]);
+
+        return redirect()->to('noticias/validate');
+    }
+
+    public function rechazar($id)
+    {
+
+        $noticia = $this->noticiasModel->find($id);
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'No pudo rechazar la noticia debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+        }
+
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        //* comprobamos que el usuario no tenga un historial de seguimientos de validacion previo al rechazo.
+
+        $historial = $this->seguimientosModel->seguimientosUserRechazo($this->session->usuario, $id);
+
+        if(count($historial) > 0)
+        {
+            return redirect()->back()->with('error', 'No puede rechazar la noticia debido a que ya le hizo un seguimiento de validaciones a la misma.');
+        }
+
+        $reglas = [
+            'motivo' => [
+                'label' => 'Motivo',
+                'rules' => 'required|max_length[1000]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio',
+                    'max_length' => 'El campo {field} no puede exceder los {param} caracteres.'
+                ]
+            ],
+        ];
+
+        if (!$this->validate($reglas)) {
+            return redirect()->back()->withInput('error', $this->validator->listErrors());
+        }
+
+        $res = $this->respaldosModel->respaldoNoticia($id);
+        if (count($res) > 0) {
+            $respaldo = $res[0];
+            $this->respaldosModel->update($respaldo['id'], [
+                'estado' => $noticia['estado'],
+            ]);
+        } else {
+
+            $this->respaldosModel->insert([
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion'],
+                'id_noticia' => $noticia['id']
+            ]);
+        }
+
+        $this->noticiasModel->update($id, [
+            'version' => $version + 1,
+            'estado' => RECHAZADO,
+        ]);
+
+
+        $this->seguimientosModel->insert([
+            'accion' => RECHAZADO,
+            'antes' => 'validandose',
+            'despues' => 'rechazado',
+            'motivo' => $this->request->getPost('motivo'),
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $id
+        ]);
+
+        return redirect()->to('noticias/validate');
+    }
+
+    public function corregir($id)
+    {
+        $noticia = $this->noticiasModel->find($id);
+        $version = intval($noticia['version']);
+
+        if (intval($this->request->getPost('version')) !== $version) {
+            return redirect()->back()->with('error', 'No pudo mandar a corregir la noticia debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+        }
+
+        $reglas = [
+            'motivo' => [
+                'label' => 'Motivo',
+                'rules' => 'required|max_length[1000]',
+                'errors' => [
+                    'required' => 'El campo {field} es obligatorio',
+                    'max_length' => 'El campo {field} no puede exceder los {param} caracteres.'
+                ]
+            ],
+        ];
+
+        if (!$this->validate($reglas)) {
+            return redirect()->back()->withInput('error', $this->validator->listErrors());
+        }
+
+        $res = $this->respaldosModel->respaldoNoticia($id);
+        if (count($res) > 0) {
+            $respaldo = $res[0];
+            $this->respaldosModel->update($respaldo['id'], [
+                'estado' => $noticia['estado'],
+            ]);
+        } else {
+
+            $this->respaldosModel->insert([
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion'],
+                'id_noticia' => $noticia['id']
+            ]);
+        }
+
+        $this->noticiasModel->update($id, [
+            'version' => $version + 1,
+            'estado' => CORREGIR,
+        ]);
+
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        $this->seguimientosModel->insert([
+            'accion' => A_CORREGIR,
+            'antes' => 'validandose',
+            'despues' => 'a corregir',
+            'motivo' => $this->request->getPost('motivo'),
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $id
+        ]);
+
+        return redirect()->to('noticias/validate');
+    }
+
+    //*------------------------------Fin de Procesos de editor----------------------------------------
 
     //*------------------------------Fin de Procesos----------------------------------------
 
     //*------------------------------Fin de Requrimentos----------------------------------------
 }
+    //*------------------------------Fin del controlador----------------------------------------

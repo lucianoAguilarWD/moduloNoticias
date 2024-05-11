@@ -24,7 +24,7 @@
             <button class="nav-link" id="rechazadas-tab" data-bs-toggle="tab" data-bs-target="#rechazadas" type="button" role="tab" aria-controls="rechazadas" aria-selected="false">Rechazadas</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button onclick="reloadPage();" class="btn btn-info"><i class="fa-solid fa-rotate"></i></button>
+            <button onclick="reloadPage();" class="btn btn-info"><i class="fa-solid fa-rotate-right"></i></button>
         </li>
     </ul>
 
@@ -57,8 +57,8 @@
                                         <a href="<?= base_url('noticias/' . $draft['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                         <button onclick="modalCambioAValidar('<?= base_url('noticias/validar/' . $draft['id']); ?>', <?= $draft['version'] ?>);" class="btn btn-info"><i class="fa-solid fa-check"></i></button>
                                         <a href="<?= base_url('noticias/' . $draft['id'] . '/edit'); ?>" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a>
-                                        <?php if (intval($draft['version']) > 0 && intval($draft['estado'] == BORRADOR)) : ?>
-                                            <button onclick="modalDeshacer('<?= base_url('noticias/deshacer/' . $draft['id']); ?>');" class="btn btn-info"><i class="fa-solid fa-rotate-left"></i></button>
+                                        <?php if (intval($draft['version']) > 0 && intval($draft['estado']) == BORRADOR) : ?>
+                                            <button onclick="modalDeshacer('<?= base_url('noticias/deshacer/' . $draft['id']); ?>', <?= $draft['version'] ?>);" class="btn btn-info"><i class="fa-solid fa-rotate-left"></i></button>
                                         <?php endif; ?>
                                         <a href="tracking" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
                                         <?php if (intval($draft['version']) === 0 ) : ?>
@@ -310,13 +310,14 @@
         })
     }
 
-    const modalDeshacer = (url) => {
+    const modalDeshacer = (url, version) => {
         Modal.warning({
             confirm: true,
-            title: '¿Desea deshacer la modificación hecha?',
+            title: '¿Desea deshacer la validación hecha?',
             content: `Siempre puede volver a revertir está desición
             <form id="form-deshacer" action="${url}" method="post">
                 <?= csrf_field(); ?>
+                <input type="hidden" name="version" value="${version}" />
                 <input type="hidden" name="_method" value="PUT" />
             </form>
         `,

@@ -8,6 +8,7 @@ class NoticiasSeeder extends Seeder
 {
     public function run()
     {
+        $fechaPublicacion = date('Y-m-d H:i:s');
         $data = [
             'titulo' => 'Lanzamiento del Nuevo Smartphone XYZ con Tecnología 5G',
             'descripcion' => 'La empresa tecnológica XYZ ha presentado su último buque insignia, el Smartphone XYZ, que incorpora la tecnología 5G de última generación. Este dispositivo revolucionario promete velocidades de conexión ultrarrápidas, permitiendo a los usuarios disfrutar de descargas instantáneas, streaming sin interrupciones y una experiencia móvil superior. Además, el Smartphone XYZ cuenta con una cámara mejorada, una pantalla de alta resolución y una batería de larga duración, convirtiéndolo en una opción atractiva para los amantes de la tecnología móvil.',
@@ -18,22 +19,23 @@ class NoticiasSeeder extends Seeder
             'id_usuario' => 1,
             'fechaCreacion' => date('Y-m-d H:i:s'),
             'fechaModificacion' => date('Y-m-d H:i:s'),
-            'fechaPublicacion' => date('Y-m-d H:i:s'),
-            'fechaExpiracion' => date('Y-m-d H:i:s')
+            'fechaPublicacion' => $fechaPublicacion,
+            'fechaExpiracion' => date('Y-m-d H:i:s', strtotime($fechaPublicacion . TIEMPO_PUBLICACION))
         ];
         $this->db->table('noticias')->insert($data);
 
         $data = [
             'titulo' => 'Zona horaria',
             'descripcion' => 'Horario BSAS',
+            'imagen' => '1715203900_30b6007a3102e4873222.jpg',
             'estado' => BORRADOR,
             'activa' => ACTIVA,
             'id_categoria' => 3,
             'id_usuario' => 3,
             'fechaCreacion' => date('Y-m-d H:i:s'),
             'fechaModificacion' => date('Y-m-d H:i:s'),
-            'fechaPublicacion' => date('Y-m-d H:i:s'),
-            'fechaExpiracion' => date('Y-m-d H:i:s')
+            'fechaPublicacion' => $fechaPublicacion,
+            'fechaExpiracion' => date('Y-m-d H:i:s', strtotime($fechaPublicacion . TIEMPO_PUBLICACION))
         ];
         $this->db->table('noticias')->insert($data);
     }

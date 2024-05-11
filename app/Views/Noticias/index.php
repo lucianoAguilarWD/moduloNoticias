@@ -41,7 +41,7 @@
                 <div class="container row" style="margin:auto;">
                     <?php foreach ($noticias as $noticia) : ?>
                         <?php if ($noticia['imagen'] === '') : ?>
-                            <a href="<?= base_url('noticias/' . $noticia['id']); ?>">
+                            <a href="<?= base_url('noticias/' . $noticia['id']); ?>" class="d-block" style="text-decoration: none;">
                                 <div class="card col-md-6" style="max-width: 400px; max-height: 600px; margin: auto;">
                                     <div class="card-header bg-dark"></div>
                                     <div class="card-body">

@@ -130,5 +130,11 @@ define('AMBOS', 2);
 define('MODIFICO', 0);
 define('RECHAZO', 1);
 define('VALIDO', 2);
-define('PUBLICO', 3);
-define('DESHIZO', 4);
+define('DESHIZO', 3);
+define('A_CORREGIR', 4);
+
+/**
+ * Tiempo de expiración de las publicaciones
+ */
+
+define('TIEMPO_PUBLICACION', ' + 5 days'); 
