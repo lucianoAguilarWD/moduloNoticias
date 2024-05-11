@@ -61,6 +61,7 @@ class SeguimientosModel extends Model
         return $this->select('seguimientos.*, noticias.titulo AS noticia, noticias.estado AS estado')
             ->join('noticias', 'seguimientos.id_noticia = noticias.id')
             ->where('noticias.id', $id)
+            ->orderBy('seguimientos.fechaCreacion', 'DESC') // Ordenar por la fecha de creación de forma ascendente
             ->findAll();
     }
 }

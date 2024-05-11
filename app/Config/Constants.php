@@ -132,6 +132,7 @@ define('RECHAZO', 1);
 define('VALIDO', 2);
 define('DESHIZO', 3);
 define('A_CORREGIR', 4);
+define('DESACTIVO', 5);
 
 /**
  * Tiempo de expiración de las publicaciones

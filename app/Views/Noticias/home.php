@@ -41,7 +41,7 @@
                                     <a href="<?= base_url('noticias/' . $draft['id']); ?>" class="d-block" style="text-decoration: none;">
                                         <div class="card border-0" style="max-width: 600px; max-height: 800px; margin: auto;">
                                             <div class="card-header bg-dark text-light">
-                                                Fecha de creación: <?= $draft['fechaCreacion']; ?> <br>
+                                                <?= $draft['fechaCreacion']; ?> <br>
                                             </div>
                                             <div class="card-body bg-light">
                                                 <div>
@@ -60,8 +60,10 @@
                                         <?php if (intval($draft['version']) > 0 && intval($draft['estado']) == BORRADOR) : ?>
                                             <button onclick="modalDeshacer('<?= base_url('noticias/deshacer/' . $draft['id']); ?>', <?= $draft['version'] ?>);" class="btn btn-info"><i class="fa-solid fa-rotate-left"></i></button>
                                         <?php endif; ?>
-                                        <a href="tracking" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
-                                        <?php if (intval($draft['version']) === 0 ) : ?>
+                                        <?php if (intval($draft['version']) !== 0) : ?>
+                                            <a href="<?= base_url('noticias/seguimiento/' . $draft['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                        <?php endif; ?>
+                                        <?php if (intval($draft['version']) === 0) : ?>
                                             <button onclick="modalDesactivar('<?= base_url('noticias/desactivar/' . $draft['id']); ?>', <?= $draft['version'] ?>);" class="btn btn-info"><i class="fa-solid fa-minus"></i></button>
                                         <?php endif; ?>
                                         <button onclick="modalConfirmacion('<?= base_url('noticias/' . $draft['id']); ?>');" class="btn btn-info"><i class="fa-solid fa-trash"></i></button>
@@ -77,7 +79,7 @@
         </div>
         <!-----------------------------------------------VALIDANDOSE----------------------------------------------------->
         <div class="tab-pane" id="validando" role="tabpanel" aria-labelledby="validando-tab" tabindex="0">
-            <section class="col-md-8 mt-5">
+            <section class="mt-5">
                 <div class="card border-0">
                     <div class="card-body">
                         <div class="container row" style="margin: auto;">
@@ -86,7 +88,7 @@
                                     <a href="<?= base_url('noticias/' . $val['id']); ?>" class="d-block" style="text-decoration: none;">
                                         <div class="card border-0" style="max-width: 600px; max-height: 800px; margin: auto;">
                                             <div class="card-header bg-dark text-light">
-                                                Fecha de creación: <?= $val['fechaCreacion']; ?> <br>
+                                                <?= $val['fechaCreacion']; ?> <br>
                                             </div>
                                             <div class="card-body bg-light">
                                                 <div>
@@ -101,8 +103,10 @@
                                     <div class="bg-light text-center">
                                         <a href="<?= base_url('noticias/' . $val['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                         <button onclick="modalCambioABorrador('<?= base_url('noticias/borrador/' . $val['id']); ?>', <?= $val['version'] ?>);" class="btn btn-info"><i class="fa-solid fa-pen-ruler"></i></button>
-                                        <a href="tracking" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
-                                        <?php if (intval($val['version']) === 0 ) : ?>
+                                        <?php if (intval($val['version']) !== 0) : ?>
+                                            <a href="<?= base_url('noticias/seguimiento/' . $val['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                        <?php endif; ?>
+                                        <?php if (intval($val['version']) === 0) : ?>
                                             <button onclick="modalDesactivar('<?= base_url('noticias/desactivar/' . $val['id']); ?>', <?= $val['version'] ?>);" class="btn btn-info"><i class="fa-solid fa-minus"></i></button>
                                         <?php endif; ?>
                                         <button onclick="modalConfirmacion('<?= base_url('noticias/' . $val['id']); ?>');" class="btn btn-info"><i class="fa-solid fa-trash"></i></button>
@@ -116,7 +120,7 @@
         </div>
         <!-----------------------------------------------DESACTIVADAS----------------------------------------------------->
         <div class="tab-pane" id="desactivadas" role="tabpanel" aria-labelledby="desactivadas-tab" tabindex="0">
-            <section class="col-md-8 mt-5">
+            <section class="mt-5">
                 <div class="card border-0">
                     <div class="card-body">
                         <div class="container row" style="margin: auto;">
@@ -125,7 +129,7 @@
                                     <a href="<?= base_url('noticias/' . $desactivada['id']); ?>" class="d-block" style="text-decoration: none;">
                                         <div class="card border-0" style="max-width: 600px; max-height: 800px; margin: auto;">
                                             <div class="card-header bg-dark text-light">
-                                                Fecha de creación: <?= $desactivada['fechaCreacion']; ?> <br>
+                                                <?= $desactivada['fechaCreacion']; ?> <br>
                                             </div>
                                             <div class="card-body bg-light">
                                                 <div>
@@ -140,7 +144,9 @@
                                     <div class="bg-light text-center">
                                         <a href="<?= base_url('noticias/' . $desactivada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                         <button onclick="modalActivar('<?= base_url('noticias/activar/' . $desactivada['id']); ?>');" class="btn btn-info"><i class="fa-solid fa-bolt"></i></button>
-                                        <a href="tracking" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                        <?php if (intval($desactivada['version']) !== 0) : ?>
+                                            <a href="<?= base_url('noticias/seguimiento/' . $desactivada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                        <?php endif; ?>
                                     </div>
 
                                 </div>
@@ -153,7 +159,7 @@
         </div>
         <!-----------------------------------------------PUBLICADAS----------------------------------------------------->
         <div class="tab-pane" id="publicadas" role="tabpanel" aria-labelledby="publicadas-tab" tabindex="0">
-            <section class="col-md-8 mt-5">
+            <section class="mt-5">
                 <div class="card border-0">
                     <div class="card-body">
                         <div class="container row" style="margin: auto;">
@@ -179,7 +185,9 @@
                                     </a>
                                     <div class="bg-light text-center">
                                         <a href="<?= base_url('noticias/' . $publicada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
-                                        <a href="tracking" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                        <?php if (intval($publicada['version']) !== 0) : ?>
+                                            <a href="<?= base_url('noticias/seguimiento/' . $publicada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                        <?php endif; ?>
                                     </div>
 
                                 </div>
@@ -192,7 +200,7 @@
         </div>
         <!-----------------------------------------------CORREGIR----------------------------------------------------->
         <div class="tab-pane" id="corregir" role="tabpanel" aria-labelledby="corregir-tab" tabindex="0">
-            <section class="col-md-8 mt-5">
+            <section class="mt-5">
                 <div class="card border-0">
                     <div class="card-body">
                         <div class="container row" style="margin: auto;">
@@ -201,7 +209,7 @@
                                     <a href="<?= base_url('noticias/' . $correct['id']); ?>" class="d-block" style="text-decoration: none;">
                                         <div class="card border-0" style="max-width: 600px; max-height: 800px; margin: auto;">
                                             <div class="card-header bg-dark text-light">
-                                                Fecha de creación: <?= $correct['fechaCreacion']; ?> <br>
+                                                <?= $correct['fechaCreacion']; ?> <br>
                                             </div>
                                             <div class="card-body bg-light">
                                                 <div>
@@ -216,7 +224,9 @@
                                     <div class="bg-light text-center">
                                         <a href="<?= base_url('noticias/' . $correct['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                         <a href="<?= base_url('noticias/' . $correct['id'] . '/edit'); ?>" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="tracking" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                        <?php if (intval($correct['version']) !== 0) : ?>
+                                            <a href="<?= base_url('noticias/seguimiento/' . $correct['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                        <?php endif; ?>
                                     </div>
 
                                 </div>
@@ -229,7 +239,7 @@
         </div>
         <!-----------------------------------------------RECHAZADAS----------------------------------------------------->
         <div class="tab-pane" id="rechazadas" role="tabpanel" aria-labelledby="rechazadas-tab" tabindex="0">
-            <section class="col-md-8 mt-5">
+            <section class="mt-5">
                 <div class="card border-0">
                     <div class="card-body">
                         <div class="container row" style="margin: auto;">
@@ -238,7 +248,7 @@
                                     <a href="<?= base_url('noticias/' . $rechazada['id']); ?>" class="d-block" style="text-decoration: none;">
                                         <div class="card border-0" style="max-width: 600px; max-height: 800px; margin: auto;">
                                             <div class="card-header bg-dark text-light">
-                                                Fecha de creación: <?= $rechazada['fechaCreacion']; ?> <br>
+                                                <?= $rechazada['fechaCreacion']; ?> <br>
                                             </div>
                                             <div class="card-body bg-light">
                                                 <div>
@@ -253,7 +263,9 @@
                                     </a>
                                     <div class="bg-light text-center">
                                         <a href="<?= base_url('noticias/' . $rechazada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
-                                        <a href="tracking" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                        <?php if (intval($rechazada['version']) !== 0) : ?>
+                                            <a href="<?= base_url('noticias/seguimiento/' . $rechazada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                        <?php endif; ?>
                                         <button onclick="modalConfirmacion('<?= base_url('noticias/' . $rechazada['id']); ?>');" class="btn btn-info"><i class="fa-solid fa-trash"></i></button>
                                     </div>
 
@@ -393,6 +405,7 @@
             }
         })
     }
+
     function reloadPage() {
         location.reload();
     }

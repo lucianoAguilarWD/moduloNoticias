@@ -340,6 +340,8 @@ class Noticias extends BaseController
             }
         }
 
+        $noticiaCat = $this->noticiasModel->noticiaCategoria($noticia['id']);
+
         //? crear el respaldo o modificar el respaldo de ser necesario
 
         $res = $this->respaldosModel->respaldoNoticia($noticia['id']);
@@ -383,21 +385,35 @@ class Noticias extends BaseController
         ]);
 
         //? creamos el seguimiento
-        $noticiaCat = $this->noticiasModel->noticiaCategoria($noticia['id']);
+        
+        switch ($noticiaCat['estado']){
+            case BORRADOR: $est = 'Borrador';break;
+            case L_VALIDAR: $est = 'Validandose';break;
+            case CORREGIR: $est = 'A corregir';break;
+            case RECHAZADO: $est = 'Rechazada';break;
+            case VALIDADA: $est = 'Validada/Publicada;';break;
+        }
 
         $tit = $noticiaCat['titulo'];
         $desc = $noticiaCat['descripcion'];
-        $est = $noticiaCat['estado'];
-        $img = $noticiaCat['imagen'];
+        $img = ($noticiaCat['imagen'] !== null)? 'Tiene imagen': 'No tiene imagen';
         $categoria = $noticiaCat['categoria'];
-        $antes = "$tit|$desc|$est|$img|$categoria";
+        $antes = "Titulo: $tit - Descripción: $desc - Estado: $est - Imagen: $img - Categoria: $categoria";
+
+        switch (intval($post['estados'])){
+            case BORRADOR: $est = 'Borrador';break;
+            case L_VALIDAR: $est = 'Validandose';break;
+            case CORREGIR: $est = 'A corregir';break;
+            case RECHAZADO: $est = 'Rechazada';break;
+            case VALIDADA: $est = 'Validada/Publicada;';break;
+        }
 
         $tit = trim($post['titulo']);
         $desc = trim($post['desc']);
-        $est = intval($post['estados']);
-        $img = $newName;
-        $categoria = intval($post['categoria']);
-        $despues = "$tit|$desc|$est|$img|$categoria";
+        $img = ($newName === '') ? 'Mantuvo imagen': 'Cambio imagen';
+        $categoriaTrae = $this->categoriasModel->traerCategoria(intval($post['categoria']));
+        $categoria = $categoriaTrae['nombre'];
+        $despues = "Titulo: $tit - Descripción: $desc - Estado: $est - Imagen: $img - Categoria: $categoria";
         $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
 
         $this->seguimientosModel->insert([
@@ -499,7 +515,7 @@ class Noticias extends BaseController
 
     public function tracking($id)
     {
-        $seguimientos = $this->seguimientosModel->seguimientoNoticia($id);
+        $seguimientos = $this->seguimientosModel->seguimientosNoticia($id);
 
 
         if (empty($seguimientos)) {
@@ -530,9 +546,10 @@ class Noticias extends BaseController
         $noticiaCat = $this->noticiasModel->noticiaCategoria($idNoticia);
 
         $version = intval($noticia['version']);
+        $url = 'http://localhost/moduloNoticias/public/noticias/seguimiento/' . $idNoticia;
 
         if (intval($this->request->getPost('version')) !== $version) {
-            return redirect()->back()->with('error', 'No pudo deshacer la modificación en la noticia debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+            return redirect()->back()->with('error', "No pudo deshacer la modificación en la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
         }
 
         $version = intval($noticia['version']);
@@ -578,7 +595,7 @@ class Noticias extends BaseController
         $est = $noticiaCat['estado'];
         $img = $noticiaCat['imagen'];
         $categoria = $noticiaCat['categoria'];
-        $despues = "$tit|$desc|$est|$img|$categoria";
+        $despues = "Titulo: $tit - Descripción: $desc - Estado: $est - Imagen: $img - Categoria: $categoria";
         $noticiaCat = $this->noticiasModel->noticiaCategoria($idNoticia);
 
         $tit = $noticiaCat['titulo'];
@@ -586,7 +603,7 @@ class Noticias extends BaseController
         $est = $noticiaCat['estado'];
         $img = $noticiaCat['imagen'];
         $categoria = $noticiaCat['categoria'];
-        $antes = "$tit|$desc|$est|$img|$categoria";
+        $antes = "Titulo: $tit - Descripción: $desc - Estado: $est - Imagen: $img - Categoria: $categoria";
         $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
 
         $this->seguimientosModel->insert([
@@ -612,6 +629,16 @@ class Noticias extends BaseController
         $this->noticiasModel->update($id, [
             'version' => $version + 1,
             'activa' => DESACTIVADA
+        ]);
+
+        $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
+
+        $this->seguimientosModel->insert([
+            'accion' => DESACTIVO,
+            'antes' => 'Activa',
+            'despues' => 'Desactivada',
+            'id_usuario' => $usuario['id'],
+            'id_noticia' => $noticia['id']
         ]);
 
         return redirect()->to('noticias/home');
@@ -703,9 +730,10 @@ class Noticias extends BaseController
     {
         $noticia = $this->noticiasModel->find($id);
         $version = intval($noticia['version']);
+        $url = 'http://localhost/moduloNoticias/public/noticias/seguimiento/' . $id;
 
         if (intval($this->request->getPost('version')) !== $version) {
-            return redirect()->back()->with('error', 'No pudo publicarse debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+            return redirect()->back()->with('error', "No pudo publicar la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
         }
 
         $res = $this->respaldosModel->respaldoNoticia($id);
@@ -756,9 +784,10 @@ class Noticias extends BaseController
     {
         $noticia = $this->noticiasModel->find($id);
         $version = intval($noticia['version']);
+        $url = 'http://localhost/moduloNoticias/public/noticias/seguimiento/' . $id;
 
         if (intval($this->request->getPost('version')) !== $version) {
-            return redirect()->back()->with('error', 'No pudo deshacerse la publicación debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+            return redirect()->back()->with('error', "No pudo despublicar la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
         }
 
         $res = $this->respaldosModel->respaldoNoticia($id);
@@ -810,9 +839,10 @@ class Noticias extends BaseController
 
         $noticia = $this->noticiasModel->find($id);
         $version = intval($noticia['version']);
+        $url = 'http://localhost/moduloNoticias/public/noticias/seguimiento/' . $id;
 
         if (intval($this->request->getPost('version')) !== $version) {
-            return redirect()->back()->with('error', 'No pudo rechazar la noticia debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+            return redirect()->back()->with('error', "No pudo rechazar la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
         }
 
         $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
@@ -884,9 +914,10 @@ class Noticias extends BaseController
     {
         $noticia = $this->noticiasModel->find($id);
         $version = intval($noticia['version']);
+        $url = 'http://localhost/moduloNoticias/public/noticias/seguimiento/' . $id;
 
         if (intval($this->request->getPost('version')) !== $version) {
-            return redirect()->back()->with('error', 'No pudo mandar a corregir la noticia debido posibles actualizaciones en la noticia.<a href="tracking">Para obtener más detalles, consulte el seguimiento de la misma.</a> ');
+            return redirect()->back()->with('error', "No pudo mandar a corregir la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
         }
 
         $reglas = [
