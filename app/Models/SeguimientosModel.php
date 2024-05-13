@@ -58,8 +58,9 @@ class SeguimientosModel extends Model
 
     public function seguimientosNoticia($id)
     {
-        return $this->select('seguimientos.*, noticias.titulo AS noticia, noticias.estado AS estado')
+        return $this->select('seguimientos.*, noticias.titulo AS noticia, noticias.estado AS estado, usuarios.nombre AS usuario')
             ->join('noticias', 'seguimientos.id_noticia = noticias.id')
+            ->join('usuarios', 'seguimientos.id_usuario = usuarios.id')
             ->where('noticias.id', $id)
             ->orderBy('seguimientos.fechaCreacion', 'DESC') // Ordenar por la fecha de creación de forma ascendente
             ->findAll();

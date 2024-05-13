@@ -61,7 +61,7 @@
                                             <button onclick="modalDeshacer('<?= base_url('noticias/deshacer/' . $draft['id']); ?>', <?= $draft['version'] ?>);" class="btn btn-info"><i class="fa-solid fa-rotate-left"></i></button>
                                         <?php endif; ?>
                                         <?php if (intval($draft['version']) !== 0) : ?>
-                                            <a href="<?= base_url('noticias/seguimiento/' . $draft['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                            <a href="<?= base_url('noticias/seguimientos/' . $draft['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
                                         <?php endif; ?>
                                         <?php if (intval($draft['version']) === 0) : ?>
                                             <button onclick="modalDesactivar('<?= base_url('noticias/desactivar/' . $draft['id']); ?>', <?= $draft['version'] ?>);" class="btn btn-info"><i class="fa-solid fa-minus"></i></button>
@@ -104,7 +104,7 @@
                                         <a href="<?= base_url('noticias/' . $val['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                         <button onclick="modalCambioABorrador('<?= base_url('noticias/borrador/' . $val['id']); ?>', <?= $val['version'] ?>);" class="btn btn-info"><i class="fa-solid fa-pen-ruler"></i></button>
                                         <?php if (intval($val['version']) !== 0) : ?>
-                                            <a href="<?= base_url('noticias/seguimiento/' . $val['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                            <a href="<?= base_url('noticias/seguimientos/' . $val['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
                                         <?php endif; ?>
                                         <?php if (intval($val['version']) === 0) : ?>
                                             <button onclick="modalDesactivar('<?= base_url('noticias/desactivar/' . $val['id']); ?>', <?= $val['version'] ?>);" class="btn btn-info"><i class="fa-solid fa-minus"></i></button>
@@ -145,7 +145,7 @@
                                         <a href="<?= base_url('noticias/' . $desactivada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                         <button onclick="modalActivar('<?= base_url('noticias/activar/' . $desactivada['id']); ?>');" class="btn btn-info"><i class="fa-solid fa-bolt"></i></button>
                                         <?php if (intval($desactivada['version']) !== 0) : ?>
-                                            <a href="<?= base_url('noticias/seguimiento/' . $desactivada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                            <a href="<?= base_url('noticias/seguimientos/' . $desactivada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
                                         <?php endif; ?>
                                     </div>
 
@@ -186,7 +186,7 @@
                                     <div class="bg-light text-center">
                                         <a href="<?= base_url('noticias/' . $publicada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                         <?php if (intval($publicada['version']) !== 0) : ?>
-                                            <a href="<?= base_url('noticias/seguimiento/' . $publicada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                            <a href="<?= base_url('noticias/seguimientos/' . $publicada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
                                         <?php endif; ?>
                                     </div>
 
@@ -225,7 +225,7 @@
                                         <a href="<?= base_url('noticias/' . $correct['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                         <a href="<?= base_url('noticias/' . $correct['id'] . '/edit'); ?>" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a>
                                         <?php if (intval($correct['version']) !== 0) : ?>
-                                            <a href="<?= base_url('noticias/seguimiento/' . $correct['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                            <a href="<?= base_url('noticias/seguimientos/' . $correct['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
                                         <?php endif; ?>
                                     </div>
 
@@ -264,7 +264,7 @@
                                     <div class="bg-light text-center">
                                         <a href="<?= base_url('noticias/' . $rechazada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                         <?php if (intval($rechazada['version']) !== 0) : ?>
-                                            <a href="<?= base_url('noticias/seguimiento/' . $rechazada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                            <a href="<?= base_url('noticias/seguimientos/' . $rechazada['id']); ?>" class="btn btn-info"><i class="fa-solid fa-magnifying-glass"></i></a>
                                         <?php endif; ?>
                                         <button onclick="modalConfirmacion('<?= base_url('noticias/' . $rechazada['id']); ?>');" class="btn btn-info"><i class="fa-solid fa-trash"></i></button>
                                     </div>

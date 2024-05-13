@@ -123,7 +123,7 @@
                                 <td><?= $sValid['categorias']; ?></td>
                                 <td>
                                     <a href="<?= base_url('noticias/' . $sValid['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
-                                    <button onclick="modalDeshacer('<?= base_url('noticias/desPublicar/' . $sValid['id']); ?>', <?= $sValid['version'] ?>);" class="btn btn-info"><i class="fa-solid fa-rotate-left"></i></button>
+                                    <button onclick="modalDespublicar('<?= base_url('noticias/despublicar/' . $sValid['id']); ?>', <?= $sValid['version'] ?>);" class="btn btn-info"><i class="fa-solid fa-rotate-left"></i></button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -272,6 +272,23 @@
         `,
             onAccept: () => {
                 document.getElementById("form-deshacer").submit()
+            }
+        })
+    }
+
+    const modalDespublicar = (url, version) => {
+        Modal.warning({
+            confirm: true,
+            title: '¿Desea deshacer la publicación?',
+            content: `Siempre puede volver a revertir está desición
+            <form id="form-despublicar" action="${url}" method="post">
+                <?= csrf_field(); ?>
+                <input type="hidden" name="version" value="${version}" />
+                <input type="hidden" name="_method" value="PUT" />
+            </form>
+        `,
+            onAccept: () => {
+                document.getElementById("form-despublicar").submit()
             }
         })
     }

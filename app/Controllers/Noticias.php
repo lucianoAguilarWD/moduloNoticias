@@ -526,13 +526,38 @@ class Noticias extends BaseController
         if ($this->session->rol === null) {
             return redirect()->to('/');
         }elseif($this->session->rol === EDITOR){
-            return view('Noticias/tracking', ['seguimientos' => $seguimientos, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutEditor']);
+            return view('Noticias/trackings', ['seguimientos' => $seguimientos, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutEditor']);
         }elseif($this->session->rol === VALIDADOR){
-            return view('Noticias/tracking', ['seguimientos' => $seguimientos, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutValidador']);
+            return view('Noticias/trackings', ['seguimientos' => $seguimientos, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutValidador']);
         }elseif($this->session->rol === AMBOS){
-            return view('Noticias/tracking', ['seguimientos' => $seguimientos, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutMultiRol']);
+            return view('Noticias/trackings', ['seguimientos' => $seguimientos, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutMultiRol']);
         }
     }
+
+    public function seguimientoCompleto($id)
+    {
+        $seguimiento = $this->seguimientosModel->find($id);
+        $usuario = $this->usuariosModel->find($seguimiento['id_usuario']);
+        $nombre = $usuario['nombre'];
+
+
+        if (empty($seguimiento)) {
+            throw new PageNotFoundException('Cannot find the news item: ' . $id);
+        }
+
+
+        if ($this->session->rol === null) {
+            return redirect()->to('/');
+        }elseif($this->session->rol === EDITOR){
+            return view('Noticias/tracking', ['seguimiento' => $seguimiento, 'usuario' => $nombre, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutEditor']);
+        }elseif($this->session->rol === VALIDADOR){
+            return view('Noticias/tracking', ['seguimiento' => $seguimiento, 'usuario' => $nombre, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutValidador']);
+        }elseif($this->session->rol === AMBOS){
+            return view('Noticias/tracking', ['seguimiento' => $seguimiento, 'usuario' => $nombre, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutMultiRol']);
+        }
+    }
+
+
 
     //*------------------------------Fin de Vistas----------------------------------------
 
@@ -546,7 +571,7 @@ class Noticias extends BaseController
         $noticiaCat = $this->noticiasModel->noticiaCategoria($idNoticia);
 
         $version = intval($noticia['version']);
-        $url = 'http://localhost/moduloNoticias/public/noticias/seguimiento/' . $idNoticia;
+        $url = 'http://localhost/moduloNoticias/public/noticias/seguimientos/' . $idNoticia;
 
         if (intval($this->request->getPost('version')) !== $version) {
             return redirect()->back()->with('error', "No pudo deshacer la modificación en la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
@@ -730,7 +755,7 @@ class Noticias extends BaseController
     {
         $noticia = $this->noticiasModel->find($id);
         $version = intval($noticia['version']);
-        $url = 'http://localhost/moduloNoticias/public/noticias/seguimiento/' . $id;
+        $url = 'http://localhost/moduloNoticias/public/noticias/seguimientos/' . $id;
 
         if (intval($this->request->getPost('version')) !== $version) {
             return redirect()->back()->with('error', "No pudo publicar la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
@@ -784,7 +809,7 @@ class Noticias extends BaseController
     {
         $noticia = $this->noticiasModel->find($id);
         $version = intval($noticia['version']);
-        $url = 'http://localhost/moduloNoticias/public/noticias/seguimiento/' . $id;
+        $url = 'http://localhost/moduloNoticias/public/noticias/seguimientos/' . $id;
 
         if (intval($this->request->getPost('version')) !== $version) {
             return redirect()->back()->with('error', "No pudo despublicar la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
@@ -839,7 +864,7 @@ class Noticias extends BaseController
 
         $noticia = $this->noticiasModel->find($id);
         $version = intval($noticia['version']);
-        $url = 'http://localhost/moduloNoticias/public/noticias/seguimiento/' . $id;
+        $url = 'http://localhost/moduloNoticias/public/noticias/seguimientos/' . $id;
 
         if (intval($this->request->getPost('version')) !== $version) {
             return redirect()->back()->with('error', "No pudo rechazar la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
@@ -914,7 +939,7 @@ class Noticias extends BaseController
     {
         $noticia = $this->noticiasModel->find($id);
         $version = intval($noticia['version']);
-        $url = 'http://localhost/moduloNoticias/public/noticias/seguimiento/' . $id;
+        $url = 'http://localhost/moduloNoticias/public/noticias/seguimientos/' . $id;
 
         if (intval($this->request->getPost('version')) !== $version) {
             return redirect()->back()->with('error', "No pudo mandar a corregir la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
