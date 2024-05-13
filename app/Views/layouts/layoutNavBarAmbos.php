@@ -3,7 +3,7 @@
     <div class="row">
       <nav class="navbar navbar-expand-lg bg-dark" style="background-color:#0047AB;">
         <div class="container-fluid">
-          <a class="navbar-brand" href="<?= base_url('/noticias'); ?>" ><img src="<?= base_url('/assets/icon/news.png');?>" style="border-radius: 50%; max-width: 65px;"></a>
+          <a class="navbar-brand" href="<?= base_url('/'); ?>" ><img src="<?= base_url('/assets/icon/news.png');?>" style="border-radius: 50%; max-width: 65px;"></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -16,7 +16,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="<?= base_url('/noticias/new');?>" >Crear noticia</a>
                   <a class="dropdown-item" href="<?= base_url('/noticias/home');?>" >Área de trabajo</a>
-                  <a class="dropdown-item" href="<?= base_url('/noticias/validate');?>" >Área de validaciones</a>
+                  <a class="dropdown-item" href="<?= base_url('/noticias/validate');?>" >Área de validación</a>
                   <a class="dropdown-item" href="<?= base_url('/usuarios/logOut');?>" >Cerrar sesión</a>
                 </div>
               </li>

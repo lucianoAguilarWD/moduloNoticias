@@ -23,7 +23,7 @@ class Usuarios extends BaseController
         if ($this->session->rol === null) {
             return view('Usuarios/login', ['titulo' => 'Iniciar Sesión', 'layout' => 'layouts/layoutUsuarios']);
         } else {
-            return redirect()->to('noticias');
+            return redirect()->to('/');
         }
     }
 
@@ -66,7 +66,7 @@ class Usuarios extends BaseController
             //* Creamos la sesión
             $this->session->set($data);
 
-            return redirect()->to('noticias');
+            return redirect()->to('/');
         }
     }
 
@@ -83,7 +83,7 @@ class Usuarios extends BaseController
         if ($this->session->rol === null) {
             return view('Usuarios/signup',  ['titulo' => 'Crear Cuenta', 'layout' => 'layouts/layoutUsuarios']);
         } else {
-            return redirect()->to('noticias');
+            return redirect()->to('/');
         }
     }
 
@@ -152,14 +152,14 @@ class Usuarios extends BaseController
         //* Creamos la sesión
         $this->session->set($data);
 
-        return redirect()->to('noticias');
+        return redirect()->to('/');
     }
 
     public function logOut()
     {
         if ($this->session->rol !== null) {
             $this->session->destroy();
-            return redirect()->to('noticias');
+            return redirect()->to('/');
         }
     }
 }

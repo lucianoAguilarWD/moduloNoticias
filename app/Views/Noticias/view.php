@@ -22,8 +22,22 @@
         <div class="card-footer bg-dark text-light">
             Fecha de publicación: <?= $noticia['fechaPublicacion']; ?>
         </div>
+
+        <div class="text-center mt-4">
+            <button onclick="goBack();" class="btn confirmacion"><i class="fa-solid fa-circle-arrow-left"></i></button>
+        </div>
     </div>
 
 
 </main>
 <?php echo $this->endSection(); ?>
+
+<?= $this->section('scripts'); ?>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+<?= $this->endSection(); ?>

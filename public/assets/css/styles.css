@@ -2,6 +2,10 @@ body {
     font-family: Roboto;
 }
 
+main {
+    min-height:80vh
+}
+
 p{
     font-size: 14px;
 }
@@ -36,14 +40,10 @@ a{
 
 .noticias-footer{
     color:white;
-    border: white;
-    border: 40px;
-    /* bottom: 0;
-    width: 100%; */
-    /* position: relative; */
+    position: relative;
+    bottom: 0;
+    width: 100%;
 } 
-
-
 
 .noticias-footer a{
     text-decoration: none;
@@ -56,7 +56,7 @@ a{
     font-size: 1.5rem;
     text-decoration: none !important;
     color:white;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: Roboto;
 }
 
 .noticias-footer .list-group-item{

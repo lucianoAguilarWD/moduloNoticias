@@ -17,7 +17,7 @@ $routes->get('/usuarios/logOut', 'Usuarios::logOut');
 
 //* noticias
 
-$routes->get('/noticias', 'Noticias::index');
+$routes->get('/', 'Noticias::index');
 $routes->get('/noticias/(:num)', 'Noticias::show/$1');
 
 $routes->get('/noticias/new', 'Noticias::new');
@@ -30,6 +30,22 @@ $routes->delete('noticias/(:num)', 'Noticias::delete/$1');
 
 //todo: requerimentos
 
-$routes->get('/noticias/validar', 'Noticias::validar');
+//todo: vistas
 $routes->get('/noticias/home', 'Noticias::home');
 $routes->get('/noticias/validate', 'Noticias::validates');
+$routes->get('/noticias/seguimientos/(:num)', 'Noticias::tracking/$1');
+$routes->get('/noticias/seguimiento/(:num)', 'Noticias::seguimientoCompleto/$1');
+
+//todo: procesos editor
+$routes->put('/noticias/deshacer/(:num)', 'Noticias::deshacerModificacion/$1');
+$routes->put('/noticias/desactivar/(:num)', 'Noticias::desactivar/$1');
+$routes->put('/noticias/activar/(:num)', 'Noticias::activar/$1');
+$routes->put('/noticias/borrador/(:num)', 'Noticias::enviarABorrador/$1');
+$routes->put('/noticias/validar/(:num)', 'Noticias::enviarAValidar/$1');
+
+//todo: procesos validador
+$routes->put('/noticias/publicar/(:num)', 'Noticias::publicar/$1');
+$routes->put('/noticias/rechazar/(:num)', 'Noticias::rechazar/$1');
+$routes->put('/noticias/corregir/(:num)', 'Noticias::corregir/$1');
+$routes->put('/noticias/despublicar/(:num)', 'Noticias::desPublicar/$1');
+

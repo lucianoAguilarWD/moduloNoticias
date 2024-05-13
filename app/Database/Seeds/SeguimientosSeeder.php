@@ -10,6 +10,8 @@ class SeguimientosSeeder extends Seeder
     {
         $data = [
             'accion' => 1,
+            'antes' => 'tit|desc|est|categoria',
+            'despues' => 'tit|desc|est|categoria',
             'motivo' => 'Se mando a corregir el titulo, porque es muy largo',
             'id_usuario' => 2,
             'id_noticia' => 1,
@@ -19,6 +21,8 @@ class SeguimientosSeeder extends Seeder
 
         $data = [
             'accion' => 1,
+            'antes' => 'tit|desc|est|categoria',
+            'despues' => 'tit|desc|est|categoria',
             'motivo' => 'Se mando a corregir el titulo, porque es muy largo',
             'id_usuario' => 3,
             'id_noticia' => 2,

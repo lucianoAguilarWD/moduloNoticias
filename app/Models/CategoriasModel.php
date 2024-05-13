@@ -20,4 +20,9 @@ class CategoriasModel extends Model
     // Dates
     protected $useTimestamps = false;
 
+    public function traerCategoria($id)
+    {
+        return $this->select('categorias.nombre')->find($id);
+    }
+
 }

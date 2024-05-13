@@ -1,5 +1,5 @@
-<footer class="footer fixed-bottom bg-dark">
-    <div class="card text-center noticias-footer">
+<footer class="noticias-footer">
+    <div class="card text-center">
         <div class="card-header bg-dark">
 
             <div class="card-body">
@@ -8,7 +8,7 @@
                     <div class="col-md-4 footer-col">
                         <h3>Ayuda</h3>
                         <ul class="list-group list-group-flush">
-                            <a href="<?php base_url('noticias'); ?>">
+                            <a href="<?php base_url('/'); ?>">
                                 <li class="list-group-item bg-dark">Buscar</li>
                             </a>
 
@@ -18,7 +18,7 @@
                     <div class="col-md-4 footer-col">
                         <h3>Contacto</h3>
                         <ul class="list-group list-group-flush">
-                            <a href="<?php base_url('noticias'); ?>">
+                            <a href="<?php base_url('/'); ?>">
                                 <li class="list-group-item bg-dark">Contacto</li>
                             </a>
                         </ul>
