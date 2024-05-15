@@ -2,7 +2,7 @@
 
 <?php echo $this->section('contenido'); ?>
 
-<main class="container-fluid">
+<main class="container-fluid mt-5">
 
     <div class="tab-content">
         <div class="tab-pane active" id="validar" role="tabpanel" aria-labelledby="validar-tab" tabindex="0">
@@ -13,6 +13,7 @@
                             <th scope="col">Usuario</th>
                             <th scope="col">Detalles</th>
                             <th scope="col">Motivo</th>
+                            <th scope="col">Fecha</th>
                             <th scope="col">Vista completa</th>
                         </tr>
                     </thead>
@@ -43,8 +44,9 @@
                                             break;
                                     } ?></td>
                                 <td><?= strlen($seguimiento['motivo']) > 22 ? substr($seguimiento['motivo'], 0, 22) . '...' : $seguimiento['motivo']; ?></td>
+                                <td><?= $seguimiento['fechaCreacion']; ?></td>
                                 <td>
-                                    <a href="<?= base_url('noticias/seguimiento/' . $seguimiento['id']); ?>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="<?= base_url('noticias/seguimiento/' . $seguimiento['id']); ?>" class="confirmacion"><i class="fa-solid fa-eye"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -55,7 +57,7 @@
         </div>
 
         <div class="text-center mt-4">
-            <button onclick="goBack();" class="btn confirmacion"><i class="fa-solid fa-circle-arrow-left"></i></button>
+            <button onclick="goBack();" class="confirmacion"><i class="fa-solid fa-circle-arrow-left"></i></button>
         </div>
 
 </main>
