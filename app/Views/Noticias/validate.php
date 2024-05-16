@@ -130,10 +130,7 @@
                                         <?php if (intval($seguimiento['estado']) !== BORRADOR && intval($seguimiento['estado']) !== L_VALIDAR && $seguimiento['publicacion'] === null) : ?>
                                             <button onclick="modalDeshacer('<?= base_url('noticias/deshacer/' . $seguimiento['noticiaI']); ?>', <?= $seguimiento['version'] ?>);" class="btn confirmacion"><i class="fa-solid fa-rotate-left"></i></button>
                                         <?php endif; ?>
-                                        <?php if (intval($seguimiento['version']) !== 0) : ?>
-                                            <a href="<?= base_url('noticias/seguimientos/' . $seguimiento['noticiaI']); ?>" class="btn confirmacion"><i class="fa-solid fa-table-list"></i></a>
-                                        <?php endif; ?>
-
+                                        <a href="<?= base_url('noticias/seguimientos/' . $seguimiento['noticiaI']); ?>" class="btn confirmacion"><i class="fa-solid fa-table-list"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

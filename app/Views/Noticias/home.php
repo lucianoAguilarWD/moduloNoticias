@@ -49,7 +49,7 @@
                                                 </div>
                                                 <div class="card-body bg-light">
                                                     <div>
-                                                        <h3><?= strlen($draft['titulo']) > 24 ? substr($draft['titulo'], 0, 24) . '...' : $draft['titulo']; ?></h3>
+                                                        <h3><?= strlen($draft['titulo']) > 20 ? substr($draft['titulo'], 0, 20) . '...' : $draft['titulo']; ?></h3>
                                                         Categoría: <?= $draft['categorias']; ?>
                                                         <p><?= strlen($draft['descripcion']) > 36 ? substr($draft['descripcion'], 0, 36) . '...' : $draft['descripcion']; ?></p>
                                                     </div>
@@ -104,7 +104,7 @@
                                                 </div>
                                                 <div class="card-body bg-light">
                                                     <div>
-                                                        <h3><?= strlen($val['titulo']) > 24 ? substr($val['titulo'], 0, 24) . '...' : $val['titulo']; ?></h3>
+                                                        <h3><?= strlen($val['titulo']) > 20 ? substr($val['titulo'], 0, 20) . '...' : $val['titulo']; ?></h3>
                                                         Categoría: <?= $val['categorias']; ?>
                                                         <p><?= strlen($val['descripcion']) > 36 ? substr($val['descripcion'], 0, 36) . '...' : $val['descripcion']; ?></p>
                                                     </div>
@@ -154,7 +154,7 @@
                                                 </div>
                                                 <div class="card-body bg-light">
                                                     <div>
-                                                        <h3><?= strlen($desactivada['titulo']) > 24 ? substr($desactivada['titulo'], 0, 24) . '...' : $desactivada['titulo']; ?></h3>
+                                                        <h3><?= strlen($desactivada['titulo']) > 20 ? substr($desactivada['titulo'], 0, 20) . '...' : $desactivada['titulo']; ?></h3>
                                                         Categoría: <?= $desactivada['categorias']; ?>
                                                         <p><?= strlen($desactivada['descripcion']) > 36 ? substr($desactivada['descripcion'], 0, 36) . '...' : $desactivada['descripcion']; ?></p>
                                                     </div>
@@ -198,7 +198,7 @@
                                         <a href="<?= base_url('noticias/' . $publicada['id']); ?>" class="d-block" style="text-decoration: none;">
                                             <div class="card border-0" style="max-width: 600px; max-height: 800px; margin: auto;">
                                                 <div class="card-header bg-dark text-light">
-                                                    <h3><?= strlen($publicada['titulo']) > 24 ? substr($publicada['titulo'], 0, 24) . '...' : $publicada['titulo']; ?></h3>
+                                                    <h3><?= strlen($publicada['titulo']) > 20 ? substr($publicada['titulo'], 0, 20) . '...' : $publicada['titulo']; ?></h3>
                                                 </div>
                                                 <div class="card-body bg-light">
                                                     <div>
@@ -252,7 +252,7 @@
                                                 </div>
                                                 <div class="card-body bg-light">
                                                     <div>
-                                                        <h3><?= strlen($correct['titulo']) > 24 ? substr($correct['titulo'], 0, 24) . '...' : $correct['titulo']; ?></h3>
+                                                        <h3><?= strlen($correct['titulo']) > 20 ? substr($correct['titulo'], 0, 20) . '...' : $correct['titulo']; ?></h3>
                                                         Categoría: <?= $correct['categorias']; ?>
                                                         <p><?= strlen($correct['descripcion']) > 36 ? substr($correct['descripcion'], 0, 36) . '...' : $correct['descripcion']; ?></p>
                                                     </div>
@@ -300,7 +300,7 @@
                                                 </div>
                                                 <div class="card-body bg-light">
                                                     <div>
-                                                        <h3><?= strlen($rechazada['titulo']) > 24 ? substr($rechazada['titulo'], 0, 24) . '...' : $rechazada['titulo']; ?></h3>
+                                                        <h3><?= strlen($rechazada['titulo']) > 20 ? substr($rechazada['titulo'], 0, 20) . '...' : $rechazada['titulo']; ?></h3>
                                                         Categoría: <?= $rechazada['categorias']; ?>
                                                         <p><?= strlen($rechazada['descripcion']) > 36 ? substr($rechazada['descripcion'], 0, 36) . '...' : $rechazada['descripcion']; ?></p>
                                                     </div>

@@ -13,7 +13,7 @@
             <div class="card-body">
                 <div class="container row" style="margin: auto;">
                     <?php foreach ($noticias as $noticia) : ?>
-                        <?php if ($noticia['imagen'] !== '') : ?>
+                        <?php if ($noticia['imagen'] !== NULL && $noticia['imagen'] !== '') : ?>
                             <div class="card col-md-6 border-0" style="max-width: 600px; max-height: 800px; min-height: 300px; min-width: 300px; margin: auto;">
 
                                 <div class="card-body">
@@ -40,7 +40,7 @@
             <div class="card-body">
                 <div class="container row" style="margin:auto;">
                     <?php foreach ($noticias as $noticia) : ?>
-                        <?php if ($noticia['imagen'] === '') : ?>
+                        <?php if ($noticia['imagen'] === NULL || $noticia['imagen'] === '') : ?>
                             <a href="<?= base_url('noticias/' . $noticia['id']); ?>" class="d-block" style="text-decoration: none;">
                                 <div class="card col-md-6" style="max-width: 400px; max-height: 600px; margin: auto;">
                                     <div class="card-header bg-dark"></div>

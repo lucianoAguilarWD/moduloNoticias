@@ -21,5 +21,17 @@ class RespaldosSeeder extends Seeder
             'fechaExpiracion' => date('Y-m-d H:i:s', strtotime($fechaPublicacion . TIEMPO_PUBLICACION))
         ];
         $this->db->table('respaldos')->insert($data);
+
+        $data = [
+            'titulo' => 'Nuevos iPad Pro',
+            'descripcion' => 'Apple planea lanzar nuevos iPad Pro con tecnología Mini-Led y conector Thunderbolt. Estos dispositivos permiten cargar y conectar a otros dispositivos. La evolución de la manzanita.',
+            'estado' => VALIDADA,
+            'activa' => ACTIVA,
+            'id_categoria' => 1,
+            'id_noticia' => 8,
+            'fechaPublicacion' => $fechaPublicacion,
+            'fechaExpiracion' => date('Y-m-d H:i:s', strtotime($fechaPublicacion . TIEMPO_PUBLICACION))
+        ];
+        $this->db->table('respaldos')->insert($data);
     }
 }

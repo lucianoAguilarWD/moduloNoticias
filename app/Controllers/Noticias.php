@@ -314,6 +314,18 @@ class Noticias extends BaseController
         if (!$this->validate($reglas)) {
             return redirect()->back()->withInput('error', $this->validator->listErrors());
         }
+        $post = $this->request->getPost(['titulo', 'desc', 'categoria', 'estados']);
+
+        $version = $version + 1;
+
+        if (intval($post['estados']) === BORRADOR) {
+            $user = $this->session->usuario;
+            $borrador = $this->noticiasModel->noticiasPorEstado($user, BORRADOR);
+
+            if (count($borrador) >= 3) {
+                return redirect()->back()->with('error', 'No puede agregar la noticia a borrador debido a que ya tiene tres en su borrador. Desactive o descarte una noticia.');
+            }
+        }
 
         //? trabajando la imagen.
         $file = $this->request->getFile('archivo');
@@ -328,17 +340,7 @@ class Noticias extends BaseController
 
         //? comprobamos que el borrador no este ocupado
 
-        $post = $this->request->getPost(['titulo', 'desc', 'categoria', 'estados']);
-        $version = $version + 1;
-
-        if (intval($post['estados']) === BORRADOR) {
-            $user = $this->session->usuario;
-            $borrador = $this->noticiasModel->noticiasPorEstado($user, BORRADOR);
-
-            if (count($borrador) >= 3) {
-                return redirect()->back()->with('error', 'No puede agregar la noticia a borrador debido a que ya tiene tres en su borrador. Desactive o descarte una noticia.');
-            }
-        }
+        
 
         $noticiaCat = $this->noticiasModel->noticiaCategoria($noticia['id']);
 
@@ -410,7 +412,7 @@ class Noticias extends BaseController
 
         $tit = trim($post['titulo']);
         $desc = trim($post['desc']);
-        $img = ($newName === '') ? 'Mantuvo imagen': 'Cambio imagen';
+        $img = ($newName === '') ? 'Mantuvo': 'Cambio imagen';
         $categoriaTrae = $this->categoriasModel->traerCategoria(intval($post['categoria']));
         $categoria = $categoriaTrae['nombre'];
         $despues = "Titulo: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoria: $categoria";
@@ -618,7 +620,7 @@ class Noticias extends BaseController
         $tit = $noticiaCat['titulo'];
         $desc = $noticiaCat['descripcion'];
         $est = $noticiaCat['estado'];
-        $img = $noticiaCat['imagen'];
+        $img = ($noticiaCat['imagen'] === '') ? 'Mantuvo': 'Cambio imagen';
         $categoria = $noticiaCat['categoria'];
         $despues = "Titulo: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoria: $categoria";
         $noticiaCat = $this->noticiasModel->noticiaCategoria($idNoticia);
@@ -626,7 +628,7 @@ class Noticias extends BaseController
         $tit = $noticiaCat['titulo'];
         $desc = $noticiaCat['descripcion'];
         $est = $noticiaCat['estado'];
-        $img = $noticiaCat['imagen'];
+        $img = ($noticiaCat['imagen'] !== null)? 'Tiene imagen': 'No tiene imagen';
         $categoria = $noticiaCat['categoria'];
         $antes = "Titulo: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoria: $categoria";
         $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
