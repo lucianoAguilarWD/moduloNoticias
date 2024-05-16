@@ -8,6 +8,8 @@ class NoticiasSeeder extends Seeder
 {
     public function run()
     {
+        //----------------------------------------------Publicadas-------------------------------------------------------//
+
         $fechaPublicacion = date('Y-m-d H:i:s');
         $data = [
             'version' => 3,
@@ -147,5 +149,75 @@ class NoticiasSeeder extends Seeder
             'fechaExpiracion' => date('Y-m-d H:i:s', strtotime($fechaPublicacion . TIEMPO_PUBLICACION))
         ];
         $this->db->table('noticias')->insert($data);
+
+        //---------------------------------------------Borrador------------------------------------------------//
+
+        $data = [
+            'version' => 0,
+            'titulo' => 'Google anuncia avances en inteligencia artificial para mejorar la accesibilidad en Android',
+            'descripcion' => 'Google revela nuevas herramientas impulsadas por inteligencia artificial diseñadas para mejorar la accesibilidad en dispositivos Android. Estas innovaciones incluyen funciones de reconocimiento de voz mejoradas y capacidades de navegación simplificadas para usuarios con discapacidades visuales y motoras',
+            'estado' => BORRADOR,
+            'activa' => ACTIVA,
+            'id_categoria' => 2,
+            'id_usuario' => 1,
+            'fechaCreacion' => date('Y-m-d H:i:s'),
+            'fechaModificacion' => date('Y-m-d H:i:s'),
+        ];
+        $this->db->table('noticias')->insert($data);
+
+        $data = [
+            'version' => 0,
+            'titulo' => 'Tesla presenta su nuevo modelo de automóvil eléctrico con tecnología de conducción autónoma avanzada',
+            'descripcion' => 'Tesla desvela su último modelo de vehículo eléctrico, equipado con un sistema de conducción autónoma de próxima generación. Este sistema utiliza cámaras, radares y sensores ultrasonidos para proporcionar capacidades de conducción autónoma mejoradas, acercando un paso más la visión de la conducción totalmente autónoma',
+            'estado' => BORRADOR,
+            'activa' => ACTIVA,
+            'id_categoria' => 2,
+            'id_usuario' => 1,
+            'fechaCreacion' => date('Y-m-d H:i:s'),
+            'fechaModificacion' => date('Y-m-d H:i:s'),
+        ];
+        $this->db->table('noticias')->insert($data);
+
+        $data = [
+            'version' => 0,
+            'titulo' => 'Amazon lanza su servicio de entrega con drones en áreas urbanas seleccionadas.',
+            'descripcion' => 'Amazon inicia oficialmente su servicio de entrega con drones en ciertas áreas urbanas, permitiendo tiempos de entrega más rápidos y eficientes. Este innovador enfoque de logística promete revolucionar la industria del comercio electrónico y cambiar la forma en que se realizan las entregas a domicilio',
+            'estado' => BORRADOR,
+            'activa' => ACTIVA,
+            'id_categoria' => 5,
+            'id_usuario' => 1,
+            'fechaCreacion' => date('Y-m-d H:i:s'),
+            'fechaModificacion' => date('Y-m-d H:i:s'),
+        ];
+        $this->db->table('noticias')->insert($data);
+
+        //-----------------------------------------a validarse------------------------------------------------------------------//
+
+        $data = [
+            'version' => 0,
+            'titulo' => 'Facebook anuncia nuevas medidas de seguridad para proteger la privacidad de los usuarios',
+            'descripcion' => 'Facebook introduce una serie de nuevas herramientas y políticas destinadas a fortalecer la privacidad y seguridad de los datos de sus usuarios. Estas medidas incluyen controles de privacidad más intuitivos, auditorías de seguridad más rigurosas y mayores restricciones sobre el uso de datos personales con fines publicitarios',
+            'estado' => L_VALIDAR,
+            'activa' => ACTIVA,
+            'id_categoria' => 5,
+            'id_usuario' => 1,
+            'fechaCreacion' => date('Y-m-d H:i:s'),
+            'fechaModificacion' => date('Y-m-d H:i:s'),
+        ];
+        $this->db->table('noticias')->insert($data);
+
+        $data = [
+            'version' => 0,
+            'titulo' => 'Investigadores desarrollan una nueva vacuna contra el COVID-19 utilizando tecnología de ARN mensajero',
+            'descripcion' => 'Científicos anuncian el desarrollo exitoso de una vacuna contra el COVID-19 basada en la tecnología de ARN mensajero. Esta vacuna promete una respuesta inmunitaria más robusta y una producción más rápida que las vacunas tradicionales, lo que podría revolucionar la forma en que se combaten las enfermedades infecciosas en el futuro.',
+            'estado' => L_VALIDAR,
+            'activa' => ACTIVA,
+            'id_categoria' => 5,
+            'id_usuario' => 3,
+            'fechaCreacion' => date('Y-m-d H:i:s'),
+            'fechaModificacion' => date('Y-m-d H:i:s'),
+        ];
+        $this->db->table('noticias')->insert($data);
+        
     }
 }

@@ -62,7 +62,6 @@
                                             <?php if ($valid['seguimientos'] === false) : ?>
                                                 <button onclick="modalRechazar('<?= base_url('noticias/rechazar/' . $valid['noticia']['id']); ?>', <?= $valid['noticia']['version'] ?>);" class="btn confirmacion"><i class="fa-solid fa-square-xmark"></i></button>
                                             <?php endif; ?>
-                                            <button onclick="infoPage();" class="btn confirmacion"><i class="fa-solid fa-info"></i></button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

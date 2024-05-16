@@ -109,7 +109,7 @@
             </div>
 
             <div class="mb-3">
-                <?php if ($noticia['imagen'] !== '') : ?>
+                <?php if ($noticia['imagen'] !== '' && $noticia['imagen'] !== NULL) : ?>
                     <img src="<?= base_url('uploads/') . $noticia['imagen']; ?>" class="card-img-top" alt="Imagen de la noticia" style="width:100px; height:100px;">
                 <?php endif; ?>
                 <label for="archivo">Selecciona una imagen(opcional)</label>

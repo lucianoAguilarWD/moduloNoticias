@@ -19,8 +19,8 @@
                                 <div class="card-body">
                                     <a href="<?= base_url('noticias/' . $noticia['id']); ?>"><img class="card-img-top" src="<?= base_url('uploads/') . $noticia['imagen']; ?>" alt="Imagen de referencia" title="<?= $noticia['titulo']; ?>" style="height:300px;"></a>
                                     <div class="text-light bg-dark" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                        Categoría: <?= $noticia['categorias']; ?>
-                                        <h3><?= strlen($noticia['titulo']) > 21 ? substr($noticia['titulo'], 0, 21) . '...' : $noticia['titulo']; ?></h3>
+                                        <p>Categoría: <?= $noticia['categorias']; ?></p>
+                                        <h5><?= strlen($noticia['titulo']) > 30 ? substr($noticia['titulo'], 0, 30) . '...' : $noticia['titulo']; ?></h5>
                                     </div>
                                 </div>
 
@@ -42,7 +42,7 @@
                     <?php foreach ($noticias as $noticia) : ?>
                         <?php if ($noticia['imagen'] === NULL || $noticia['imagen'] === '') : ?>
                             <a href="<?= base_url('noticias/' . $noticia['id']); ?>" class="d-block" style="text-decoration: none;">
-                                <div class="card col-md-6" style="max-width: 400px; max-height: 600px; margin: auto;">
+                                <div class="card col-md-10" style="max-width: 400px; max-height: 600px; margin: auto;">
                                     <div class="card-header bg-dark"></div>
                                     <div class="card-body">
                                         <div class="text-muted">Categoría: <?= $noticia['categorias']; ?></div>

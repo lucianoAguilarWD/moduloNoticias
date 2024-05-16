@@ -64,6 +64,8 @@ Contraseña: alberto3344
 
 ## Pantallas y consideraciones propias al realizar el proyecto
 
+* Se tomó la decisión de colocar el botón de "Descartar" no solo en las noticias en estado de borrador, sino también en las noticias en proceso de validación y en las noticias rechazadas, con el objetivo de brindar mayor comodidad al usuario. Por ejemplo, si un editor se arrepiente de dejar una noticia en proceso de validación y desea descartarla, puede hacerlo directamente en lugar de tener que pasarla primero a estado de borrador y luego descartarla. En el caso de las noticias rechazadas, al ser consideradas un punto final en el ciclo de vida de la noticia, se permite al usuario descartarlas/eliminarlas de forma más sencilla. Esta funcionalidad evita la acumulación de noticias rechazadas y ofrece una manera más práctica de gestionar el contenido en el sistema.
+
 ## Usuarios
 
 * `usuarios/new`: muestra el formulario de crear usuario.
