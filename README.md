@@ -1,7 +1,7 @@
 # Modulo de Noticias
 
 ## Descripción
-Este proyecto del curso "Técnicas y Herramientas para el Desarrollo Web" y "Topicos avanzados" se enfoca en desarrollar un sitio web de noticias para una empresa tecnológica, siguiendo una narrativa específica y cumpliendo con los requisitos establecidos.
+Este proyecto del curso "Técnicas y Herramientas para el Desarrollo Web" y "Tópicos avanzados" se enfoca en desarrollar un sitio web de noticias para una empresa tecnológica, siguiendo una narrativa específica y cumpliendo con los requisitos establecidos.
 
 ## Estructura del Proyecto
 El proyecto sigue el patrón de diseño Modelo-Vista-Controlador (MVC), lo que facilita la gestión de los componentes del sistema. Incluye migraciones, seeders, validaciones personalizadas y utiliza el ORM de CodeIgniter query builder.
@@ -34,7 +34,9 @@ database.default.database = modulonoticias
 database.default.username = root
 database.default.password = 
 
-dar los valores correspondientes al archivo .env o a los archivos app.php y database.php
+dar los valores correspondientes al archivo .env o a database.php con los datos de su usuario y pw. Por defecto dejo esa configuración.
+
+app.baseURL = 'http://localhost/modulonoticias/' por si la necesitan
 
 al clonar este repositorio se debe instalar las dependencias del proyecto con composer install
 

@@ -116,7 +116,7 @@ class Noticias extends BaseController
 
         $reglas = [
             'titulo' => [
-                'label' => 'Titulo',
+                'label' => 'Título',
                 'rules' => 'required|max_length[150]',
                 'errors' => [
                     'required' => 'El campo {field} es obligatorio',
@@ -144,13 +144,13 @@ class Noticias extends BaseController
                 'errors' => [
                     'is_image' => 'El campo {field} debe ser una imagen',
                     'mime_in' => 'Los formatos soportados son jpg/jpeg/png',
-                    'max_size' => 'El tamaño maximo es 1 mb',
-                    'max_dims' => 'Las dimensiones maximas son 1920x1080'
+                    'max_size' => 'El tamaño máximo es 1 mb',
+                    'max_dims' => 'Las dimensiones máximas son 1920x1080'
                 ]
             ],
 
             'categoria' => [
-                'label' => 'Seleccione una categoria',
+                'label' => 'Seleccione una categoría',
                 'rules' => 'required|in_list[1,2,3,4,5]',
                 'errors' => [
                     'required' => 'El campo {field} es obligatorio',
@@ -261,7 +261,7 @@ class Noticias extends BaseController
         //? validando el formulario
         $reglas = [
             'titulo' => [
-                'label' => 'Titulo',
+                'label' => 'Título',
                 'rules' => 'required|max_length[150]',
                 'errors' => [
                     'required' => 'El campo {field} es obligatorio',
@@ -289,13 +289,13 @@ class Noticias extends BaseController
                 'errors' => [
                     'is_image' => 'El campo {field} debe ser una imagen',
                     'mime_in' => 'Los formatos soportados son jpg/jpeg/png',
-                    'max_size' => 'El tamaño maximo es 1 mb',
-                    'max_dims' => 'Las dimensiones maximas son 1920x1080'
+                    'max_size' => 'El tamaño máximo es 1 mb',
+                    'max_dims' => 'Las dimensiones máximas son 1920x1080'
                 ]
             ],
 
             'categoria' => [
-                'label' => 'Seleccione una categoria',
+                'label' => 'Seleccione una categoría',
                 'rules' => 'required|in_list[1,2,3,4,5]',
                 'errors' => [
                     'required' => 'El campo {field} es obligatorio',
@@ -400,7 +400,7 @@ class Noticias extends BaseController
         $desc = $noticiaCat['descripcion'];
         $img = ($noticiaCat['imagen'] !== null)? 'Tiene imagen': 'No tiene imagen';
         $categoria = $noticiaCat['categoria'];
-        $antes = "Titulo: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoria: $categoria";
+        $antes = "Título: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoría: $categoria";
 
         switch (intval($post['estados'])){
             case BORRADOR: $est = 'Borrador';break;
@@ -415,7 +415,7 @@ class Noticias extends BaseController
         $img = ($newName === '') ? 'Mantuvo': 'Cambio imagen';
         $categoriaTrae = $this->categoriasModel->traerCategoria(intval($post['categoria']));
         $categoria = $categoriaTrae['nombre'];
-        $despues = "Titulo: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoria: $categoria";
+        $despues = "Título: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoría: $categoria";
         $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
 
         $this->seguimientosModel->insert([
@@ -573,7 +573,7 @@ class Noticias extends BaseController
         $noticiaCat = $this->noticiasModel->noticiaCategoria($idNoticia);
 
         $version = intval($noticia['version']);
-        $url = 'http://localhost/moduloNoticias/public/noticias/seguimientos/' . $idNoticia;
+        $url = 'http://localhost/moduloNoticias/noticias/seguimientos/' . $idNoticia;
 
         if (intval($this->request->getPost('version')) !== $version) {
             return redirect()->back()->with('error', "No pudo deshacer la modificación en la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
@@ -622,7 +622,7 @@ class Noticias extends BaseController
         $est = $noticiaCat['estado'];
         $img = ($noticiaCat['imagen'] === '') ? 'Mantuvo': 'Cambio imagen';
         $categoria = $noticiaCat['categoria'];
-        $despues = "Titulo: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoria: $categoria";
+        $despues = "Título: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoría: $categoria";
         $noticiaCat = $this->noticiasModel->noticiaCategoria($idNoticia);
 
         $tit = $noticiaCat['titulo'];
@@ -630,7 +630,7 @@ class Noticias extends BaseController
         $est = $noticiaCat['estado'];
         $img = ($noticiaCat['imagen'] !== null)? 'Tiene imagen': 'No tiene imagen';
         $categoria = $noticiaCat['categoria'];
-        $antes = "Titulo: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoria: $categoria";
+        $antes = "Título: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoría: $categoria";
         $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
 
         $this->seguimientosModel->insert([
@@ -712,7 +712,7 @@ class Noticias extends BaseController
 
         $this->seguimientosModel->insert([
             'accion' => MODIFICO,
-            'antes' => 'validandose',
+            'antes' => 'validándose',
             'despues' => 'borrador',
             'id_usuario' => $usuario['id'],
             'id_noticia' => $id
@@ -741,7 +741,7 @@ class Noticias extends BaseController
         $this->seguimientosModel->insert([
             'accion' => MODIFICO,
             'antes' => 'borrador',
-            'despues' => 'validandose',
+            'despues' => 'validándose',
             'id_usuario' => $usuario['id'],
             'id_noticia' => $id
         ]);
@@ -757,7 +757,7 @@ class Noticias extends BaseController
     {
         $noticia = $this->noticiasModel->find($id);
         $version = intval($noticia['version']);
-        $url = 'http://localhost/moduloNoticias/public/noticias/seguimientos/' . $id;
+        $url = 'http://localhost/moduloNoticias/noticias/seguimientos/' . $id;
 
         if (intval($this->request->getPost('version')) !== $version) {
             return redirect()->back()->with('error', "No pudo publicar la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
@@ -798,7 +798,7 @@ class Noticias extends BaseController
 
         $this->seguimientosModel->insert([
             'accion' => VALIDO,
-            'antes' => 'validandose',
+            'antes' => 'validándose',
             'despues' => 'válido/público',
             'id_usuario' => $usuario['id'],
             'id_noticia' => $id
@@ -811,7 +811,7 @@ class Noticias extends BaseController
     {
         $noticia = $this->noticiasModel->find($id);
         $version = intval($noticia['version']);
-        $url = 'http://localhost/moduloNoticias/public/noticias/seguimientos/' . $id;
+        $url = 'http://localhost/moduloNoticias/noticias/seguimientos/' . $id;
 
         if (intval($this->request->getPost('version')) !== $version) {
             return redirect()->back()->with('error', "No pudo despublicar la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
@@ -866,7 +866,7 @@ class Noticias extends BaseController
 
         $noticia = $this->noticiasModel->find($id);
         $version = intval($noticia['version']);
-        $url = 'http://localhost/moduloNoticias/public/noticias/seguimientos/' . $id;
+        $url = 'http://localhost/moduloNoticias/noticias/seguimientos/' . $id;
 
         if (intval($this->request->getPost('version')) !== $version) {
             return redirect()->back()->with('error', "No pudo rechazar la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
@@ -927,7 +927,7 @@ class Noticias extends BaseController
 
         $this->seguimientosModel->insert([
             'accion' => RECHAZO,
-            'antes' => 'validandose',
+            'antes' => 'validándose',
             'despues' => 'rechazado',
             'motivo' => $this->request->getPost('motivo'),
             'id_usuario' => $usuario['id'],
@@ -941,7 +941,7 @@ class Noticias extends BaseController
     {
         $noticia = $this->noticiasModel->find($id);
         $version = intval($noticia['version']);
-        $url = 'http://localhost/moduloNoticias/public/noticias/seguimientos/' . $id;
+        $url = 'http://localhost/moduloNoticias/noticias/seguimientos/' . $id;
 
         if (intval($this->request->getPost('version')) !== $version) {
             return redirect()->back()->with('error', "No pudo mandar a corregir la noticia debido posibles actualizaciones en la noticia.<a href=\"$url\">Seguimiento de la noticia</a> ");
@@ -992,7 +992,7 @@ class Noticias extends BaseController
 
         $this->seguimientosModel->insert([
             'accion' => A_CORREGIR,
-            'antes' => 'validandose',
+            'antes' => 'validándose',
             'despues' => 'a corregir',
             'motivo' => $this->request->getPost('motivo'),
             'id_usuario' => $usuario['id'],
