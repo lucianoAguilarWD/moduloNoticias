@@ -36,6 +36,8 @@ database.default.password =
 
 dar los valores correspondientes al archivo .env o a los archivos app.php y database.php
 
+al clonar este repositorio se debe instalar las dependencias del proyecto con composer install
+
 ## Desafíos Superados
 Se superaron desafíos en la planificación y desarrollo del respaldo y versiones de noticias, que condujeron a la implementación de las validaciones requeridas. Se utilizó una página única para editores y validadores, organizada en secciones con pestañas. Se implementó un evento para la publicación automática de noticias y se usaron popups/modales para mensajes de ayuda y formularios.
 
