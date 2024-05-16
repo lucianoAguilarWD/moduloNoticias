@@ -9,7 +9,7 @@
 
         <div class="card-header bg-dark">
             <div>
-                <?php if ($noticia['imagen'] !== '') : ?>
+                <?php if ($noticia['imagen'] !== '' && $noticia['imagen'] !== NULL) : ?>
                     <img src="<?= base_url('public/uploads/') . $noticia['imagen']; ?>" class="card-img-top" alt="Imagen de la noticia">
                 <?php endif; ?>
             </div>
