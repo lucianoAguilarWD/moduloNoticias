@@ -22,7 +22,7 @@ class Usuarios extends Migration
             ],
             'contrasenia' => [
                 'type' => 'VARCHAR',
-                'constraint' => 50,
+                'constraint' => 150,
             ],
             'rol' => [
                 'type' => 'INT',

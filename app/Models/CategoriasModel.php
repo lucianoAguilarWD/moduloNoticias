@@ -12,12 +12,17 @@ class CategoriasModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nombre', 'id_noticia'];
+    protected $allowedFields    = ['id', 'nombre'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
 
     // Dates
     protected $useTimestamps = false;
+
+    public function traerCategoria($id)
+    {
+        return $this->select('categorias.nombre')->find($id);
+    }
 
 }

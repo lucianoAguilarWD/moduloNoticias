@@ -11,7 +11,7 @@
 </head>
 <body>
    
-<?php echo $this->include('layouts/layoutNavBar');?>
+<?php echo $this->include('layouts/layoutNavBarValidador');?>
 
 <?php echo $this->renderSection('contenido');?>
 

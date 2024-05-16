@@ -92,3 +92,50 @@ define('EVENT_PRIORITY_NORMAL', 100);
  * @deprecated Use \CodeIgniter\Events\Events::PRIORITY_HIGH instead.
  */
 define('EVENT_PRIORITY_HIGH', 10);
+
+/*
+ | --------------------------------------------------------------------------
+ | Constantes del proyecto
+ | --------------------------------------------------------------------------
+ |
+ | Constantes hechas para usar a la hora de interactuar con la base de datos y al hacer condiciones.
+ |
+ |
+*/
+/**
+ * Estados.
+*/
+define('BORRADOR', 0);
+define('L_VALIDAR', 1);
+define('CORREGIR', 2);
+define('RECHAZADO', 3);
+define('VALIDADA', 4);
+
+/**
+ * Activa.
+*/
+define('DESACTIVADA', 0);
+define('ACTIVA', 1);
+
+/**
+ * Rol.
+*/
+define('EDITOR', 0);
+define('VALIDADOR', 1);
+define('AMBOS', 2);
+
+/**
+ * Acción.
+*/
+define('MODIFICO', 0);
+define('RECHAZO', 1);
+define('VALIDO', 2);
+define('DESHIZO', 3);
+define('A_CORREGIR', 4);
+define('DESACTIVO', 5);
+
+/**
+ * Tiempo de expiración de las publicaciones
+ */
+
+define('TIEMPO_PUBLICACION', ' + 5 days'); 

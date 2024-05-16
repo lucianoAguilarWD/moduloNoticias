@@ -12,11 +12,16 @@ class UsuariosModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nombre', 'contrasenia', 'rol'];
+    protected $allowedFields    = ['id', 'nombre', 'contrasenia', 'rol'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
 
     // Dates
     protected $useTimestamps = false;
+
+    public function find_by_name($nombre)
+    {
+        return $this->where('nombre', $nombre)->get()->getRowArray();
+    }
 }

@@ -1,0 +1,166 @@
+body {
+    font-family: Roboto;
+}
+
+main {
+    min-height:80vh
+}
+
+p{
+    font-size: 14px;
+}
+
+/*------------------ nav -------------------*/
+
+.noticias-nav{
+    display: flex;
+    justify-content:right;
+}
+
+.noticias-nav a{
+    margin-left: 2rem;
+    margin-right: 2rem;
+    font-size: 1.5rem;
+    text-decoration: none !important;
+    color: #CCCCCC;
+}
+
+a{
+    color: #CCCCCC;
+}
+
+.dropdown-menu :hover{
+    background-color: white;
+    color:#333 ;
+}
+
+/*----------------------------------------------*/
+
+/*------------------ footer -------------------*/
+
+.noticias-footer{
+    color:white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+} 
+
+.noticias-footer a{
+    text-decoration: none;
+    color:  white;
+}
+
+.noticias-footer h3{
+    margin-left: 2rem;
+    margin-right: 2rem;
+    font-size: 1.5rem;
+    text-decoration: none !important;
+    color:white;
+    font-family: Roboto;
+}
+
+.noticias-footer .list-group-item{
+    color:white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.noticias-footer .list-group-item:hover{
+    background:#343a40;
+}
+
+.noticias-footer .btn-social i{
+    color:white;
+}
+
+.noticias-footer .btn-social i:hover{
+    color:#343a40;
+}
+
+@media only screen and(max-width:768px){
+    .noticias-footer .btn-social{
+        display: inline-block;
+        margin-top: 15px;
+    }
+}
+
+/*----------------------------------------------*/
+
+/*------------------ botones -------------------*/
+
+.confirmacion{
+    padding: 10px 15px;
+    border: none;
+    font-size: 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    outline: none;
+    background:#343a40;
+    color: white;
+}
+
+.confirmacion:hover{
+    background: black;
+    color: white;
+}
+
+/*----------------------------------------------*/
+
+/*------------------ card -------------------*/
+
+.card-header{
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: sans-serif;
+    width: 100%;
+    margin: auto;
+}
+
+.card-footer{
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: sans-serif;
+    width: 100%;
+    margin: auto;
+}
+
+.noticias-muestra{
+    width: 800px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    padding: 3rem !important;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+/*----------------------------------------------*/
+
+section{
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: sans-serif;
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+    margin-top: 10px;
+}
+
+form{
+    background-color: white;
+}
+
+form h2{
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: navy;
+}
+
+label{
+    font-weight: bold; 
+    color: #333; 
+    font-size: 16px; 
+    margin-right: 10px;
+}

@@ -11,7 +11,7 @@
 </head>
 <body>
    
-<?php echo $this->include('layouts/layoutNavBar');?>
+<?php echo $this->include('layouts/layoutNavBarAmbos');?>
 
 <?php echo $this->renderSection('contenido');?>
 

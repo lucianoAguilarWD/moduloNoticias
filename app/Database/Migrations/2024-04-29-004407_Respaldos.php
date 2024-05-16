@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Seguimientos extends Migration
+class Respaldos extends Migration
 {
     public function up()
     {
@@ -15,25 +15,36 @@ class Seguimientos extends Migration
                 'unsigned' => true,
                 'auto_increment' => true
             ],
-            'accion' => [
+            'titulo' => [
+                'type' => 'VARCHAR',
+                'constraint' => 150
+            ],
+            'descripcion' => [
+                'type' => 'VARCHAR',
+                'constraint' => 1000
+            ],
+            'imagen' => [
+                'type' => 'VARCHAR',
+                'constraint' => 150,
+                'null' => true
+            ],
+            'estado' => [
                 'type' => 'INT',
                 'constraint' => 11,
             ],
-            'antes' => [
-                'type' => 'LONGTEXT',
+            'activa' => [
+                'type' => 'Int',
+                'constraint' => 11,
             ],
-            'despues' => [
-                'type' => 'LONGTEXT',
-            ],
-            'motivo' => [
-                'type' => 'VARCHAR',
-                'constraint' =>1000,
+            'fechaPublicacion' => [
+                'type' => 'DATETIME',
                 'null' => true
             ],
-            'fechaCreacion' => [
+            'fechaExpiracion' => [
                 'type' => 'DATETIME',
+                'null' => true
             ],
-            'id_usuario' => [
+            'id_categoria' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
@@ -46,13 +57,13 @@ class Seguimientos extends Migration
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('id_usuario', 'usuarios', 'id');
+        $this->forge->addForeignKey('id_categoria', 'categorias', 'id');
         $this->forge->addForeignKey('id_noticia', 'noticias', 'id');
-        $this->forge->createTable('seguimientos');
+        $this->forge->createTable('respaldos');
     }
 
     public function down()
     {
-        $this->forge->dropTable('seguimientos');
+        $this->forge->dropTable('respaldos');
     }
 }

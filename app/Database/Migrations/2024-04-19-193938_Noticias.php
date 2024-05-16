@@ -15,41 +15,54 @@ class Noticias extends Migration
                 'unsigned' => true,
                 'auto_increment' => true
             ],
+            'version' => [
+                'type' => 'INT',
+                'constraint' => 255,
+            ],
             'titulo' => [
                 'type' => 'VARCHAR',
-                'constraint' => 50
+                'constraint' => 150
             ],
             'descripcion' => [
-                'type' => 'TINYTEXT',
+                'type' => 'VARCHAR',
+                'constraint' => 1000
+            ],
+            'imagen' => [
+                'type' => 'VARCHAR',
+                'constraint' => 150,
+                'null' => true
             ],
             'estado' => [
                 'type' => 'INT',
                 'constraint' => 11,
             ],
-            'validada' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'null' => true
-            ],
-            'imagen' => [
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-                'null' => true
-            ],
-            'fechaCreacion' => [
-                'type' => 'DATETIME',
-            ],
             'activa' => [
-                'type' => 'DATETIME',
-                'null' => true
+                'type' => 'Int',
+                'constraint' => 11,
             ],
             'fechaPublicacion' => [
                 'type' => 'DATETIME',
                 'null' => true
             ],
-            'fechaExpiración' => [
+            'fechaExpiracion' => [
                 'type' => 'DATETIME',
                 'null' => true
+            ],
+            'fechaCreacion' => [
+                'type' => 'DATETIME',
+            ],
+            'fechaModificacion' => [
+                'type' => 'DATETIME',
+                'null' => true
+            ],
+            'descartado' => [
+                'type' => 'DATETIME',
+                'null' => true
+            ],
+            'id_categoria' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => true,
             ],
             'id_usuario' => [
                 'type' => 'INT',
@@ -59,6 +72,7 @@ class Noticias extends Migration
         ]);
 
         $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('id_categoria', 'categorias', 'id');
         $this->forge->addForeignKey('id_usuario', 'usuarios', 'id');
         $this->forge->createTable('noticias');
     }

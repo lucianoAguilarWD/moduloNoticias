@@ -11,11 +11,12 @@
             <ul class="navbar-nav">
               <li class="nav-item ml-auto dropdown">
                 <a class="nav-link dropdown-toggle" style="color: #CCCCCC;" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fas fa-user"></i> Usuario
+                  <i class="fas fa-user"></i> Editor
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="<?= base_url('/usuarios');?>" >Iniciar Sesion</a>
-                  <a class="dropdown-item" href="<?= base_url('/usuarios/new');?>" >Crear cuenta</a>
+                  <a class="dropdown-item" href="<?= base_url('/noticias/new');?>" >Crear noticia</a>
+                  <a class="dropdown-item" href="<?= base_url('/noticias/home');?>" >Área de edición</a>
+                  <a class="dropdown-item" href="<?= base_url('/usuarios/logOut');?>" >Cerrar sesión</a>
                 </div>
               </li>
             </ul>
