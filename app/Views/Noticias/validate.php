@@ -41,9 +41,9 @@
                         <table class="table table-hover table-bordered mt-3 text-center" aria-describedby="titulo">
                             <thead class="table-dark">
                                 <tr>
-                                    <th scope="col">Titulo</th>
+                                    <th scope="col">Título</th>
                                     <th scope="col">Descripción</th>
-                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Categoría</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -95,7 +95,7 @@
                     <table class="table table-hover table-bordered mt-3 text-center" aria-describedby="titulo">
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">Titulo</th>
+                                <th scope="col">Noticia</th>
                                 <th scope="col">Acción</th>
                                 <th scope="col">Motivo</th>
                                 <th scope="col">Fecha</th>
@@ -140,7 +140,7 @@
                 <?php else : ?>
                     <div class="card border-0 mt-5">
                         <h1 class="display-4">¡Bienvenido! Aún no has realizado ninguna validación.</h1>
-                        <p class="lead">Aquí podrás consultar el historial de validación de la noticias, visualizando únicamente la última validación realizada por cada noticia. Utiliza esta sección para hacer un seguimiento de tus acciones de validación. Puedes ver el historial completo si asi lo necesitas</p>
+                        <p class="lead">Aquí podrás consultar el historial de validación de la noticias, visualizando únicamente la última validación realizada por cada noticia. Utiliza esta sección para hacer un seguimiento de tus acciones de validación. Puedes ver el historial completo si así lo necesitas</p>
                         <hr class="my-4">
                         <p>Utilizamos clases de utilidad para la tipografía y el espaciado, creando un diseño atractivo para destacar las propiedades disponibles.</p>
                     </div>
@@ -162,9 +162,9 @@
                     <table class="table table-hover table-bordered mt-3 text-center" aria-describedby="titulo">
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">Titulo</th>
+                                <th scope="col">Título</th>
                                 <th scope="col">Descripción</th>
-                                <th scope="col">Categoria</th>
+                                <th scope="col">Categoría</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -225,7 +225,7 @@
         Modal.confirm({
             confirm: true,
             title: '¿Desea publicar la noticia?',
-            content: `Se subira la noticia a la página principal del sitio
+            content: `Se subirá la noticia a la página principal del sitio
             <form id="form-publicar" action="${url}" method="post">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="version" value="${version}" />
@@ -242,7 +242,7 @@
         Modal.warning({
             confirm: true,
             title: '¿Desea rechazar la noticia?',
-            content: `siempre puede deshacer está descisión en la pestaña de historial
+            content: `Siempre puede deshacer está decisión en la pestaña de historial
             <form id="form-rechazar" action="${url}" method="post">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="version" value="${version}" />
@@ -284,7 +284,7 @@
         Modal.confirm({
             confirm: true,
             title: '¿Desea mandar a corregir la noticia?',
-            content: `siempre puede deshacer está descisión en la pestaña de historial
+            content: `Siempre puede deshacer está decisión en la pestaña de historial
             <form id="form-corregir" action="${url}" method="post">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="version" value="${version}" />
@@ -326,7 +326,7 @@
         Modal.warning({
             confirm: true,
             title: '¿Desea deshacer la validación hecha?',
-            content: `Siempre puede volver a revertir está desición
+            content: `Siempre puede volver a revertir está decisión
             <form id="form-deshacer" action="${url}" method="post">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="version" value="${version}" />
@@ -343,7 +343,7 @@
         Modal.warning({
             confirm: true,
             title: '¿Desea deshacer la publicación?',
-            content: `Siempre puede volver a revertir está desición
+            content: `Siempre puede volver a revertir está decisión
             <form id="form-despublicar" action="${url}" method="post">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="version" value="${version}" />
@@ -371,7 +371,7 @@
             confirm: false,
             title: '<h1 class="display-6">Ayuda sobre el historial</h1>',
             content: `
-            <p class="lead">Aquí podrás consultar el historial de validación de la noticias, visualizando únicamente la última validación realizada por cada noticia. Utiliza esta sección para hacer un seguimiento de tus acciones de validación. Puedes ver el historial completo si asi lo necesitas</p>
+            <p class="lead">Aquí podrás consultar el historial de validación de la noticias, visualizando únicamente la última validación realizada por cada noticia. Utiliza esta sección para hacer un seguimiento de tus acciones de validación. Puedes ver el historial completo si así lo necesitas</p>
             `
         })
     }

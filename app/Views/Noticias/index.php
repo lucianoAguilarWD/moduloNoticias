@@ -17,7 +17,7 @@
                             <div class="card col-md-6 border-0" style="max-width: 600px; max-height: 800px; min-height: 300px; min-width: 300px; margin: auto;">
 
                                 <div class="card-body">
-                                    <a href="<?= base_url('noticias/' . $noticia['id']); ?>"><img class="card-img-top" src="<?= base_url('uploads/') . $noticia['imagen']; ?>" alt="Imagen de referencia" title="<?= $noticia['titulo']; ?>" style="height:300px;"></a>
+                                    <a href="<?= base_url('noticias/' . $noticia['id']); ?>"><img class="card-img-top" src="<?= base_url('public/uploads/') . $noticia['imagen']; ?>" alt="Imagen de referencia" title="<?= $noticia['titulo']; ?>" style="height:300px;"></a>
                                     <div class="text-light bg-dark" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
                                         <p>Categoría: <?= $noticia['categorias']; ?></p>
                                         <h5><?= strlen($noticia['titulo']) > 30 ? substr($noticia['titulo'], 0, 30) . '...' : $noticia['titulo']; ?></h5>

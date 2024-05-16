@@ -3,7 +3,7 @@
     <div class="row">
       <nav class="navbar navbar-expand-lg bg-dark" style="background-color:#0047AB;">
         <div class="container-fluid">
-          <a class="navbar-brand" href="<?= base_url('/'); ?>" ><img src="<?= base_url('/assets/icon/news.png');?>" style="border-radius: 50%; max-width: 65px;"></a>
+          <a class="navbar-brand" href="<?= base_url('/'); ?>" ><img src="<?= base_url('public/assets/icon/news.png');?>" style="border-radius: 50%; max-width: 65px;"></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
