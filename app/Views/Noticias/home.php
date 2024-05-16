@@ -9,7 +9,7 @@
             <button class="nav-link active" id="borrador-tab" data-bs-toggle="tab" data-bs-target="#borrador" type="button" role="tab" aria-controls="borrador" aria-selected="true">Borrador</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="validando-tab" data-bs-toggle="tab" data-bs-target="#validando" type="button" role="tab" aria-controls="validando" aria-selected="false">Validandose</button>
+            <button class="nav-link" id="validando-tab" data-bs-toggle="tab" data-bs-target="#validando" type="button" role="tab" aria-controls="validando" aria-selected="false">Validándose</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="desactivadas-tab" data-bs-toggle="tab" data-bs-target="#desactivadas" type="button" role="tab" aria-controls="desactivadas" aria-selected="false">Desactivadas</button>
@@ -228,7 +228,7 @@
                     <?php else : ?>
                         <div class="card border-0 mt-5">
                             <h1 class="display-4">¡Bienvenido! Aún no tienes noticias publicadas.</h1>
-                            <p class="lead">En esta sección, encontrarás todas tus noticias publicadas que aun no finalizaron.</p>
+                            <p class="lead">En esta sección, encontrarás todas tus noticias publicadas que aún no finalizaron.</p>
                             <hr class="my-4">
                             <p>Utilizamos clases de utilidad para la tipografía y el espaciado, creando un diseño atractivo para destacar las propiedades disponibles.</p>
                         </div>
@@ -366,7 +366,7 @@
         Modal.danger({
             confirm: true,
             title: '¿Desea Eliminar la noticia?',
-            content: `Si elimina la noticia no podra recuperarla luego.
+            content: `Si elimina la noticia no podrá recuperarla luego.
             <form id="form-elimina" action="${url}" method="post">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="_method" value="DELETE" />
@@ -382,7 +382,7 @@
         Modal.warning({
             confirm: true,
             title: '¿Desea deshacer la validación hecha?',
-            content: `Siempre puede volver a revertir está desición
+            content: `Siempre puede volver a revertir está decisión
             <form id="form-deshacer" action="${url}" method="post">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="version" value="${version}" />
@@ -416,7 +416,7 @@
         Modal.success({
             confirm: true,
             title: '¿Desea activar la noticia?',
-            content: `Debera tener en cuenta que solo puede tener tres noticias en borrador
+            content: `Deberá tener en cuenta que solo puede tener tres noticias en borrador
             <form id="form-activar" action="${url}" method="post">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="_method" value="PUT" />
@@ -432,7 +432,7 @@
         Modal.confirm({
             confirm: true,
             title: '¿Desea enviar a borrador?',
-            content: `Debera tener en cuenta que solo puede tener tres noticias en borrador
+            content: `Deberá tener en cuenta que solo puede tener tres noticias en borrador
             <form id="form-enviarABorrador" action="${url}" method="post">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="version" value="${version}" />
@@ -449,7 +449,7 @@
         Modal.confirm({
             confirm: true,
             title: '¿Desea publicar la noticia?',
-            content: `Debera esperar a que validen la noticia antes de ser publicada
+            content: `Deberá esperar a que validen la noticia antes de ser publicada
             <form id="form-enviarAValidar" action="${url}" method="post">
                 <?= csrf_field(); ?>
                 <input type="hidden" name="version" value="${version}" />
@@ -467,7 +467,7 @@
             confirm: false,
             title: '<h1 class="display-6">Ayuda sobre la recarga de página</h1>',
             content: `
-            <p class="lead">Siempre puede recargar la pagina para poder actualizar las secciones de ser necesario.</p>
+            <p class="lead">Siempre puede recargar la página para poder actualizar las secciones de ser necesario.</p>
             `
         })
     }
