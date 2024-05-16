@@ -41,7 +41,7 @@
                         <div class="card-body">
                             <div class="container row">
                                 <?php foreach ($borrador as $draft) : ?>
-                                    <div class="col-md-4" style="margin: auto;">
+                                    <div class="col-md-4 mb-2" style="margin: auto;">
                                         <a href="<?= base_url('noticias/' . $draft['id']); ?>" class="d-block" style="text-decoration: none;">
                                             <div class="card border-0" style="max-width: 600px; max-height: 800px; margin: auto;">
                                                 <div class="card-header bg-dark text-light">
@@ -49,7 +49,7 @@
                                                 </div>
                                                 <div class="card-body bg-light">
                                                     <div>
-                                                        <h3><?= strlen($draft['titulo']) > 24 ? substr($draft['titulo'], 0, 24) . '...' : $draft['titulo']; ?></h3>
+                                                        <h3><?= strlen($draft['titulo']) > 15 ? substr($draft['titulo'], 0, 15) . '...' : $draft['titulo']; ?></h3>
                                                         Categoría: <?= $draft['categorias']; ?>
                                                         <p><?= strlen($draft['descripcion']) > 36 ? substr($draft['descripcion'], 0, 36) . '...' : $draft['descripcion']; ?></p>
                                                     </div>
@@ -96,7 +96,7 @@
                         <div class="card-body">
                             <div class="container row" >
                                 <?php foreach ($validacion as $val) : ?>
-                                    <div class="col-md-4" style="margin: auto;">
+                                    <div class="col-md-4 mb-2" style="margin: auto;">
                                         <a href="<?= base_url('noticias/' . $val['id']); ?>" class="d-block" style="text-decoration: none;">
                                             <div class="card border-0" style="max-width: 600px; max-height: 800px; margin: auto;">
                                                 <div class="card-header bg-dark text-light">
@@ -104,7 +104,7 @@
                                                 </div>
                                                 <div class="card-body bg-light">
                                                     <div>
-                                                        <h3><?= strlen($val['titulo']) > 24 ? substr($val['titulo'], 0, 24) . '...' : $val['titulo']; ?></h3>
+                                                        <h3><?= strlen($val['titulo']) > 15 ? substr($val['titulo'], 0, 15) . '...' : $val['titulo']; ?></h3>
                                                         Categoría: <?= $val['categorias']; ?>
                                                         <p><?= strlen($val['descripcion']) > 36 ? substr($val['descripcion'], 0, 36) . '...' : $val['descripcion']; ?></p>
                                                     </div>
@@ -146,7 +146,7 @@
                         <div class="card-body">
                             <div class="container row">
                                 <?php foreach ($desactivadas as $desactivada) : ?>
-                                    <div class="col-md-4" style="margin: auto;">
+                                    <div class="col-md-4 mb-2" style="margin: auto;">
                                         <a href="<?= base_url('noticias/' . $desactivada['id']); ?>" class="d-block" style="text-decoration: none;">
                                             <div class="card border-0" style="max-width: 600px; max-height: 800px; margin: auto;">
                                                 <div class="card-header bg-dark text-light">
@@ -154,7 +154,7 @@
                                                 </div>
                                                 <div class="card-body bg-light">
                                                     <div>
-                                                        <h3><?= strlen($desactivada['titulo']) > 24 ? substr($desactivada['titulo'], 0, 24) . '...' : $desactivada['titulo']; ?></h3>
+                                                        <h3><?= strlen($desactivada['titulo']) > 15 ? substr($desactivada['titulo'], 0, 15) . '...' : $desactivada['titulo']; ?></h3>
                                                         Categoría: <?= $desactivada['categorias']; ?>
                                                         <p><?= strlen($desactivada['descripcion']) > 36 ? substr($desactivada['descripcion'], 0, 36) . '...' : $desactivada['descripcion']; ?></p>
                                                     </div>
@@ -194,11 +194,11 @@
                         <div class="card-body">
                             <div class="container row">
                                 <?php foreach ($publicadas as $publicada) : ?>
-                                    <div class="col-md-4" style="margin: auto;">
+                                    <div class="col-md-4 mb-2" style="margin: auto;">
                                         <a href="<?= base_url('noticias/' . $publicada['id']); ?>" class="d-block" style="text-decoration: none;">
                                             <div class="card border-0" style="max-width: 600px; max-height: 800px; margin: auto;">
                                                 <div class="card-header bg-dark text-light">
-                                                    <h3><?= strlen($publicada['titulo']) > 24 ? substr($publicada['titulo'], 0, 24) . '...' : $publicada['titulo']; ?></h3>
+                                                    <h3><?= strlen($publicada['titulo']) > 15 ? substr($publicada['titulo'], 0, 15) . '...' : $publicada['titulo']; ?></h3>
                                                 </div>
                                                 <div class="card-body bg-light">
                                                     <div>
@@ -244,7 +244,7 @@
                         <div class="card-body">
                             <div class="container row">
                                 <?php foreach ($corregir as $correct) : ?>
-                                    <div class="col-md-4" style="margin: auto;">
+                                    <div class="col-md-4 mb-2" style="margin: auto;">
                                         <a href="<?= base_url('noticias/' . $correct['id']); ?>" class="d-block" style="text-decoration: none;">
                                             <div class="card border-0" style="max-width: 600px; max-height: 800px; margin: auto;">
                                                 <div class="card-header bg-dark text-light">
@@ -252,7 +252,7 @@
                                                 </div>
                                                 <div class="card-body bg-light">
                                                     <div>
-                                                        <h3><?= strlen($correct['titulo']) > 24 ? substr($correct['titulo'], 0, 24) . '...' : $correct['titulo']; ?></h3>
+                                                        <h3><?= strlen($correct['titulo']) > 15 ? substr($correct['titulo'], 0, 15) . '...' : $correct['titulo']; ?></h3>
                                                         Categoría: <?= $correct['categorias']; ?>
                                                         <p><?= strlen($correct['descripcion']) > 36 ? substr($correct['descripcion'], 0, 36) . '...' : $correct['descripcion']; ?></p>
                                                     </div>
@@ -292,7 +292,7 @@
                         <div class="card-body">
                             <div class="container row">
                                 <?php foreach ($rechazadas as $rechazada) : ?>
-                                    <div class="col-md-4" style="margin: auto;">
+                                    <div class="col-md-4 mb-2" style="margin: auto;">
                                         <a href="<?= base_url('noticias/' . $rechazada['id']); ?>" class="d-block" style="text-decoration: none;">
                                             <div class="card border-0" style="max-width: 600px; max-height: 800px; margin: auto;">
                                                 <div class="card-header bg-dark text-light">
@@ -300,7 +300,7 @@
                                                 </div>
                                                 <div class="card-body bg-light">
                                                     <div>
-                                                        <h3><?= strlen($rechazada['titulo']) > 24 ? substr($rechazada['titulo'], 0, 24) . '...' : $rechazada['titulo']; ?></h3>
+                                                        <h3><?= strlen($rechazada['titulo']) > 15 ? substr($rechazada['titulo'], 0, 15) . '...' : $rechazada['titulo']; ?></h3>
                                                         Categoría: <?= $rechazada['categorias']; ?>
                                                         <p><?= strlen($rechazada['descripcion']) > 36 ? substr($rechazada['descripcion'], 0, 36) . '...' : $rechazada['descripcion']; ?></p>
                                                     </div>

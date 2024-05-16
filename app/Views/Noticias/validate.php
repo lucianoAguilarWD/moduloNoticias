@@ -62,7 +62,6 @@
                                             <?php if ($valid['seguimientos'] === false) : ?>
                                                 <button onclick="modalRechazar('<?= base_url('noticias/rechazar/' . $valid['noticia']['id']); ?>', <?= $valid['noticia']['version'] ?>);" class="btn confirmacion"><i class="fa-solid fa-square-xmark"></i></button>
                                             <?php endif; ?>
-                                            <button onclick="infoPage();" class="btn confirmacion"><i class="fa-solid fa-info"></i></button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -130,10 +129,7 @@
                                         <?php if (intval($seguimiento['estado']) !== BORRADOR && intval($seguimiento['estado']) !== L_VALIDAR && $seguimiento['publicacion'] === null) : ?>
                                             <button onclick="modalDeshacer('<?= base_url('noticias/deshacer/' . $seguimiento['noticiaI']); ?>', <?= $seguimiento['version'] ?>);" class="btn confirmacion"><i class="fa-solid fa-rotate-left"></i></button>
                                         <?php endif; ?>
-                                        <?php if (intval($seguimiento['version']) !== 0) : ?>
-                                            <a href="<?= base_url('noticias/seguimientos/' . $seguimiento['noticiaI']); ?>" class="btn confirmacion"><i class="fa-solid fa-table-list"></i></a>
-                                        <?php endif; ?>
-
+                                        <a href="<?= base_url('noticias/seguimientos/' . $seguimiento['noticiaI']); ?>" class="btn confirmacion"><i class="fa-solid fa-table-list"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
