@@ -36,7 +36,7 @@ database.default.password =
 
 dar los valores correspondientes al archivo .env o a database.php con los datos de su usuario y pw. Por defecto dejo esa configuración.
 
-app.baseURL = 'http://localhost/modulonoticias/' por si la necesitan
+app.baseURL = 'http://localhost/moduloNoticias/' por si la necesitan
 
 al clonar este repositorio se debe instalar las dependencias del proyecto con composer install
 
