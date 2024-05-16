@@ -13,12 +13,11 @@ class PublicarAutomaticamente extends Migration
             ON SCHEDULE EVERY 1 DAY
             STARTS CURRENT_TIMESTAMP
             ON COMPLETION NOT PRESERVE
+            ENABLE
             DO
-            BEGIN
-                UPDATE noticias
-                SET fechaPublicacion = CURDATE(), fechaExpiracion = DATE_ADD(CURDATE(), INTERVAL 5 DAY)
-                WHERE estado = 1 AND DATEDIFF(CURDATE(), fechaRegistro) >= 5;
-            END;
+            UPDATE noticias
+            SET fechaPublicacion = CURDATE(), fechaExpiracion = DATE_ADD(CURDATE(), INTERVAL 5 DAY)
+            WHERE estado = 1 AND activa = 1 AND DATEDIFF(CURDATE(), fechaModificacion) >= 5;
         ");
     }
 

@@ -97,10 +97,12 @@ class NoticiasModel extends Model
     }
 
 
-    public function noticiasPublicadasSinValidar()
+    public function noticiasPublicadasSinValidar($nombre)
     {
         return $this->select('noticias.*, categorias.nombre AS categorias')
             ->join('categorias', 'noticias.id_categoria = categorias.id')
+            ->join('usuarios', 'noticias.id_usuario = usuarios.id')
+            ->where("usuarios.nombre != '$nombre'")
             ->where('estado != 4')
             ->where('activa', ACTIVA)
             ->where('fechaPublicacion IS NOT NULL')

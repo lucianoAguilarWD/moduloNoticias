@@ -398,7 +398,7 @@ class Noticias extends BaseController
         $desc = $noticiaCat['descripcion'];
         $img = ($noticiaCat['imagen'] !== null)? 'Tiene imagen': 'No tiene imagen';
         $categoria = $noticiaCat['categoria'];
-        $antes = "Titulo: $tit - Descripción: $desc - Estado: $est - Imagen: $img - Categoria: $categoria";
+        $antes = "Titulo: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoria: $categoria";
 
         switch (intval($post['estados'])){
             case BORRADOR: $est = 'Borrador';break;
@@ -413,7 +413,7 @@ class Noticias extends BaseController
         $img = ($newName === '') ? 'Mantuvo imagen': 'Cambio imagen';
         $categoriaTrae = $this->categoriasModel->traerCategoria(intval($post['categoria']));
         $categoria = $categoriaTrae['nombre'];
-        $despues = "Titulo: $tit - Descripción: $desc - Estado: $est - Imagen: $img - Categoria: $categoria";
+        $despues = "Titulo: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoria: $categoria";
         $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
 
         $this->seguimientosModel->insert([
@@ -494,7 +494,7 @@ class Noticias extends BaseController
         $data = [
             'titulo' => 'Área de validación',
             'validar' => $aux,
-            'sinValidar' => $this->noticiasModel->noticiasPublicadasSinValidar(),
+            'sinValidar' => $this->noticiasModel->noticiasPublicadasSinValidar($user),
             'seguimientos' => $this->seguimientosModel->seguimientosNoticiasUser($user)
         ];
         $validador = $data;
@@ -526,11 +526,11 @@ class Noticias extends BaseController
         if ($this->session->rol === null) {
             return redirect()->to('/');
         }elseif($this->session->rol === EDITOR){
-            return view('Noticias/trackings', ['seguimientos' => $seguimientos, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutEditor']);
+            return view('Noticias/trackings', ['seguimientos' => $seguimientos, 'titulo' => 'Historial de seguimientos', 'layout' => 'layouts/layoutEditor']);
         }elseif($this->session->rol === VALIDADOR){
-            return view('Noticias/trackings', ['seguimientos' => $seguimientos, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutValidador']);
+            return view('Noticias/trackings', ['seguimientos' => $seguimientos, 'titulo' => 'Historial de seguimientos', 'layout' => 'layouts/layoutValidador']);
         }elseif($this->session->rol === AMBOS){
-            return view('Noticias/trackings', ['seguimientos' => $seguimientos, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutMultiRol']);
+            return view('Noticias/trackings', ['seguimientos' => $seguimientos, 'titulo' => 'Historial de seguimientos', 'layout' => 'layouts/layoutMultiRol']);
         }
     }
 
@@ -549,11 +549,11 @@ class Noticias extends BaseController
         if ($this->session->rol === null) {
             return redirect()->to('/');
         }elseif($this->session->rol === EDITOR){
-            return view('Noticias/tracking', ['seguimiento' => $seguimiento, 'usuario' => $nombre, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutEditor']);
+            return view('Noticias/tracking', ['seguimiento' => $seguimiento, 'usuario' => $nombre, 'titulo' => 'Seguimiento', 'layout' => 'layouts/layoutEditor']);
         }elseif($this->session->rol === VALIDADOR){
-            return view('Noticias/tracking', ['seguimiento' => $seguimiento, 'usuario' => $nombre, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutValidador']);
+            return view('Noticias/tracking', ['seguimiento' => $seguimiento, 'usuario' => $nombre, 'titulo' => 'Seguimiento', 'layout' => 'layouts/layoutValidador']);
         }elseif($this->session->rol === AMBOS){
-            return view('Noticias/tracking', ['seguimiento' => $seguimiento, 'usuario' => $nombre, 'titulo' => 'Seguimientos', 'layout' => 'layouts/layoutMultiRol']);
+            return view('Noticias/tracking', ['seguimiento' => $seguimiento, 'usuario' => $nombre, 'titulo' => 'Seguimiento', 'layout' => 'layouts/layoutMultiRol']);
         }
     }
 
@@ -620,7 +620,7 @@ class Noticias extends BaseController
         $est = $noticiaCat['estado'];
         $img = $noticiaCat['imagen'];
         $categoria = $noticiaCat['categoria'];
-        $despues = "Titulo: $tit - Descripción: $desc - Estado: $est - Imagen: $img - Categoria: $categoria";
+        $despues = "Titulo: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoria: $categoria";
         $noticiaCat = $this->noticiasModel->noticiaCategoria($idNoticia);
 
         $tit = $noticiaCat['titulo'];
@@ -628,7 +628,7 @@ class Noticias extends BaseController
         $est = $noticiaCat['estado'];
         $img = $noticiaCat['imagen'];
         $categoria = $noticiaCat['categoria'];
-        $antes = "Titulo: $tit - Descripción: $desc - Estado: $est - Imagen: $img - Categoria: $categoria";
+        $antes = "Titulo: $tit | Descripción: $desc | Estado: $est | Imagen: $img | Categoria: $categoria";
         $usuario = $this->usuariosModel->find_by_name($this->session->usuario);
 
         $this->seguimientosModel->insert([
@@ -924,7 +924,7 @@ class Noticias extends BaseController
 
 
         $this->seguimientosModel->insert([
-            'accion' => RECHAZADO,
+            'accion' => RECHAZO,
             'antes' => 'validandose',
             'despues' => 'rechazado',
             'motivo' => $this->request->getPost('motivo'),

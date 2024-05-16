@@ -15,7 +15,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="<?= base_url('/noticias/new');?>" >Crear noticia</a>
-                  <a class="dropdown-item" href="<?= base_url('/noticias/home');?>" >Área de trabajo</a>
+                  <a class="dropdown-item" href="<?= base_url('/noticias/home');?>" >Área de edición</a>
                   <a class="dropdown-item" href="<?= base_url('/usuarios/logOut');?>" >Cerrar sesión</a>
                 </div>
               </li>
