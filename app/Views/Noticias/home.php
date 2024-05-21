@@ -381,7 +381,7 @@
     const modalDeshacer = (url, version) => {
         Modal.warning({
             confirm: true,
-            title: '¿Desea deshacer la validación hecha?',
+            title: '¿Desea deshacer la modificación hecha?',
             content: `Siempre puede volver a revertir está decisión
             <form id="form-deshacer" action="${url}" method="post">
                 <?= csrf_field(); ?>
