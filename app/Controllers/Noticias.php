@@ -318,6 +318,8 @@ class Noticias extends BaseController
 
         $version = $version + 1;
 
+        //? comprobamos que el borrador no este ocupado
+
         if (intval($post['estados']) === BORRADOR) {
             $user = $this->session->usuario;
             $borrador = $this->noticiasModel->noticiasPorEstado($user, BORRADOR);
@@ -326,6 +328,7 @@ class Noticias extends BaseController
                 return redirect()->back()->with('error', 'No puede agregar la noticia a borrador debido a que ya tiene tres en su borrador. Desactive o descarte una noticia.');
             }
         }
+        $noticiaCat = $this->noticiasModel->noticiaCategoria($noticia['id']);
 
         //? trabajando la imagen.
         $file = $this->request->getFile('archivo');
@@ -337,12 +340,6 @@ class Noticias extends BaseController
         } else {
             $newName = $noticia['imagen'];
         }
-
-        //? comprobamos que el borrador no este ocupado
-
-        
-
-        $noticiaCat = $this->noticiasModel->noticiaCategoria($noticia['id']);
 
         //? crear el respaldo o modificar el respaldo de ser necesario
 
@@ -654,7 +651,6 @@ class Noticias extends BaseController
         }
 
         $this->noticiasModel->update($id, [
-            'version' => $version + 1,
             'activa' => DESACTIVADA
         ]);
 
@@ -675,8 +671,9 @@ class Noticias extends BaseController
     {
         $user = $this->session->usuario;
         $borrador = $this->noticiasModel->noticiasPorEstado($user, BORRADOR);
+        $noticia = $this->noticiasModel->find($id);
 
-        if (count($borrador) >= 3) {
+        if (intval($noticia['estado']) === BORRADOR && count($borrador) >= 3) {
             return redirect()->back()->with('error', 'No puede activar la noticia mientras tenga tres noticias en su borrador.');
         }
 
