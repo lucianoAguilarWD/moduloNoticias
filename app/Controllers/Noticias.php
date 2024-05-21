@@ -703,6 +703,29 @@ class Noticias extends BaseController
             return redirect()->back()->with('error', 'No puede agregar la noticia a borrador debido a que ya tiene tres en su borrador. Desactive o descarte una noticia.');
         }
 
+        $res = $this->respaldosModel->respaldoNoticia($id);
+        if (count($res) > 0) {
+            $respaldo = $res[0];
+            $this->respaldosModel->update($respaldo['id'], [
+                'estado' => $noticia['estado'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion']
+            ]);
+        } else {
+
+            $this->respaldosModel->insert([
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion'],
+                'id_noticia' => $noticia['id']
+            ]);
+        }
+
         $this->noticiasModel->update($id, [
             'version' => $version + 1,
             'estado' => BORRADOR
@@ -728,6 +751,29 @@ class Noticias extends BaseController
 
         if (intval($this->request->getPost('version')) !== $version) {
             return redirect()->back()->with('error', 'Por favor, recargue el área de trabajo para verificar posibles actualizaciones en la noticia. Para obtener más detalles, consulte el seguimiento de la misma.');
+        }
+
+        $res = $this->respaldosModel->respaldoNoticia($id);
+        if (count($res) > 0) {
+            $respaldo = $res[0];
+            $this->respaldosModel->update($respaldo['id'], [
+                'estado' => $noticia['estado'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion']
+            ]);
+        } else {
+
+            $this->respaldosModel->insert([
+                'titulo' => $noticia['titulo'],
+                'descripcion' => $noticia['descripcion'],
+                'estado' => $noticia['estado'],
+                'imagen' => $noticia['imagen'],
+                'id_categoria' => $noticia['id_categoria'],
+                'activa' => $noticia['activa'],
+                'fechaPublicacion' => $noticia['fechaPublicacion'],
+                'fechaExpiracion' => $noticia['fechaExpiracion'],
+                'id_noticia' => $noticia['id']
+            ]);
         }
         
 
