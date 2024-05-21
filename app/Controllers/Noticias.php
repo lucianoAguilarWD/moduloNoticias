@@ -322,7 +322,7 @@ class Noticias extends BaseController
             $user = $this->session->usuario;
             $borrador = $this->noticiasModel->noticiasPorEstado($user, BORRADOR);
 
-            if (count($borrador) >= 3) {
+            if (count($borrador) >= 3 && intval($noticia['estado']) !== BORRADOR) {
                 return redirect()->back()->with('error', 'No puede agregar la noticia a borrador debido a que ya tiene tres en su borrador. Desactive o descarte una noticia.');
             }
         }
