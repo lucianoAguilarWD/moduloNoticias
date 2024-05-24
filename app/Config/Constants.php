@@ -138,4 +138,4 @@ define('DESACTIVO', 5);
  * Tiempo de expiración de las publicaciones
  */
 
-define('TIEMPO_PUBLICACION', ' + 5 days'); 
+define('TIEMPO_PUBLICACION', ' + 30 days'); 
